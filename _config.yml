@@ -19,3 +19,12 @@ github_username:  jekyll
 
 # Build settings
 markdown: kramdown
+
+destination: _site
+keep_files:
+    - _site/.git
+exclude:
+    - jekyll-serve.sh
+    - gh-pages.sh
+    - README
+    - Dockerfile

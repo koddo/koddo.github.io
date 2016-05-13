@@ -26,5 +26,5 @@ keep_files:
 exclude:
     - jekyll-serve.sh
     - gh-pages.sh
-    - README
+    - README.md
     - Dockerfile

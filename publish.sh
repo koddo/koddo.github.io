@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-cd _site
-git add --all && \
+cd _site && \
+    git add --all && \
     git commit --allow-empty-message -am '' && \
-    git push origin gh-pages
+    git push origin master
 

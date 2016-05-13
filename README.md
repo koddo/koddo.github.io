@@ -24,9 +24,7 @@ $ mv koddo.github.io _site
 
 
 
-
-
 misc
 =======================
 
-TODO: tag page layout -- https://github.com/pattex/jekyll-tagging
+TODO: tag_page, tag_feed layout

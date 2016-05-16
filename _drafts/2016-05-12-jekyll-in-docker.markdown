@@ -5,8 +5,6 @@ layout: post
 tags:   docker jekyll
 ---
 
-
-
 https://hub.docker.com/r/jekyll/jekyll/
 
 https://github.com/jekyll/docker/wiki/Usage:-Running#on-native-docker

@@ -1,9 +1,13 @@
 ---
-title:  "jekyll in docker"
-date:   2016-05-12 12:18:44 +0000
 layout: post
-tags:   docker jekyll
+title:  "jekyll in docker"
+date:   2016-05-24 19:03:34 +0300
+tags:   [docker jekyll]
+comments: true
+disqus_identifier: 192B869A268-B68A-4829-8F5F-FED546C72732
+
 ---
+
 
 https://hub.docker.com/r/jekyll/jekyll/
 
@@ -26,3 +30,8 @@ RUN gem install jekyll-tagging
 
 $ docker build -t my-jekyll-image - < Dockerfile
 {% endhighlight %}
+
+
+asdf
+asdf
+asdf

@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html>
-
   {% include head.html %}
-
   <body>
-
     {% include header.html %}
-
     <div class="page-content">
       <div class="wrapper">
         {{ content }}
       </div>
     </div>
-
     {% include footer.html %}
-
+    {% if true %}<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>{% endif %}
+    {% if false %}<script id="dsq-count-scr" src="//koddo.disqus.com/count.js" async></script>{% endif %}
+    {% if true %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/3.1.1/anchor.min.js"></script>
+    <script>anchors.add();</script>
+    {% endif %}
   </body>
-
 </html>

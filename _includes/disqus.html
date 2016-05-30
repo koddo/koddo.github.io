@@ -1,0 +1,22 @@
+<div id="disqus_thread"></div>
+<input type="button" id="btn_show_disqus" value="Any comments?" />
+{% if false %}
+<!-- https://help.disqus.com/customer/portal/articles/565624-adding-comment-count-links-to-your-home-page -->
+<span id="comments_count" class="disqus-comment-count" data-disqus-identifier="{{ page.disqus_identifier }}">this will be replaced with the comments count</span>
+{% endif %}
+<script>
+ var disqus_config = function () {
+     this.page.url = "{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}";
+     this.page.identifier = "{{ page.disqus_identifier }}";
+ };
+ document.getElementById('btn_show_disqus').onclick = function () {
+     var d = document, s = d.createElement('script');
+     s.src = '//koddo.disqus.com/embed.js';
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+
+     document.getElementById('btn_show_disqus').style.display = 'none';
+     document.getElementById('comments_count').style.display = 'none';
+ };
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>

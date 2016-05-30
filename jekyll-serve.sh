@@ -8,6 +8,6 @@ docker run -it --rm --name=jekyll \
     --volume=$(pwd):/srv/jekyll \
     -p 0.0.0.0:4000:4000 \
     my-jekyll-image \
-    jekyll serve \
+    jekyll serve --drafts \
     --force_polling   # for macosx
 

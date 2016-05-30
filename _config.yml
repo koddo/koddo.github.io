@@ -6,14 +6,14 @@
 # 'jekyll serve'. If you change this file, please restart the server process.
 
 # Site settings
-title: Your awesome title
+title: "koddo on code"
 description: > # this means to ignore newlines
   Write an awesome description for your new site here. You can edit this
   line in _config.yml. It will appear in your document head meta (for
   Google search results) and in your feed.xml site description.
 
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://koddo.github.io" # the base hostname & protocol for your site
+url: "https://koddo.github.io" # the base hostname & protocol for your site
 
 # email: your-email@domain.com
 # twitter_username: jekyllrb
@@ -29,6 +29,7 @@ exclude:
     - jekyll-serve.sh
     - gh-pages.sh
     - README.md
+    - README-master-branch.md
     - Dockerfile
 
 
@@ -44,3 +45,9 @@ tag_feed_dir: tag
 
 
 permalink: /blog/:title
+
+# assuming the default is permalink: /:collection/:path
+collections:
+  ryctoic:
+    output: true
+    title: "Ryctoic drafts"

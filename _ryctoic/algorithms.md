@@ -77,13 +77,6 @@ exercises:
 <https://www.hackerrank.com/challenges/no-prefix-set>
 
 
-<div class="todo" markdown="1">
-- TODO: illustraton of trie nodes implementation: <http://127.0.0.1:4001/algorithms/Algorithms.4th.by_Sedgewick_Wayne.pdf#747>
-- TODO: search miss \\(O(\log_{A}{N})\\): <http://127.0.0.1:4001/algorithms/Algorithms.4th.by_Sedgewick_Wayne.pdf#756>
-- TODO: space requirements and sample table: <http://127.0.0.1:4001/algorithms/Algorithms.4th.by_Sedgewick_Wayne.pdf#758>
-- TODO: add exersices
-- TODO: add comparements with other algorithms
-</div>
 
 
 <div class="ryctoic" markdown="1">
@@ -91,10 +84,33 @@ exercises:
 - functions on trie and their implementations
 - implementation of nodes
 - time-space complexity
-- applications 
+- applications
+- what about to have hash tables or other data structures instead of arrays in trie nodes?
 </div>
 
 
+<div class="todo" markdown="1">
+- TODO: illustraton of trie nodes implementation: <http://127.0.0.1:4001/algorithms/Algorithms.4th.by_Sedgewick_Wayne.pdf#747>
+- TODO: search miss \\(O(\log_{A}{N})\\): <http://127.0.0.1:4001/algorithms/Algorithms.4th.by_Sedgewick_Wayne.pdf#756>
+- TODO: space requirements and estimates table: <http://127.0.0.1:4001/algorithms/Algorithms.4th.by_Sedgewick_Wayne.pdf#758>
+- TODO: exercises table: <http://127.0.0.1:4001/algorithms/Algorithms.4th.by_Sedgewick_Wayne.pdf#767>
+- TODO: add exersices
+- TODO: add comparements with other algorithms
+- TODO: succinct trie --- <http://stevehanov.ca/blog/index.php?id=120>, [Succinct Trees in Practice](http://epubs.siam.org/doi/abs/10.1137/1.9781611972900.9)
+- TODO: what is double-array trie? <https://linux.thai.net/~thep/datrie/datrie.html>
+- TODO: directed acyclic word graph (aka dawg)
+- TODO: radix tree
+- TODO: fix wikipedia article on tries --- wrong complexity or memory
+</div>
+
+# Ternary search tree
+
+when nodes have most children pointers used, trie is more space and time efficient than the TST
+
+good for large alphabets, ascii, unicode --- tries won't handle this
+
+TODO: can build balanced TSTs via rotations to achieve \( L + \log N \) worst-case guarantees, but probably not worth the trouble, since they work good even without this --- <http://algs4.cs.princeton.edu/lectures/52Tries.pdf#34>
+as fast as hash tables for string keys, space efficient
 
 # Skip list
 

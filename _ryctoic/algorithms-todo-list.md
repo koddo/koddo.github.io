@@ -14,14 +14,9 @@ dfs with explicit stack --- http://stackoverflow.com/questions/5278580/non-recur
 
 https://en.wikipedia.org/wiki/N-gram
 
-trie
-https://en.wikipedia.org/wiki/Compact_prefix_tree
-https://en.wikipedia.org/wiki/Radix_tree
-
-
-
-
 invert binary tree, yes
+
+<http://algs4.cs.princeton.edu/cheatsheet/>, <http://introcs.cs.princeton.edu/java/lectures/>
 
 
 

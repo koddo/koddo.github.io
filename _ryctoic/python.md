@@ -4,6 +4,8 @@ layout:  collection_page
 
 ---
 
+TODO: divide functions by groups, check out some cheat sheets
+
 # Python build-in functions
 
 __import__

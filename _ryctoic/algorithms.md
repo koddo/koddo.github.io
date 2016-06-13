@@ -112,6 +112,12 @@ good for large alphabets, ascii, unicode --- tries won't handle this
 TODO: can build balanced TSTs via rotations to achieve \( L + \log N \) worst-case guarantees, but probably not worth the trouble, since they work good even without this --- <http://algs4.cs.princeton.edu/lectures/52Tries.pdf#34>
 as fast as hash tables for string keys, space efficient
 
+
+<div class="ryctoic" markdown="1">
+- when trie is more efficient than a tst?
+</div>
+
+
 # Skip list
 
 <https://en.wikipedia.org/wiki/Skip_list>

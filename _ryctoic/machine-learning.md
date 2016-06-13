@@ -27,6 +27,8 @@ Digit Recognizer
 
 Amazon Employee Access Challenge
 
+Sentiment Analysis on Movie Reviews
+
 # XGBoost
 
 <https://xgboost.readthedocs.io/en/latest/model.html>

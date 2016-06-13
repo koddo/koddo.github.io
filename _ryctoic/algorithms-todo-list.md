@@ -18,7 +18,7 @@ invert binary tree, yes
 
 <http://algs4.cs.princeton.edu/cheatsheet/>, <http://introcs.cs.princeton.edu/java/lectures/>
 
-
+Алгоритмы и структуры данных в ядре Linux, Chromium --- https://habrahabr.ru/company/wunderfund/blog/277143/
 
 
 

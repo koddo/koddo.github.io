@@ -1,4 +1,12 @@
 from jekyll/jekyll
 
-RUN gem install jekyll-tagging
+RUN apk add --update \
+                     build-base \
+                     ruby-dev \
+    && rm -rf /var/cache/apk/*
+
+RUN gem install \
+                jekyll-tagging \
+                guard \
+                guard-livereload
 

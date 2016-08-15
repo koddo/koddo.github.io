@@ -2,7 +2,7 @@
 
 docker run -it --rm --name=jekyll \
     --volume=$(pwd):/srv/jekyll \
-    my-jekyll-image \
+    my-jekyll \
     jekyll build   # without --drafts
 
 # the whole _site/ dir gets rewritten after jekyll build

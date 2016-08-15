@@ -1,11 +1,6 @@
-# Welcome to Jekyll!
-#
-# This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely need to edit after that.
-# For technical reasons, this file is *NOT* reloaded automatically when you use
+# this file is *NOT* reloaded automatically when you use
 # 'jekyll serve'. If you change this file, please restart the server process.
 
-# Site settings
 title: "koddo on code"
 description: > # this means to ignore newlines
   Write an awesome description for your new site here. You can edit this
@@ -21,17 +16,24 @@ url: "https://koddo.github.io" # the base hostname & protocol for your site
 
 # Build settings
 markdown: kramdown
-
+kramdown:
+  input:          GFM
+  hard_wrap:      true
+  highlighter:    rouge
+  
 destination: _site
 keep_files:
     - _site/.git
 exclude:
     - jekyll-serve.sh
+    - jekyll-livereload.sh
+    - publish.sh
     - gh-pages.sh
     - README.md
     - README-master-branch.md
     - Dockerfile
-
+    - Guardfile
+    - _config_livereload.yml
 
 tag_page_layout: tag_page
 tag_page_dir: tag
@@ -51,3 +53,5 @@ collections:
   ryctoic:
     output: true
     title: "Ryctoic drafts"
+
+    

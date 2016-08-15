@@ -17,7 +17,7 @@ https://github.com/jekyll/docker/wiki/Usage:-Running#on-native-docker
 $ docker run -it --rm --name=jekyll \
      --volume=$(pwd):/srv/jekyll \
      -p 127.0.0.1:4000:4000 \
-     my-jekyll-image \
+     my-jekyll \
      jekyll serve
 {% endhighlight %}
 
@@ -28,10 +28,19 @@ $ cat Dockerfile
 from jekyll/jekyll
 RUN gem install jekyll-tagging
 
-$ docker build -t my-jekyll-image - < Dockerfile
+$ docker build -t my-jekyll - < Dockerfile
 {% endhighlight %}
 
 
 asdf
 asdf
 asdf
+
+
+
+without `mathjax: true`
+fuck it: \\(\color{red}\sqrt{\color{black}\frac{1}{2}}\\)
+
+
+
+fuck it

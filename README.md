@@ -13,25 +13,33 @@ M-x ym-jekyll-regenerate-date-and-filename
 ```
 $ ssh -t alex@debian.local "cd ~/mnt/koddo.github.io && ./jekyll-serve.sh"
 $ ./publish.sh
+$ open -a Firefox http://my-jekyll.dev.dnsdock:4000/
 ```
 
 before the first run create an image with installed gems
 
 ```
-$ docker build -t my-jekyll-image - < Dockerfile
+$ docker build --tag my-jekyll - < Dockerfile
 ```
 
-the _site/ dir contains the master branch of this repo, _site/.git is in keep_files in _config.yml
+the `_site/` dir contains the master branch of this repo, `_site/.git` is in keep_files in _config.yml
 
 ```
 $ git clone git@github.com:koddo/koddo.github.io.git
 $ mv koddo.github.io _site
 ```
 
+## livereload
+
+in a second terminal tab:
+
+```
+$ ssh -t alex@debian.local "cd ~/mnt/koddo.github.io && ./jekyll-livereload.sh"
+```
 
 
-misc
-=======================
+
+# misc
 
 setup:
 
@@ -39,6 +47,7 @@ disqus
 mathjax
 https://github.com/pattex/jekyll-tagging
 https://github.com/bryanbraun/anchorjs
+https://github.com/guard/guard-livereload, http://stackoverflow.com/questions/8395526/using-live-reload-with-jekyll
 
 kramdown ToC
 

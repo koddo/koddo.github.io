@@ -4,66 +4,8 @@ layout:  collection_page
 
 ---
 
-TODO: divide functions by groups, check out some cheat sheets
-
-TODO: __slots__
-
-<https://hg.python.org/cpython/file/3.5/Doc/library/functions.rst>
-
-# skipped hackerrank challenges
-
-sets
-https://www.hackerrank.com/challenges/no-idea
-https://www.hackerrank.com/challenges/py-the-captains-room
-
-math
-https://www.hackerrank.com/challenges/find-angle --- python 3 is disabled
-
-collections
-https://www.hackerrank.com/challenges/piling-up --- deque
-
-classes
-https://www.hackerrank.com/challenges/class-1-dealing-with-complex-numbers
-https://www.hackerrank.com/challenges/class-2-find-the-torsional-angle
-
-functional
-https://www.hackerrank.com/challenges/validate-list-of-email-address-with-filter
-
-regex
-all
-
-xml
-all
-
-closures
-all
-
-
-
-
-# misc
-
-https://www.quora.com/What-are-good-Python-interview-questions
-http://www.ilian.io/python-interview-question-and-answers/
-http://career.guru99.com/top-25-python-interview-questions/
-
-http://www.tutorialspoint.com/python/python_interview_questions.htm
-
-
-q: check the import search path --- a: `sys.path`
-
-q: declare main() in python --- a: `if __name__ == '__main__': ...`
-
-TODO: how to measure time
-$ python -m timeit "'somestring'.find('str', 2, 9)"
-$ python -m timeit "'somestring'[2:9].find('str')"
-
-q: write a lambda function --- a: `lambda x: x**2`
-
-TODO: shallow and deep copies
-
-q: how to get an integer `111...1` of lenght `n` without using string operations? --- a: `10**n//9`
-q: how to get a palindrome number like `123454321` up to `9` in the middle? --- a: `111..11` to the power of `2`
+* this line is replaced with the generated table of contents
+{:toc}
 
 
 # true, false, and comparison in python
@@ -113,15 +55,20 @@ behavior of the `is` and `is not` operators cannot be customized; also they can 
 
 <br/>
 
-q: what values are considered false in python? --- a: `False`, `None`, any numeric zero, empty sequence, empty map, instance with `__bool__()` returning False or `__len__()` returning zero
-q: `not a == b` vs `not (a == b)` vs `b == not a` --- a: not has a lower priority than non-Boolean operators, so `not a == b` is interpreted as `not (a == b)`, and `b == not a` is a syntax error
-q: `if False and whatever(): 'this line is skipped'` --- a:? TODO
-q: `x < y <= z` vs `x < y and y <= z` --- a: `x < y <= z` is equivalent to `x < y and y <= z`, except `y` is evaluated only once, and in both cases `z` is not evaluated at all when `x < y` is found to be false
-q: what are comparison operators? --- a: `==`, `!=`, `<`, `>`, `<=`, `>=`, `is`, `is not`
-q: when are two objects of different types compare equal? --- a: objects of different _built-in_ types never compare equal (except different numeric types), but we can define an object with `__eq__`
-q: what happens when you compare different types? `'a' == 1` and `'abc' > 10` a: the former is false, the latter raises `TypeError` exception
-q: how to customize behavior of `is` and `is not`? --- a: behavior of the `is` and `is not` operators cannot be customized; also they can be applied to any two objects and never raise an exception
 
+<div class="ryctoic-questions" markdown="1">
+- q: what values are considered false in python? --- a: `False`, `None`, any numeric zero, empty sequence, empty map, instance with `__bool__()` returning False or `__len__()` returning zero
+- q: `not a == b` vs `not (a == b)` vs `b == not a` --- a: not has a lower priority than non-Boolean operators, so `not a == b` is interpreted as `not (a == b)`, and `b == not a` is a syntax error
+- q: `if False and whatever(): 'this line is skipped'`
+- q: `x < y <= z` vs `x < y and y <= z` --- a: `x < y <= z` is equivalent to `x < y and y <= z`, except `y` is evaluated only once, and in both cases `z` is not evaluated at all when `x < y` is found to be false
+- q: what are comparison operators? --- a: `==`, `!=`, `<`, `>`, `<=`, `>=`, `is`, `is not`
+- q: when are two objects of different types compare equal? --- a: objects of different _built-in_ types never compare equal (except different numeric types), but we can define an object with `__eq__`
+- q: what happens when you compare different types? `'a' == 1` and `'abc' > 10` a: the former is false, the latter raises `TypeError` exception
+- q: how to customize behavior of `is` and `is not`? --- a: behavior of the `is` and `is not` operators cannot be customized; also they can be applied to any two objects and never raise an exception
+</div>
+
+<br />
+<br />
 
 # functions
 
@@ -225,11 +172,13 @@ lst == [3, 1, 2]
 sorted(lst)
 ```
 
+`lst.sort()` returns `None`, here is why: <https://mail.python.org/pipermail/python-dev/2003-October/038855.html>
+
 pre-allocating a list benchmark: <http://stackoverflow.com/questions/22225666/pre-allocating-a-list-of-none>
 
 q: `sorted(l)` vs `l.sort()` --- a: `l.sort()` is destructive and, therefore, a bit faster
 q: sort in descending order --- a: `sorted(l, reverse=True)` or `l.sort(reverse=True)`
-q: get a list in reversed order --- a: `reversed(lst)` or `lst[::-1]`
+q: get a list in reversed order --- a: `reversed(lst)` or `lst.reverse()` or `lst[::-1]`
 q: sort by multiple criteria --- a: sorting is stable, so sort twice, or sort by tuples `sorted(lst, key = lambda x: (-x[1], x[0]))`, or `sorted(lst, key = operator.itemgetter(1, 2))`
 
 TODO: destructive and non-destructive insert, remove, append, extend, sort, pop
@@ -237,19 +186,39 @@ TODO: destructive and non-destructive insert, remove, append, extend, sort, pop
 q: pre-allocate a list of size `n` with a default value --- a: `lst = [None] * n` or `lst = [0] * n` with default value `0`, but try appending or list comprehension instead
 q: pre-allocation of a list vs appending elements vs list comprehension --- a: pre-allocation is useful when elements you fill the list with come out of order, appending has complexity of `O(1)`, so no difference with list comprehension (unless you try to optimize, measure it yourself then) 
 
+q: add an element to the end of a list --- a: `lst.append(e)`
+q: concatenate two lists --- a: `lst1 + [1, 2]`
+q: `lst1+lst2` vs `lst1.extend(lst2)` vs `lst1 += lst2` --- a: `.extend()` and `+=` are destructive, there is virtually no difference in performance; `.extend()` accepts any iterable, can do chaining like `getlst1().extend(lst2)`
+q: add an element to a list, not at the end, but at a given position --- a: `lst.insert(pos, value)`, same as `lst[pos:pos] = [value]`
+q: what does mean `lst[i:i] = [v]`? --- a: same as `lst.insert(i, v)`
+q: `lst.append()` vs `lst.extend()` --- a: `.append(e)` appends an element, `.extend(l)` extends the list with elements from an iterable
+q: what does `lst.sort()` return? --- a: `None`, this is to prevent chaining like `lst.sort().reverse()`
+q: remove all elements from a list --- a: `lst.clear()`
+q: `a, b, c` vs `(a, b, c) ` --- a: exactly the same, it is actually the comma which makes a tuple, not the parentheses, which are useful to avoid ambiguity, e.g., `f(a, b)` is different from `f( (a, b) )`
+q: unpack `[1, [2, 3]]` into three variables --- a: `a, (b, c) = [1, [2, 3]]`
 
-## list comprehensions
+## slicing
 
 ``` python
-[(x,y) for x in range(2) for y in range(3)]
+a = [0, 1, 2, 3, 4, 5, 6, 7]
+b = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+a[::2] = b[::2]
+a == ['a', 1, 'c', 3, 'e', 5, 'g', 7]
 ```
 
-q: multidimensional list comprehension --- a: `[(x,y) for x in ... for y in ...]`
+q: get a sublist of a list including elements from second to fifth --- a: `a_list[1:6]`
+q: get a sublist of a list including elements from second to the one before last --- a: `a_list[1:-1]`
+q: get a sublist of a list including elements from third to last --- a: `a_list[2:]`
+q: get a sublist of a list including elements from first to third --- a: `a_list[:3]`
+q: replace every nth element of a list with elements from another list --- a:`lst[::n] = another_list`, assuming `len(another_list) == len(lst[::n])`
+q: replace every nth element of a list with a value `t` --- a:`lst[::n] = t`
+
+q: get a shallow copy of a list using slicing --- a: `a_list[:]`
+q: what is a shallow copy? --- TODO
+q: what does mean `a_list[:]`? --- a: same as `a_list.copy()`, which is shallow copy
 
 
 
-
-## iterators
 
 ## itertools module
 
@@ -259,12 +228,15 @@ lst = [('USA', 'LA'), ('Russia', 'Moscow'), ('USA', 'NY'), ('Russia', 'St. Peter
 [(k, list(g)) 
    for k, g in 
    itertools.groupby( sorted(lst), key = lambda x: x[0] )]
-## [('England', [('England', 'London')]), ('Russia', [('Russia', 'Moscow'), ('Russia', 'St. Petersburg')]), ('USA', [('USA', 'LA'), ('USA', 'NY')])]
+             ## [('England', [('England', 'London')]), ('Russia', [('Russia', 'Moscow'), ('Russia', 'St. Petersburg')]), ('USA', [('USA', 'LA'), ('USA', 'NY')])]
 
 [(k, [j for i,j in g]) 
    for k, g in 
    itertools.groupby( sorted(lst), key = lambda x: x[0] )]
-## [('England', ['London']), ('Russia', ['Moscow', 'St. Petersburg']), ('USA', ['LA', 'NY'])]
+             ## [('England', ['London']), ('Russia', ['Moscow', 'St. Petersburg']), ('USA', ['LA', 'NY'])]
+
+
+
 ```
 
 product
@@ -318,19 +290,40 @@ q: how to initialize a `collections.OrderedDict()` with some content --- a: `Ord
 
 
 
+
+# tuples
+
+q: tuples vs lists --- a: tuples are immutable lists, they have no methods to change them
+q: create a tuple of one element --- `(1,)`
+q: create an empty tuple --- `()`
+
 # dicts
 
-q: get list of keys of a dict --- a: `a_dict.keys()`
-q: get iterate over keys in a dict --- a: `for k in a_dict: ...`
-q: get iterate over key-value pairs in a dict --- a: `for k,v in a_dict.items(): ...`
+interesting thing: `d[k]` raises `ValueError` when the `k` is not in the dict, while `d[k] = 'whatever'`  sets the new value
+
+``` python
+d = {}
+d[1]   # raises ValueError 
+d[1] = 'whatever'   # sets the value
+```
+q: get number of key-value pairs in a dictionary --- a: `len(d)`
+q: create a dictionary --- a: `d = {}` or `d = { 1: 'a', 2: 'b'}`
+q: get a value from dict by a key --- a: `d['the key']` or `d.get('whatever', default='zero')`
+
+
+q: get list of keys of a dict --- a: `list(a_dict.keys())`, the `.keys()` returns a view of the dict's keys
+q: iterate over keys in a dict --- a: `for k in a_dict: ...`, everything is done here implicitly
+q: iterate over key-value pairs in a dict --- a: `for k,v in a_dict.items(): ...`
 q: check if a key exists in a dict --- a: `if k in a_dict: ...`
+q: check if a key doesn't exist in a dict --- a: `if k not in a_dict: ...`
 q: get a value for key in a dict, or default --- a: `d.get(k, default=0)`
+q: set a value for key in a dict --- a: `d['whatever'] = 1`
 q: `a_dict[k]` vs `a_dict.get(k)` --- a: the latter never raises `KeyError`, returns `None` or provided default value `a_dict.get(k, default=0)`
 
 
 # sets
 
-q: create a set --- a: empty set is created like `a_set = set()`, non-empty is `a_set = {1, 2, 3}`
+q: create a set --- a: empty set is created like `a_set = set()`, not `{}`; non-empty is `a_set = {1, 2, 3}`
 q: create an empty set --- a: `a_set = set()`, not `{}`, because the latter is an empty dict
 q: create a set from a given list --- a: `a_set = set([1, 2, 3])`
 q: add an element to a set --- a: `a_set.add(e)`
@@ -345,6 +338,18 @@ q: check if a set is a subset or superset of another set --- a: `a_set.issubset(
 q: check if two sets intersect --- a: `a_set.isdisjoint(another_set)`
 q: check if an element is in the set, and vice versa --- a: `elt in a_set` and `elt not in a_set`
 
+
+
+# comprehensions
+
+``` python
+[(x,y) for x in range(2) for y in range(3)]
+```
+
+q: write multidimensional list comprehension --- a: `[(x,y) for x in ... for y in ...]`
+q: write a list comprehension for getting squares of odd numbers from 1 to 8 --- a: `[x**2 for x in range(1, 9) if x%2==1]`
+q: write a dictionary comprehension
+q: write a set comprehension
 
 # strings
 
@@ -405,7 +410,7 @@ math.log(100.0, 10) == 2.0
 math.sqrt(25.0) == 5.0
 ```
 
-TODO: q:
+TODO: all these funcs
 
 ## complex numbers
 
@@ -549,17 +554,123 @@ q: merge two lists into a list of pairs --- a: `zip('abcd', [1,2,3,4])`
 [property](https://docs.python.org/3/library/functions.html#property)
 [super](https://docs.python.org/3/library/functions.html#super)
 
-q: classmethod vs staticmethod, a: http://stackoverflow.com/questions/12179271/python-classmethod-and-staticmethod-for-beginner/12179752#12179752
+q: classmethod vs staticmethod, a: <http://stackoverflow.com/questions/12179271/python-classmethod-and-staticmethod-for-beginner/12179752#12179752>
 
-# code evaluation
 
-[compile](https://docs.python.org/3/library/functions.html#compile)
-[eval](https://docs.python.org/3/library/functions.html#eval)
-[exec](https://docs.python.org/3/library/functions.html#exec)
 
-http://stackoverflow.com/questions/2220699/whats-the-difference-between-eval-exec-and-compile-in-python
 
-# introspection
+# deques
+
+q: in which module the deque is? --- a: `collections`
+
+q: add elements to the left and to the right sides of a deck --- a: `dq.appendleft(e)` and `dq.append(e)`, or `dq.extendleft(lst)` and `dq.extend(lst)` 
+q: pop elements from the left and from the right of a deque --- a: `dq.popleft()` and `dq.pop()`
+
+
+
+`lst.index(e)` raises `ValueError` when `e` is not in the list, because a value like `-1` could lead to obscure bugs
+TODO: are these same for lists?
+q: what happens when `a_deque.index(x)` doesn't find the element? --- raises `ValueError`
+q: get position of an element in a deque between given start and end positions --- a: `dq.index(e, start, end)`, raises `ValueError`
+q: get position of an element in a deque --- a: `dq.index(e)`, raises `ValueError`
+q: get number of occurrences of an element in a deque --- a: `dq.count(e)`
+q: insert an element into a deque at a position --- a: `dq.insert(i, e)`
+
+q: delete an element from a list at a given position --- a: `del lst[3]`, same as `s[3:4] = []`
+q: delete the first occurrence of a value in a list --- a: `lst.remove('a')`
+q: delete all occurrences of a value in a list --- a: `a[:] = [e for e in lst when e!=value]`, keep `[:]` if you want it in-place
+q: get and remove an item at the end of a list --- a: `lst.pop()`
+q: get and remove an item at the given position in a list --- a: `lst.pop(position)`
+
+TODO: what are deques useful for?
+
+
+# date and time
+
+q: convert a string like `17.04.1975 14:35` to a datetime --- a: `from datetime import datetime; datetime.strptime(s, '%d.%m.%Y %H:%M')`
+q: get difference in seconds between two datetimes --- a: `abs(dt2 - dt1).total_seconds()`, this is equivalent to `diff.seconds + diff.days * 86400`
+
+
+
+# misc
+[bool](https://docs.python.org/3/library/functions.html#bool)
+[object](https://docs.python.org/3/library/functions.html#object)
+[id](https://docs.python.org/3/library/functions.html#id)
+[hash](https://docs.python.org/3/library/functions.html#hash)
+
+q: how to assign an attribute to the built-in object class? a: prohibited, intentionally --- <http://stackoverflow.com/questions/5741699/attribute-assignment-to-built-in-object/22103924#22103924>, <http://stackoverflow.com/questions/1529002/cant-set-attributes-of-object-class/1529099#1529099>
+
+q: what does `@something('whatever') def myfunc()` mean? --- a: this is called pie syntax for decorators, this is a fancy way of doing this: `def myfunc(): pass; myfunc = something('whatever')(myfunc)` 
+q: what is a decorator? --- a: it's a function that gets a function and returns it decorated 
+
+
+q: what is `None == None`? --- a: `True`
+q: what is `None == 0`? --- a: `False`
+q: what is `None == ''`? --- a: `False`
+q: what is `None == False`? --- a: `False`
+q: what if we compare `None` to something? --- a: `None == None` is `True`, while comparing to anything else is `False`
+
+
+
+<https://www.quora.com/What-are-good-Python-interview-questions>
+<http://www.ilian.io/python-interview-question-and-answers/>
+<http://career.guru99.com/top-25-python-interview-questions/>
+
+<http://www.tutorialspoint.com/python/python_interview_questions.htm>
+
+
+
+q: declare main() in python --- a: `if __name__ == '__main__': ...`
+
+TODO: how to measure time
+$ python -m timeit "'somestring'.find('str', 2, 9)"
+$ python -m timeit "'somestring'[2:9].find('str')"
+
+q: write a lambda function --- a: `lambda x: x**2`
+
+TODO: shallow and deep copies
+
+q: how to get an integer `111...1` of lenght `n` without using string operations? --- a: `10**n//9`
+q: how to get a palindrome number like `123454321` up to `9` in the middle? --- a: `111..11` to the power of `2`
+
+
+TODO: add questions like this: in which module the `deque` is?
+
+TODO: __slots__
+
+
+## skipped hackerrank challenges
+
+sets
+<https://www.hackerrank.com/challenges/no-idea>
+<https://www.hackerrank.com/challenges/py-the-captains-room>
+
+math
+<https://www.hackerrank.com/challenges/find-angle> --- python 3 is disabled
+
+collections
+<https://www.hackerrank.com/challenges/piling-up> --- deque
+
+classes
+<https://www.hackerrank.com/challenges/class-1-dealing-with-complex-numbers>
+<https://www.hackerrank.com/challenges/class-2-find-the-torsional-angle>
+
+functional
+<https://www.hackerrank.com/challenges/validate-list-of-email-address-with-filter>
+
+regex
+all
+
+xml
+all
+
+closures
+<https://www.hackerrank.com/challenges/decorators-2-name-directory>
+
+
+
+
+## introspection
 
 [dir](https://docs.python.org/3/library/functions.html#dir)
 [vars](https://docs.python.org/3/library/functions.html#vars)
@@ -572,49 +683,19 @@ http://stackoverflow.com/questions/2220699/whats-the-difference-between-eval-exe
 [callable](https://docs.python.org/3/library/functions.html#callable)
 [help](https://docs.python.org/3/library/functions.html#help)
 
-q: dir() vs vars(...).keys() a: http://stackoverflow.com/questions/980249/difference-between-dir-and-vars-keys-in-python
-
-# misc
-[bool](https://docs.python.org/3/library/functions.html#bool)
-[object](https://docs.python.org/3/library/functions.html#object)
-[id](https://docs.python.org/3/library/functions.html#id)
-[hash](https://docs.python.org/3/library/functions.html#hash)
-
-q: how to assign an attribute to the built-in object class? a: prohibited, intentionally --- http://stackoverflow.com/questions/5741699/attribute-assignment-to-built-in-object/22103924#22103924, http://stackoverflow.com/questions/1529002/cant-set-attributes-of-object-class/1529099#1529099
+q: dir() vs vars(...).keys() a: <http://stackoverflow.com/questions/980249/difference-between-dir-and-vars-keys-in-python>
+q: check the import search path --- a: `sys.path`
 
 
 
 
+## code evaluation
 
+[compile](https://docs.python.org/3/library/functions.html#compile)
+[eval](https://docs.python.org/3/library/functions.html#eval)
+[exec](https://docs.python.org/3/library/functions.html#exec)
 
-
-
-
-
-
-
-# deques
-
-q: in which module the deque is? --- a: `collections`
-q: add elements to the left and to the right sides of a deck --- a: `dq.appendleft(e)` and `dq.append(e)`, or `dq.extendleft(lst)` and `dq.extend(lst)` 
-q: insert an element into a deque at a position --- a: `dq.insert(i, e)`
-q: pop elements from the left and from the right of a deque --- a: `dq.popleft()` and `dq.pop()`
-
-are these same for lists?
-q: what happens when `a_deque.index(x)` doesn't find the element? --- raises `ValueError`
-q: get position of an element in a deque between given start and end positions --- a: `dq.index(e, start, end)`, raises `ValueError`
-q: get position of an element in a deque --- a: `dq.index(e)`, raises `ValueError`
-q: get number of occurrences of an element in a deque --- a: `dq.count(e)`
-
-
-TODO: what are deques useful for?
-
-# date and time
-
-q: convert a string like `17.04.1975 14:35` to a datetime --- a: `from datetime import datetime; datetime.strptime(s, '%d.%m.%Y %H:%M')`
-q: get difference in seconds between two datetimes --- a: `abs(dt2 - dt1).total_seconds()`, this is equivalent to `diff.seconds + diff.days * 86400`
-
-
+<http://stackoverflow.com/questions/2220699/whats-the-difference-between-eval-exec-and-compile-in-python>
 
 
 # numpy
@@ -625,12 +706,32 @@ q: get difference in seconds between two datetimes --- a: `abs(dt2 - dt1).total_
 
 TODO: `numpy.array()` vs `numpy.asarray`
 
+``` python
+import numpy
 
+print(numpy.array(['1', '2'], dtype=float))
+```
+q: numpy arrays vs python lists --- TODO
 q: get a numpy array of floats from list of integers --- a: `numpy.array( [1, 2, 3], dtype=float )`
 q: get a numpy array of floats from input --- a: `numpy.array( input().split(), dtype=float )`
 q: `numpy.array` vs `numpy.ndarray` --- a: `array()` is a function that returns n-dimensional array `ndarray`, the latter shouldn't be used directly
 q: `numpy.array` vs `numpy.matrix` --- a: unless you are heavily into linear algebra and want pretty matrix operations, stick with arrays
 q: convert a 1x6 numpy array to 3x2 --- a: `numpy.reshape(numpy.array([1, 2, 3, 4, 5, 6]), (3, 2))`
 q: what does `-1` mean in `numpy.reshape(a, (3, -1))`? --- a: it means the value is inferred from remaining dimensions
+q: transpose a numpy array --- a: `numpy.transpose(a_numpy_array)`
+q: convert a numpy array from _n_-dimensional to _1_-dimensional --- a: `a_numpy_array.flatten()`
+q: get a numpy array of zeros 3x3x4 --- a: `numpy.zeros((3, 3, 4), dtype=float)`
+q: get a numpy array of ones 3x3x4 --- a: `numpy.ones((3, 3, 4), dtype=float)`
+q: get a numpy nxn array with ones on the main diagonal --- a: `numpy.identity(n)`
+q: get a numpy nxm array with ones on the diagonal below the main one --- a: `numpy.eye(n, m, k=-1)`
+q: get an element-wise sum, substraction, multiplication, division, floor, ceil, etc of two numpy arrays
+q: get a sum, max, mean, etc of a numpy array along a given axis --- a: `numpy.sum(an_array, axis=0)`
+q: get a value of a polynomial with given coefficients at point `x` --- a: numpy.polynomials.polyval(x, [3, 2, 1])
+
+
+
+
+
+
 
 

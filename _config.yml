@@ -11,8 +11,8 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://koddo.github.io" # the base hostname & protocol for your site
 
 # email: your-email@domain.com
-# twitter_username: jekyllrb
-# github_username:  jekyll
+twitter_username: introstatic
+github_username:  koddo
 
 # Build settings
 markdown: kramdown
@@ -34,6 +34,7 @@ exclude:
     - Dockerfile
     - Guardfile
     - _config_livereload.yml
+    - notebooks
 
 tag_page_layout: tag_page
 tag_page_dir: tag
@@ -52,6 +53,6 @@ permalink: /blog/:title
 collections:
   ryctoic:
     output: true
-    title: "Ryctoic drafts"
+    title: "Ryctoic"
 
     

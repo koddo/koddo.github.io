@@ -41,7 +41,7 @@ $ ssh -t alex@debian.local "cd ~/mnt/koddo.github.io && ./jekyll-livereload.sh"
 
 # misc
 
-setup:
+## setup
 
 disqus
 mathjax
@@ -55,6 +55,7 @@ my customizations:
 collection index with links to collection pages
 collection page with a link to index
 site map
+
 
 
 TODO: tag_page, tag_feed layout

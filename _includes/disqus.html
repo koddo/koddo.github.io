@@ -1,8 +1,10 @@
 <div id="disqus_thread"></div>
-<input type="button" id="btn_show_disqus" value="Any comments?" />
+<div class="button-wrapper">
+    <input type="button" id="btn_show_disqus" value="Any comments?" />
+</div>
 {% if false %}
-<!-- https://help.disqus.com/customer/portal/articles/565624-adding-comment-count-links-to-your-home-page -->
-<span id="comments_count" class="disqus-comment-count" data-disqus-identifier="{{ page.disqus_identifier }}">this will be replaced with the comments count</span>
+  <!-- https://help.disqus.com/customer/portal/articles/565624-adding-comment-count-links-to-your-home-page -->
+  <span id="comments_count" class="disqus-comment-count" data-disqus-identifier="{{ page.disqus_identifier }}">this will be replaced with the comments count</span>
 {% endif %}
 <script>
  var disqus_config = function () {

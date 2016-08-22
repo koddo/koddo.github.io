@@ -1,12 +1,10 @@
 ---
-title:   "The English Language"
+title:   "English Language"
 layout:  collection_page
 
 ---
 
-# misc
-
-## which vs that
+# which vs that
 
 The classrooms [that were painted over the summer] are bright and cheerful.
 The classrooms, [which were painted over the summer], are bright and cheerful. 
@@ -16,7 +14,7 @@ We call the adjective clauses restrictive because they restrict--or limit--the m
 <http://www.getitwriteonline.com/archive/103103whichthat.htm>
 <http://www.quickanddirtytips.com/education/grammar/which-versus-that-0>
 
-q: which vs that --- a: for restrictive clauses both are fine, for non-restrictive clauses, when you can remove from the sentence, use "which" with surrounding commas, e.g., "The classrooms that were painted over the summer are bright and cheerful." vs "The classrooms, which were painted over the summer, are bright and cheerful."
+q: which vs that --- a: for restrictive clauses both are fine, for non-restrictive clauses, when you can remove them from the sentence without changing the meaning, use "which" with surrounding commas, e.g., "The classrooms that were painted over the summer are bright and cheerful." vs "The classrooms, which were painted over the summer, are bright and cheerful."
 
 
 

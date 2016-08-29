@@ -8,7 +8,7 @@ layout:  collection_page
 {:toc}
 
 
-# true, false, and comparison in python
+# true, false, and comparisons
 
 ``` python
 if () or [] or {} or None:
@@ -55,16 +55,37 @@ behavior of the `is` and `is not` operators cannot be customized; also they can 
 
 <br/>
 
+generally you only want to be using `is` with mutable objects (or None, which is the exception)
+`x is None` vs `x == None`: [PEP 8](https://www.python.org/dev/peps/pep-0008/#programming-recommendations)
+> Comparisons to singletons like None should always be done with is or is not , never the equality operators. 
+
+
+<http://stackoverflow.com/questions/9494404/use-of-true-false-and-none-as-return-values-in-python-functions>
 
 <div class="ryctoic-questions" markdown="1">
-- q: what values are considered false in python? --- a: `False`, `None`, any numeric zero, empty sequence, empty map, instance with `__bool__()` returning False or `__len__()` returning zero
-- q: `not a == b` vs `not (a == b)` vs `b == not a` --- a: not has a lower priority than non-Boolean operators, so `not a == b` is interpreted as `not (a == b)`, and `b == not a` is a syntax error
-- q: `if False and whatever(): 'this line is skipped'`
+deck:
+python --- true, false, and comparisons
+
+{% comment %}
+- q: What values are considered false in python? --- a: `False`, `None`, any numeric zero, empty sequence, empty dict, instance with `__bool__()` returning False or `__len__()` returning zero
+- q: `not a == b` vs `not (a == b)` vs `b == not a` --- a: `not` has a lower priority than non-boolean operators, so `not a == b` is interpreted as `not (a == b)`, and `b == not a` is a syntax error
+- q: short-circuiting behavior of boolean operators --- a: `if False and whatever(): 'this line is skipped, whatever() is not evaluated'`
 - q: `x < y <= z` vs `x < y and y <= z` --- a: `x < y <= z` is equivalent to `x < y and y <= z`, except `y` is evaluated only once, and in both cases `z` is not evaluated at all when `x < y` is found to be false
-- q: what are comparison operators? --- a: `==`, `!=`, `<`, `>`, `<=`, `>=`, `is`, `is not`
-- q: when are two objects of different types compare equal? --- a: objects of different _built-in_ types never compare equal (except different numeric types), but we can define an object with `__eq__`
-- q: what happens when you compare different types? `'a' == 1` and `'abc' > 10` a: the former is false, the latter raises `TypeError` exception
-- q: how to customize behavior of `is` and `is not`? --- a: behavior of the `is` and `is not` operators cannot be customized; also they can be applied to any two objects and never raise an exception
+- q: What are equal and not equal operators? --- a: `==`, `!=`, the `<>` was removed
+- q: What are less, more, less or equal, more or equal operators? --- a: `<`, `>`, `<=`, `>=`
+- q: How to test for object identity? --- a: `is`, `is not`
+- q: How to customize behavior of `is` and `is not`? --- a: Behavior of the `is` and `is not` operators cannot be customized.
+- q: What objects can be tested for identity with the `is` ans `is not` operators? --- a: The `is` and `is not` operators can be applied to any two objects and never raise an exception.
+- q: When does the `is` operator throw an exception? --- a: The `is` and `is not` operators can be applied to any two objects and never raise an exception.
+- q: `if x` vs `if x == True` vs `if x is True` --- a: Use `if x`; and in extremely rare cases when you really want to explicitly distinguish if `x` is, for example, not `1`, not `[]`, but boolean `True`, check it with `x == True and type(x) is bool`; don't use `x is True`, it will fail in some obscure cases, because `bool` is subclass of `int`.
+- q: `if not x` vs `x is None` vs `x == None` --- a: Use the `if not x`; and in cases when you really want to explicitly distinguish `None` and other false values, use `x is None`; don't use `x == None`, because PEP 8.
+- q: `x is y` vs `id(x) == id(y)` --- a: Use the former. Don't use `id(x) == id(y)`, because id of an object in CPython being the location in memory is an implementation detail, this may change.
+{% endcomment %}
+
+TODO:
+
+- q: When are two objects of different types compare equal? --- a: objects of different _built-in_ types never compare equal (except different numeric types), but we can define an object with `__eq__`
+- q: What happens when you compare different types? `'a' == 1` and `'abc' > 10` a: the former is false, the latter raises `TypeError` exception
 </div>
 
 <br />
@@ -74,14 +95,16 @@ behavior of the `is` and `is not` operators cannot be customized; also they can 
 
 function annotations: <https://github.com/kennknowles/python-rightarrow>
 
-q: define a function with an optional argument --- a:?
-q: define a function with a docstring --- a:?
-q: define a function with a keyword-only arguments --- a: `def foo(*, arg1=10, arg2=20): ...`
-q: define a function with an arbitraty argument list --- a: `def concat(*args, sep="/"): return sep.join(args)`
-q: define a function with keyword arguments --- a: `def foo(**kwargs): print(kwargs)`, then call it like this: `foo(a=1, b=2)`, this will print `{'a': 1, 'b': 2}`
-q: pass a list of arguments to a function with an arbitrary argument list --- a: given a function `def foo(*args): ...`, unpack the list `foo(*lst)`
-q: pass a dictionary of arguments to a function with keyword arguments --- a: given a function `def foo(**kwargs): ...`, unpack the dict `foo(**dct)`
-q: define a function with function annotations --- a: `def a_func(a_dict: '{str: int}') -> '[str]': print(a_func.__annotations__); ...`
+<div class="ryctoic-questions" markdown="1">
+- q: define a function with an optional argument --- a:?
+- q: define a function with a docstring --- a:?
+- q: define a function with a keyword-only arguments --- a: `def foo(*, arg1=10, arg2=20): ...`
+- q: define a function with an arbitraty argument list --- a: `def concat(*args, sep="/"): return sep.join(args)`
+- q: define a function with keyword arguments --- a: `def foo(**kwargs): print(kwargs)`, then call it like this: `foo(a=1, b=2)`, this will print `{'a': 1, 'b': 2}`
+- q: pass a list of arguments to a function with an arbitrary argument list --- a: given a function `def foo(*args): ...`, unpack the list `foo(*lst)`
+- q: pass a dictionary of arguments to a function with keyword arguments --- a: given a function `def foo(**kwargs): ...`, unpack the dict `foo(**dct)`
+- q: define a function with function annotations --- a: `def a_func(a_dict: '{str: int}') -> '[str]': print(a_func.__annotations__); ...`
+</div>
 
 TODO: new type hinting
 
@@ -89,8 +112,9 @@ TODO: new type hinting
 
 TODO
 
-q: catch multiple exceptions in one except block --- a: `except (IDontLIkeYouException, YouAreBeingMeanException) as e: ...`
-
+<div class="ryctoic-questions" markdown="1">
+- q: catch multiple exceptions in one except block --- a: `except (IDontLIkeYouException, YouAreBeingMeanException) as e: ...`
+</div>
 
 
 # input
@@ -103,12 +127,13 @@ q: catch multiple exceptions in one except block --- a: `except (IDontLIkeYouExc
 int( input().strip() )
 ```
 
-q: `input()` vs `raw_input()`
-q: get a string from input
-q: get an integer from input
-q: get a float from input
-q: get a fraction from input
-
+<div class="ryctoic-questions" markdown="1">
+- q: `input()` vs `raw_input()`
+- q: get a string from input
+- q: get an integer from input
+- q: get a float from input
+- q: get a fraction from input
+</div>
 
 # conditionals
 
@@ -128,8 +153,10 @@ else:
 }.get(x, 9)
 ```
 
-q: write an if-then-else --- a:?
-q: write a switch/case --- a: python doesn't have this, but we can have an if/elif chain or dict-based dispatch, but those do not support fall through, and this can be good or bad, depends on the point of view and problems you solve 
+<div class="ryctoic-questions" markdown="1">
+- q: write an if-then-else --- a:?
+- q: write a switch/case --- a: python doesn't have this, but we can have an if/elif chain or dict-based dispatch, but those do not support fall through, and this can be good or bad, depends on the point of view and problems you solve 
+</div>
 
 # loops
 
@@ -149,14 +176,17 @@ while i < 100000000:
 <http://stackoverflow.com/questions/869229/why-is-looping-over-range-in-python-faster-than-using-a-while-loop>
 
 TODO: range
-q: `range` vs `xrange`
-q: write a for loop from 0 to n --- a: `for i in range(n): ...`
-q: get a range with a step --- a: `range(start, end, step)`
-q: get a range going backwards --- a: `range(99, 0)`
-q: get a range from `0` to `-10` with a step `2` --- a: `range(0, -10, -2)`
-q: get a range from `99` to `0` with a step `2` --- a: `range(99, 0, -2)`
-q: check if any element in list satisfies some condition --- a: `any(l == 'x' for l in a_string)`
-q: `for i in range(10**10): ...` vs `i=0; while i < 10**10: i+=1; ...;`? --- a: the former is faster, code for `range()` is optimized, `i+=1` is interpreted
+
+<div class="ryctoic-questions" markdown="1">
+- q: `range` vs `xrange`
+- q: write a for loop from 0 to n --- a: `for i in range(n): ...`
+- q: get a range with a step --- a: `range(start, end, step)`
+- q: get a range going backwards --- a: `range(99, 0)`
+- q: get a range from `0` to `-10` with a step `2` --- a: `range(0, -10, -2)`
+- q: get a range from `99` to `0` with a step `2` --- a: `range(99, 0, -2)`
+- q: check if any element in list satisfies some condition --- a: `any(l == 'x' for l in a_string)`
+- q: `for i in range(10**10): ...` vs `i=0; while i < 10**10: i+=1; ...;`? --- a: the former is faster, code for `range()` is optimized, `i+=1` is interpreted
+</div>
 
 # lists
 
@@ -176,26 +206,27 @@ sorted(lst)
 
 pre-allocating a list benchmark: <http://stackoverflow.com/questions/22225666/pre-allocating-a-list-of-none>
 
-q: `sorted(l)` vs `l.sort()` --- a: `l.sort()` is destructive and, therefore, a bit faster
-q: sort in descending order --- a: `sorted(l, reverse=True)` or `l.sort(reverse=True)`
-q: get a list in reversed order --- a: `reversed(lst)` or `lst.reverse()` or `lst[::-1]`
-q: sort by multiple criteria --- a: sorting is stable, so sort twice, or sort by tuples `sorted(lst, key = lambda x: (-x[1], x[0]))`, or `sorted(lst, key = operator.itemgetter(1, 2))`
-
 TODO: destructive and non-destructive insert, remove, append, extend, sort, pop
 
-q: pre-allocate a list of size `n` with a default value --- a: `lst = [None] * n` or `lst = [0] * n` with default value `0`, but try appending or list comprehension instead
-q: pre-allocation of a list vs appending elements vs list comprehension --- a: pre-allocation is useful when elements you fill the list with come out of order, appending has complexity of `O(1)`, so no difference with list comprehension (unless you try to optimize, measure it yourself then) 
 
-q: add an element to the end of a list --- a: `lst.append(e)`
-q: concatenate two lists --- a: `lst1 + [1, 2]`
-q: `lst1+lst2` vs `lst1.extend(lst2)` vs `lst1 += lst2` --- a: `.extend()` and `+=` are destructive, there is virtually no difference in performance; `.extend()` accepts any iterable, can do chaining like `getlst1().extend(lst2)`
-q: add an element to a list, not at the end, but at a given position --- a: `lst.insert(pos, value)`, same as `lst[pos:pos] = [value]`
-q: what does mean `lst[i:i] = [v]`? --- a: same as `lst.insert(i, v)`
-q: `lst.append()` vs `lst.extend()` --- a: `.append(e)` appends an element, `.extend(l)` extends the list with elements from an iterable
-q: what does `lst.sort()` return? --- a: `None`, this is to prevent chaining like `lst.sort().reverse()`
-q: remove all elements from a list --- a: `lst.clear()`
-q: `a, b, c` vs `(a, b, c) ` --- a: exactly the same, it is actually the comma which makes a tuple, not the parentheses, which are useful to avoid ambiguity, e.g., `f(a, b)` is different from `f( (a, b) )`
-q: unpack `[1, [2, 3]]` into three variables --- a: `a, (b, c) = [1, [2, 3]]`
+<div class="ryctoic-questions" markdown="1">
+- q: `sorted(l)` vs `l.sort()` --- a: `l.sort()` is destructive and, therefore, a bit faster
+- q: sort in descending order --- a: `sorted(l, reverse=True)` or `l.sort(reverse=True)`
+- q: get a list in reversed order --- a: `reversed(lst)` or `lst.reverse()` or `lst[::-1]`
+- q: sort by multiple criteria --- a: sorting is stable, so sort twice, or sort by tuples `sorted(lst, key = lambda x: (-x[1], x[0]))`, or `sorted(lst, key = operator.itemgetter(1, 2))`
+- q: pre-allocate a list of size `n` with a default value --- a: `lst = [None] * n` or `lst = [0] * n` with default value `0`, but try appending or list comprehension instead
+- q: pre-allocation of a list vs appending elements vs list comprehension --- a: pre-allocation is useful when elements you fill the list with come out of order, appending has complexity of `O(1)`, so no difference with list comprehension (unless you try to optimize, measure it yourself then) 
+- q: add an element to the end of a list --- a: `lst.append(e)`
+- q: concatenate two lists --- a: `lst1 + [1, 2]`
+- q: `lst1+lst2` vs `lst1.extend(lst2)` vs `lst1 += lst2` --- a: `.extend()` and `+=` are destructive, there is virtually no difference in performance; `.extend()` accepts any iterable, can do chaining like `getlst1().extend(lst2)`
+- q: add an element to a list, not at the end, but at a given position --- a: `lst.insert(pos, value)`, same as `lst[pos:pos] = [value]`
+- q: what does mean `lst[i:i] = [v]`? --- a: same as `lst.insert(i, v)`
+- q: `lst.append()` vs `lst.extend()` --- a: `.append(e)` appends an element, `.extend(l)` extends the list with elements from an iterable
+- q: what does `lst.sort()` return? --- a: `None`, this is to prevent chaining like `lst.sort().reverse()`
+- q: remove all elements from a list --- a: `lst.clear()`
+- q: `a, b, c` vs `(a, b, c) ` --- a: exactly the same, it is actually the comma which makes a tuple, not the parentheses, which are useful to avoid ambiguity, e.g., `f(a, b)` is different from `f( (a, b) )`
+- q: unpack `[1, [2, 3]]` into three variables --- a: `a, (b, c) = [1, [2, 3]]`
+</div>
 
 ## slicing
 
@@ -592,6 +623,19 @@ q: get difference in seconds between two datetimes --- a: `abs(dt2 - dt1).total_
 
 
 
+# files and dirs
+
+- q: get current working directory --- a: `os.getcwd()`
+- q: change current working directory --- a: `os.chdir('/usr/bin')`
+- q: join `dirname`, `subdirname` and `filename` --- a: `os.path.join(dirname, subdirname, filename)`
+- q: expand `~` --- a: `os.path.expanduser('~')`
+- q: split absolute path into `dirname` and `filename` --- a: `dirname, filename = os.path.split(abspath)`
+- q: split a `filename` into `name` and `extension` --- a: `name, extension = os.path.splittext(filename)`
+- q: get a list of filenames matching a wildcard --- a: `import glob; glob.glob('/var/log/*sys*')`
+- q: get absolute path of a given file by relative path --- a: `os.path.realpath('python.md')`
+- q: get metadata of a file and get modification time and size --- a: `metadata = os.stat('python.md'); time.localtime(metadata.st_mtime); import humanize; humansize.approximate_size(metadata.st_size)`
+
+
 # misc
 [bool](https://docs.python.org/3/library/functions.html#bool)
 [object](https://docs.python.org/3/library/functions.html#object)
@@ -700,9 +744,12 @@ q: check the import search path --- a: `sys.path`
 
 # numpy
 
-[`numpy.array()`](http://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html)
-[`numpy.array()` vs `numpy.asarray()`](http://stackoverflow.com/questions/14415741/numpy-array-vs-asarray)
-[numpy arrays vs matrices](https://docs.scipy.org/doc/numpy-dev/user/numpy-for-matlab-users.html#array-or-matrix-which-should-i-use)
+`numpy.array()`: <http://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html>
+`numpy.array()` vs `numpy.asarray()`: <http://stackoverflow.com/questions/14415741/numpy-array-vs-asarray>
+numpy arrays vs matrices: <https://docs.scipy.org/doc/numpy-dev/user/numpy-for-matlab-users.html#array-or-matrix-which-should-i-use>
+array cheatsheet: <http://pages.physics.cornell.edu/~myers/teaching/ComputationalMethods/python/arrays.html>
+
+<http://www.scipy-lectures.org/intro/intro.html>
 
 TODO: `numpy.array()` vs `numpy.asarray`
 

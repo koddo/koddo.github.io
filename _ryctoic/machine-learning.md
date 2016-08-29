@@ -73,3 +73,9 @@ impurity of split
 
 
 ## missing values
+
+# svm
+
+> Why someone would call an algorithm a machine? I have no clue, it was invented by a russian.
+> 
+> --- Sebastian Thrun, <cite><a href="https://www.youtube.com/watch?v=mzKPXz-Yhwk&index=68&list=PLAwxTw4SYaPkQXg8TkVdIvYv4HfLG7SiH">Intro to Machine Learning</a></cite>

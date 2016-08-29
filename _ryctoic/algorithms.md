@@ -160,7 +160,14 @@ invert binary tree, yes
 Алгоритмы и структуры данных в ядре Linux, Chromium --- https://habrahabr.ru/company/wunderfund/blog/277143/
 
 
+# lists
 
+- q: print elements of a linked list
+- q: insert a node at the head of a linked list, return new head
+- q: insert a node at the end of a linked list, return the head
+- q: insert a node at given position of a linked list, return the head
+- q: remove a node at given position of a linked list, return the head
+- q: print a linked list in reverse order
 
 # Trash
 

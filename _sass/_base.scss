@@ -102,6 +102,8 @@ a {
     // color: $brand-color;
     color: $links-color;
     text-decoration: none;
+    border-bottom: 1px solid $grey-color-light;
+
 
     &:visited {
         // color: darken($brand-color, 15%);
@@ -111,11 +113,29 @@ a {
 
     &:hover {
         color: $text-color;
-        text-decoration: underline;
+        // text-decoration: underline;
+        border-bottom: 1px solid $grey-color-dark;
     }
 }
 
+a.site-title,
+a.rss-feed,
+a.page-source-link {
+    // border-bottom: none;
+    border-bottom: 1px solid $background-color;
+}
 
+a.site-title:hover {
+    text-decoration: underline;
+}
+
+a.site-title:focus {
+    text-decoration: none;
+}
+
+a.rss-feed:hover, a.page-source-link:hover {
+    border-bottom: 1px solid $grey-color-dark;
+}
 
 /**
  * Blockquotes
@@ -141,7 +161,8 @@ blockquote {
 pre,
 code {
     font-size: 15px;
-    border: 1px solid $grey-color-light;
+    // border: 1px solid $grey-color-light;
+    border: none;
     border-radius: 3px;
     background-color: #f6f6f6;
 }

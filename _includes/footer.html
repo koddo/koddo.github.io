@@ -34,15 +34,20 @@
                   {% include icon-rss.html %}
               </li>
               {% endif %}
+              {% if true %}
+              <li>
+              </li>
+              {% endif %}
           </ul>
           </div>
       </div>
 
-      <!-- <div class="footer-col footer-col-3"> -->
+      <div class="footer-col footer-col-3">
           <!-- <p>{{ site.description }}</p> -->
           <!-- the icon - code review by Arthur Shlain from the Noun Project - https://thenounproject.com/term/source-code/101170/ -->
           <!-- <a title="page source" href="https://github.com/koddo/koddo.github.io/blob/jekyll-source/{{ page.path }}"><span class="icon icon--source-code">{% include icon-source-code.svg %}</span></a> -->
-      <!-- </div> -->
+          <a class="page-source-link" href="https://github.com/koddo/koddo.github.io/blob/jekyll-source/{{ page.path }}">page source</a>
+      </div>
     </div>
 
 

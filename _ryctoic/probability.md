@@ -49,3 +49,31 @@ TODO: more examples
 - q: \\( P(AB) \ \bigvee \ P(A) + P(B) \\)
 </div>
 
+TODO: check if there are more under these names
+
+# conditional probability
+
+\\[ P(A \, \| \, B) \ = \ \frac{P(AB)}{P(B)} \\]
+
+# independence
+
+Threre are two equivalent definitions:
+
+\\[ P(A \, \| \, B) \ = \ P(A), \  \text{ when } P(B) \neq 0 \\]
+
+\\[ \text{or} \\]
+
+\\[ P(AB) \ = \ P(A) \cdot P(B) \\]
+
+The first one is more intuitive, the second one doesn't have to have a condition.
+
+{: .centered}
+![probability independence](./images/probability_independence.001.svg)
+
+
+<div class="ryctoic-questions" markdown="1">
+- q: Definition of independence. --- a: \\( P(A \, \| \, B) \ = \ P(A) \text{, when } P(B) \neq 0 \\), or equivalent one, \\( P(AB) \ = \ P(A) \cdot P(B) \\)
+- q: independence vs disjointness
+</div>
+
+

@@ -23,3 +23,20 @@
     border:1px solid #000000;
 }
 
+
+a.page-source-link {
+    color: $background-color;
+    float: right;
+    
+    &:active, &:visited {
+        color: $background-color;
+    }
+    &:hover {
+        color: $grey-color;
+    }
+}
+
+
+.centered {
+    text-align: center;
+}

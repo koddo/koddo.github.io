@@ -12,7 +12,8 @@ docker run -it --rm --name=jekyll \
     --config _config.yml,_config_livereload.yml \
     --force_polling   # for macosx
 
-
+# was -p 0.0.0.0:4000:4000 \
+    
 # now we check {% if site.livereload %}
 # we can do this using environment variable
 # JEKYLL_ENV=production jekyll build

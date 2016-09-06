@@ -67,13 +67,48 @@ Threre are two equivalent definitions:
 
 The first one is more intuitive, the second one doesn't have to have a condition.
 
+Don't confuse independence and disjointness!
+
 {: .centered}
-![probability independence](./images/probability_independence.001.svg)
+![probability independence](./images/probability.independence.001.svg)
+
+\\[ P( \\{ {\color{#5599ff}\text{first is 2}} \\}, \\{ {\color{#de8787}\text{second is 3}} \\}) \ = \ \frac{1}{16} \ = \ P(\\{ {\color{#5599ff}\text{first is 2}} \\}) \cdot P(\\{ {\color{#de8787}\text{second is 3}} \\}) \\]
+
+\\[ P( \\{ {\color{#5599ff}\text{first is 2}} \\}, \\{ {\color{#00daae}\text{first is 4}} \\}) \ = 0 \ \neq \ P(\\{ {\color{#5599ff}\text{first is 2}} \\}) \cdot P(\\{ {\color{#00daae}\text{first is 4}} \\}) \\]
+
+\\[ P( \\{ {\color{#5599ff}\text{first is 2}} \\}, \\{ {\color{#dd55ff}\text{sum is 7}} \\}) \ = \ \frac{1}{16} \ = \ P(\\{ {\color{#5599ff}\text{first is 2}} \\}) \cdot P(\\{ {\color{#dd55ff}\text{sum is 7}} \\})\\]
+
+
+## conditional independence
+
+\\[ P(AB \, \| \, C) \ = \ P(A \, \| \, C) \cdot P(B \, \| \, C) \\]
+
+Independence doesn't imply conditional independence.
+
+Here \\( P(AB) = P(A) \cdot P(B) \\), but \\( P(AB \, \| \, C) = 0 \neq P(A \, \| \, C) \cdot P(B \, \| \, C) \\):
+
+{: .centered}
+![conditional independence](./images/probability.conditional_independence.001.svg)
+
+\\[ P \left( \\{ {\color{#5599ff}\text{first is 2}} \\} \\{ {\color{#de8787}\text{second is 3}} \\} \ \middle\vert \ \\{ {\color{#dd55ff}\text{sum is 7}} \\} \right) \ = 0 \ \neq \ \frac{1}{16} \ = \ P(\\{ {\color{#5599ff}\text{first is 2}} \ \| \ \\{ {\color{#dd55ff}\text{sum is 7}} \\}) \cdot P(\\{ {\color{#de8787}\text{second is 3}} \ \| \ \\{ {\color{#dd55ff}\text{sum is 7}} \\}) \\]
+
+Example of _independent_, but _not conditionally independent_. Flipping two coins. \\( A = \\{ \text{1st heads} \\} \\), \\( B = \\{ \text{2nd heads} \\} \\), \\( C = \\{ \text{both are same} \\} \\). \\( A, \ B \\) are independent, but not conditionally independent
+
+Example of _not independent_, but _conditionally independent_. There are two coins: a fair and one with heads on both sides. \\( A = \\{ \text{1st heads} \\} \\), \\( B = \\{ \text{2nd heads} \\} \\), \\( C = \\{ \text{the coin is fair} \\} \\)
+
+{: .centered}
+![_not independent_, but _conditionally independent_](./images/probability.conditional_independence.two-heads-coin.001.svg)
 
 
 <div class="ryctoic-questions" markdown="1">
 - q: Definition of independence. --- a: \\( P(A \, \| \, B) \ = \ P(A) \text{, when } P(B) \neq 0 \\), or equivalent one, \\( P(AB) \ = \ P(A) \cdot P(B) \\)
-- q: independence vs disjointness
+- q: Independence vs disjointness.
+- q: An example of _independent_, but _not conditionally independent_ events.
+- q: An example of _not independent_, but _conditionally independent_ events.
 </div>
+
+
+
+
 
 

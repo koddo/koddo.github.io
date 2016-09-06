@@ -1,5 +1,5 @@
 ---
-title:   "Algorithms"
+title:   "Algorithms and Data Structures"
 layout:  collection_page
 
 ---
@@ -12,6 +12,190 @@ layout:  collection_page
 
 * this line is replaced with the generated table of contents
 {:toc}
+
+# Linked lists
+
+``` python
+class Node(object):
+   def __init__(self, data=None, next_node=None):
+       self.data = data
+       self.next = next_node
+```
+
+``` python
+def MergeSortedLists(headA, headB):
+    if not headA: return headB
+    if not headB: return headA
+    
+    if headA.data < headB.data:
+        headA.next = MergeLists(headA.next, headB)
+        return headA
+    else:
+        headB.next = MergeLists(headA, headB.next)
+        return headB
+```
+
+![merge sorted lists recursively](images/algorithms-and-data-structures.merge_sorted_lists.001.svg)
+
+``` python
+def MergeLists(headA, headB):
+    if not headA: return headB
+    if not headB: return headA
+
+    if not (headA.data < headB.data):
+        headA, headB = headB, headA
+
+    result = headA
+        
+    while headA.next:
+        if headB.data < headA.next.data:
+            headA.next, headB = headB, headA.next
+        headA = headA.next
+ 
+    headA.next = headB
+    return result
+```
+
+![merge sorted lists iteratively](images/algorithms-and-data-structures.merge_sorted_lists.002.svg)
+
+``` python
+# the code assumes the node at position exists
+def GetNodeFromEnd(head, position):
+    result  = head
+    current = head
+    i = 0
+    
+    while current.next:
+        i += 1
+        current = current.next
+        if i > position:
+            result = result.next
+```
+
+``` python
+def RecursiveGetNodeFromEnd(head, position):
+    if not head:
+        return (None, 0)
+    
+    (r, i) = RecursiveGetNode(head.next, position)
+    if i == position:
+        return (head.data, i+1)
+    else:
+        return (r, i+1)
+
+def GetNodeFromEnd(head, position):
+    (r, _) = RecursiveGetNode(head, position)
+    return r
+```
+
+``` python
+def RemoveDuplicates(head):
+    if not head:
+        return None
+
+    current = head
+    
+    while current.next:
+        if current.data == current.next.data:
+            current.next = current.next.next
+        else:
+            current = current.next
+  
+    return head
+```
+
+detecting a loop in a linked list:
+<http://blog.ostermiller.org/find-loop-singly-linked-list>
+<http://k2code.blogspot.ru/2010/04/how-would-you-detect-loop-in-linked.html>
+
+``` python
+def has_cycle(head):
+    if not head or not head.next:
+        return False
+    
+    current = head
+    prev = None
+    
+    while current.next:
+        current.next, next, prev = prev, current.next, current
+        
+    return current is head
+```
+
+``` python
+def has_cycle(head):
+    if not head:
+        return False
+    
+    tortoise = hare = head
+    
+    while hare.next and hare.next.next:
+        tortoise = tortoise.next
+        hare = hare.next.next
+        if tortoise is hare:
+            return True
+
+    return False
+```
+
+{: .centered}
+![tortoise and hare meet point](./images/algorithms-and-data-structures.detect_loop_in_linked_list.tortoise_and_hare.001.svg)
+
+``` python
+def has_cycle(head):
+    if not head:
+        return False
+    
+    tortoise = hare = head
+    teleport = 2
+    steps = 0
+    
+    while hare.next:
+        steps +=1
+        hare = hare.next
+        if tortoise is hare:
+            return True
+        
+        if steps == teleport:
+            steps = 0
+            teleport *= 2
+            tortoise = hare
+
+    return False
+```
+
+<div class="ryctoic-questions" markdown="1">
+deck:
+algorithms and data structures --- linked lists
+
+- q: Write a class for a node of a linked list. --- a: copied from context
+- q: Merge two sorted linked lists recursively. --- a: copied from context
+- q: Merge two sorted linked lists iteratively. --- a: copied from context
+- q: Get nth node from the end of a linked list iteratively. --- a: copied from context
+- q: Get nth node from the end of a linked list recursively. --- a: copied from context
+- q: Delete duplicates from sorted linked list.
+- q: What are the ways to detect a loop in a linked list? --- a: Reverse the list, tortoise and hare, and the optimized version, teleporting tortoise.
+- q: Detect a loop in a linked list using reverse.
+- q: Detect a loop in a linked list using tortoise and hare algorithm.
+- q: Detect a loop in a linked list using teleporting tortoise algorithm.
+
+- q: When detecting a loop in a linked list using the tortoise and hare algorithm, where do they meet? --- a: TODO: proof they meet, and they meet at beginning of the loop: <http://stackoverflow.com/questions/2936213/explain-how-finding-cycle-start-node-in-cycle-linked-list-work>
+- q: Pollard's rho algorithm for integer factorization. <https://en.wikipedia.org/wiki/Pollard%27s_rho_algorithm>, <https://www.cs.colorado.edu/~srirams/courses/csci2824-spr14/pollardsRho.html> 
+
+TODO:
+
+
+- q: print elements of a linked list
+- q: insert a node at the head of a linked list, return new head
+- q: insert a node at the end of a linked list, return the head
+- q: insert a node at given position of a linked list, return the head
+- q: remove a node at given position of a linked list, return the head
+- q: print a linked list in reverse order
+- q: compare two linked lists
+</div>
+
+TODO: python doesn't have tail recursion. How to work with linked lists? 
+
 
 
 # Trie
@@ -80,6 +264,7 @@ exercises:
 
 
 <div class="ryctoic-questions" markdown="1">
+- why is it called trie?
 - trie vs hash table and other search trees
 - functions on trie and their implementations
 - implementation of nodes
@@ -160,14 +345,6 @@ invert binary tree, yes
 Алгоритмы и структуры данных в ядре Linux, Chromium --- https://habrahabr.ru/company/wunderfund/blog/277143/
 
 
-# lists
-
-- q: print elements of a linked list
-- q: insert a node at the head of a linked list, return new head
-- q: insert a node at the end of a linked list, return the head
-- q: insert a node at given position of a linked list, return the head
-- q: remove a node at given position of a linked list, return the head
-- q: print a linked list in reverse order
 
 # Trash
 

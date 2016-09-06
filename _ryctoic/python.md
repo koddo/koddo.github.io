@@ -10,6 +10,9 @@ layout:  collection_page
 
 # true, false, and comparisons
 
+{% comment %}
+{% endcomment %}
+
 ``` python
 if () or [] or {} or None:
     'this line is skipped'
@@ -62,11 +65,41 @@ generally you only want to be using `is` with mutable objects (or None, which is
 
 <http://stackoverflow.com/questions/9494404/use-of-true-false-and-none-as-return-values-in-python-functions>
 
+
+``` Python
+class A(object):
+    def __eq__(self, other):
+        print( "A __eq__ called: %r == %r ?" % (self, other) )
+        return self.value == other.value
+class B(object):
+    def __eq__(self, other):
+        print( "B __eq__ called: %r == %r ?" % (self, other) )
+        return self.value == other.value
+
+a = A()
+a.value = 3
+b = B()
+b.value = 4
+a == b
+```
+
+
 <div class="ryctoic-questions" markdown="1">
 deck:
 python --- true, false, and comparisons
 
-{% comment %}
+TODO:
+
+- q: `==` vs `__eq__()` --- a:
+- q: Why `__eq__()` returns `NotImplemented`? --- a: 
+- q: What happens when you compare incomparable types?
+
+<https://docs.python.org/3/reference/datamodel.html#object.__eq__>
+
+<https://docs.python.org/3/library/constants.html#NotImplemented>
+
+<https://docs.python.org/3/whatsnew/3.0.html#ordering-comparisons>
+
 - q: What values are considered false in python? --- a: `False`, `None`, any numeric zero, empty sequence, empty dict, instance with `__bool__()` returning False or `__len__()` returning zero
 - q: `not a == b` vs `not (a == b)` vs `b == not a` --- a: `not` has a lower priority than non-boolean operators, so `not a == b` is interpreted as `not (a == b)`, and `b == not a` is a syntax error
 - q: short-circuiting behavior of boolean operators --- a: `if False and whatever(): 'this line is skipped, whatever() is not evaluated'`
@@ -80,12 +113,9 @@ python --- true, false, and comparisons
 - q: `if x` vs `if x == True` vs `if x is True` --- a: Use `if x`; and in extremely rare cases when you really want to explicitly distinguish if `x` is, for example, not `1`, not `[]`, but boolean `True`, check it with `x == True and type(x) is bool`; don't use `x is True`, it will fail in some obscure cases, because `bool` is subclass of `int`.
 - q: `if not x` vs `x is None` vs `x == None` --- a: Use the `if not x`; and in cases when you really want to explicitly distinguish `None` and other false values, use `x is None`; don't use `x == None`, because PEP 8.
 - q: `x is y` vs `id(x) == id(y)` --- a: Use the former. Don't use `id(x) == id(y)`, because id of an object in CPython being the location in memory is an implementation detail, this may change.
-{% endcomment %}
-
-TODO:
-
-- q: When are two objects of different types compare equal? --- a: objects of different _built-in_ types never compare equal (except different numeric types), but we can define an object with `__eq__`
-- q: What happens when you compare different types? `'a' == 1` and `'abc' > 10` a: the former is false, the latter raises `TypeError` exception
+- q: When two objects of different _built-in_ types compare equal? --- a: Objects of different _built-in_ types, except different numeric types, never compare equal.
+- q: What happens when you compare objects of different _built-in_ types, e.g, `'a' == 1` and `'abc' > 10`? a: Except for numeric types, `==` and `!=` always return `False` for objects of different _build-in_ types, `<`, `>`, `<=`, `>=` raise `TypeError` exception.
+- q: What happens when you sort a heterogeneous list? --- a: All the elements must be comparable to each other, otherwise the `TypeError` is thrown. If `.sort()` is used for in-place sorting, then the list is modified until the occurrence of the error.
 </div>
 
 <br />
@@ -106,6 +136,7 @@ function annotations: <https://github.com/kennknowles/python-rightarrow>
 - q: define a function with function annotations --- a: `def a_func(a_dict: '{str: int}') -> '[str]': print(a_func.__annotations__); ...`
 </div>
 
+TODO: mutable default args
 TODO: new type hinting
 
 # exceptions
@@ -681,7 +712,10 @@ q: how to get a palindrome number like `123454321` up to `9` in the middle? --- 
 TODO: add questions like this: in which module the `deque` is?
 
 TODO: __slots__
-
+TODO: <https://pypi.python.org/pypi/PyMonad/>
+TODO: persistent data structures <https://github.com/tobgu/pyrsistent>
+TODO: <http://stackoverflow.com/questions/101268/hidden-features-of-python>
+TODO: generate random number
 
 ## skipped hackerrank challenges
 
@@ -774,6 +808,8 @@ q: get a numpy nxm array with ones on the diagonal below the main one --- a: `nu
 q: get an element-wise sum, substraction, multiplication, division, floor, ceil, etc of two numpy arrays
 q: get a sum, max, mean, etc of a numpy array along a given axis --- a: `numpy.sum(an_array, axis=0)`
 q: get a value of a polynomial with given coefficients at point `x` --- a: numpy.polynomials.polyval(x, [3, 2, 1])
+
+
 
 
 

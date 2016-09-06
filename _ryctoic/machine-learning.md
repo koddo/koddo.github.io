@@ -10,6 +10,11 @@ layout:  collection_page
 
 <https://s3.amazonaws.com/MLMastery/MachineLearningAlgorithms.png>
 
+# misc
+
+examples of statistics using pandas: <https://github.com/rouseguy/intro2stats/tree/master/notebooks>
+
+
 
 # Kaggle
 

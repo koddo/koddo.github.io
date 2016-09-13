@@ -15,6 +15,6 @@ We call the adjective clauses restrictive because they restrict--or limit--the m
 <http://www.quickanddirtytips.com/education/grammar/which-versus-that-0>
 
 q: which vs that --- a: for restrictive clauses both are fine, for non-restrictive clauses, when you can remove them from the sentence without changing the meaning, use "which" with surrounding commas, e.g., "The classrooms that were painted over the summer are bright and cheerful." vs "The classrooms, which were painted over the summer, are bright and cheerful."
+q: pronounciation: suite vs suit
 
-
-
+acquaintance

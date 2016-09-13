@@ -123,28 +123,176 @@ TODO:
 
 # functions
 
-function annotations: <https://github.com/kennknowles/python-rightarrow>
 
 <div class="ryctoic-questions" markdown="1">
-- q: define a function with an optional argument --- a:?
-- q: define a function with a docstring --- a:?
-- q: define a function with a keyword-only arguments --- a: `def foo(*, arg1=10, arg2=20): ...`
-- q: define a function with an arbitraty argument list --- a: `def concat(*args, sep="/"): return sep.join(args)`
-- q: define a function with keyword arguments --- a: `def foo(**kwargs): print(kwargs)`, then call it like this: `foo(a=1, b=2)`, this will print `{'a': 1, 'b': 2}`
-- q: pass a list of arguments to a function with an arbitrary argument list --- a: given a function `def foo(*args): ...`, unpack the list `foo(*lst)`
-- q: pass a dictionary of arguments to a function with keyword arguments --- a: given a function `def foo(**kwargs): ...`, unpack the dict `foo(**dct)`
-- q: define a function with function annotations --- a: `def a_func(a_dict: '{str: int}') -> '[str]': print(a_func.__annotations__); ...`
+- q: Define a function. --- a: `def whatever(): ...`
+- q: Define a function with an optional argument. --- a: `def whatever(data=0): ...`
+- q: Define a function with a docstring. --- a: An example: 
+
+      def whatever():
+          """This is a docstring."""
+          pass
+
+- q: Get the docstring of a function? --- a: `help(a_func)` or `a_func.__doc__`
+- q: Define a function with a keyword-only arguments. --- a: `def foo(*, arg1=10, arg2=20): ...`
+- q: Define a function with an arbitraty argument list. --- a: `def concat(*args, sep="/"): return sep.join(args)`
+- q: Define a function with keyword arguments. --- a: `def foo(**kwargs): print(kwargs)`, then call it like this: `foo(a=1, b=2)`, this will print `{'a': 1, 'b': 2}`
+- q: Pass a list of arguments to a function with an arbitrary argument list. --- a: Given a function `def foo(*args): ...`, unpack the list `foo(*lst)`
+- q: Pass a dictionary of arguments to a function with keyword arguments. --- a: Given a function `def foo(**kwargs): ...`, unpack the dict `foo(**dct)`
+- q: Define a function with function annotations. --- a: `def a_func(a_dict: '{str: int}') -> '[str]': print(a_func.__annotations__); ...`
+- q: Write a lambda function. --- a: `f = lambda x: x**2`
 </div>
 
 TODO: mutable default args
 TODO: new type hinting
+TODO: function annotations: <https://github.com/kennknowles/python-rightarrow>
+
+
+# conditionals and loops
+
+``` python
+if False:
+    whatever()
+else:
+    print('ok')
+```
+
+`switch/case` [pep-3103](https://www.python.org/dev/peps/pep-3103/)
+
+``` python
+{
+    'a': 1,
+    'b': 2,
+    'c': 3,
+}.get(x, 0)
+```
+
+these do not support fall through, and this can be good or bad, depends on the point of view and problems you solve
+
+
+`range()` used to be `xrange()` in python 2
+
+``` python
+for n in range(0,100000000):
+  pass
+
+int i = 0
+while i < 100000000:
+  i += 1
+```
+
+<http://stackoverflow.com/questions/869229/why-is-looping-over-range-in-python-faster-than-using-a-while-loop>
+
+``` Python
+if condition:
+    ...
+else:
+    ...
+```
+
+TODO: range
+
+<div class="ryctoic-questions" markdown="1">
+- q: Write an if-then-else.
+- q: Write an one line if-else statement (ternary conditional operator). --- a: `x = 'good' if y else 'bad'`
+- q: What is short for else if? --- a: `elif`
+- q: What is going to be printed in this example when the condition is false? `if x < y < z: print(x); print(y); print(z)` --- a: Semicolon binds tighter than the colon in this context, so that in this example, either all or none of the print() calls are executed.
+- q: Write a switch/case statement. --- a: Python doesn't have this, but we can have an if/elif chain or dict-based dispatch, but those do not support fall through.
+- q: `range()` vs `xrange()` --- a: `range()` used to be `xrange()` in python 2.
+- q: Write a for loop from 0 to n-1 inclusive. --- a: `for i in range(n): ...`
+- q: Write a for loop from 1 to n inclusive. --- a: `for i in range(1, n+1): ...`
+- q: What is going to be printed? `for i in range(1, n+1): print(i)` --- a: Numbers from `1` to `n` inclusive.
+
+- q: Get a range with a step --- a: `range(start, end, step)`
+
+- q: Get a range going backwards. --- a: `range(99, 0, -1)`
+- q: Get a range from `99` to `0` with a step `2`. --- a: `range(99, 0, -2)`
+- q: Get a range from `0` to `-10`. --- a: `range(0, -10, -1)`
+- q: Check if any element in a list satisfies some condition. --- a: `any(l == 'x' for l in a_string)`
+- q: Check if all elements in a list satisfy some condition. --- a: `all(x > 0 for x in lst)`
+- q: `for i in range(10**10): ...` vs `i=0; while i < 10**10: i+=1; ...;`? --- a: The former should be faster, code for `range()` is optimized.
+- q: Write a while statement. --- a: `while condition: ...`
+- q: What does `else` do after `for` and `while` statements? --- a: The `else` code is executed after the loop ends if there was no `break`.
+- q: What are `break` and `continue` for? --- a: `continue` is for moving forward to the next iteration, `break` is for ending the loop.
+</div>
+
 
 # exceptions
 
-TODO
+
+
+``` Python
+# http://stackoverflow.com/questions/1611561/can-i-get-the-exception-from-the-finally-block-in-python/1611572#1611572
+try:
+    whatever
+except:
+    here sys.exc_info is valid
+    to re-raise the exception, use a bare `raise`
+else:
+    here you know there was no exception
+finally:
+    and here you can do exception-independent finalization
+```
+
+
+``` Python
+# The exception variable is excplicitly deleted after the except block is left.
+
+except E as N:
+    foo
+
+# equivalent 
+
+except E as N:
+    try:
+        foo
+    finally:
+        del N
+```
+
+Exception objects now store their traceback as the `__traceback__` attribute. This means that an exception object now contains all the information pertaining to an exception, and there are fewer reasons to use `sys.exc_info()` (though the latter is not removed).
+
+``` Python
+# http://stackoverflow.com/questions/3702675/how-to-print-the-full-traceback-without-halting-the-program/16946886#16946886
+import traceback
+
+try:
+    raise TypeError("Oups!")
+except Exception as err:
+    try:
+        raise TypeError("Again !?!")
+    except:
+        pass
+
+    # traceback.print_tb(err.__traceback__)
+    traceback.print_exc()
+
+ ### File "e3.py", line 4, in <module>
+ ###    raise TypeError("Oups!")
+```
+
+TODO: with statement
+TODO: supress <http://stackoverflow.com/questions/574730/python-how-to-ignore-an-exception-and-proceed/15566001#15566001>
+TODO: with pytest.raises(ExpectedException) <http://doc.pytest.org/en/latest/assert.html>
+
+- q: write a new exception class
 
 <div class="ryctoic-questions" markdown="1">
+- q: catch an exception. --- a: `except ValueError: ...`
+- q: catch an exception and name it to use in the except clause. --- a: `except ValueError as e: ...`
 - q: catch multiple exceptions in one except block --- a: `except (IDontLIkeYouException, YouAreBeingMeanException) as e: ...`
+- q: catch different exceptions in different except blocks.
+- q: How to catch every exception and just ignore them? --- a: Just `except:`, but never do this.
+- q: `else` in try-catch
+- q: `finally`
+- q: how to get exception info in the finally block? --- a: The exception variable is excplicitly deleted after the except block is left.
+- q: `assert`
+- q: What happens here? `assert( 2+2==5, 'Houston, we have a problem' )` --- a: `assert`, unlike `print`, which is a function, is still a statement, so this is equivalent to `assert True`, because we have a non-empty tuple here.
+- q: `assert`, `__debug__`, `-O` flag
+- q: `Exception` vs `BaseException` --- a: The latter should only be used as a base class for exceptions that should only be handled at the top level, such as `SystemExit` or `KeyboardInterrupt`. The recommended idiom for handling all exceptions except for this latter category is to use `except Exception:`.
+- q: how to raise an exception? --- a: `raise SomeException(args)`
+- q: how to re-raise an exception in an except block? --- a: Just `raise` without arguments.
+- q: how to print traceback of an exception? --- a: In the exception block: `traceback.print_exc()`
 </div>
 
 
@@ -160,64 +308,12 @@ int( input().strip() )
 
 <div class="ryctoic-questions" markdown="1">
 - q: `input()` vs `raw_input()`
+- q: get a string from input with a prompt
 - q: get a string from input
 - q: get an integer from input
 - q: get a float from input
-- q: get a fraction from input
 </div>
 
-# conditionals
-
-``` python
-if False:
-    whatever()
-else:
-    print('ok')
-```
-
-`switch/case` [pep-3103](https://www.python.org/dev/peps/pep-3103/)
-
-``` python
-{
-    'a': 1,
-    'b': 2,
-}.get(x, 9)
-```
-
-<div class="ryctoic-questions" markdown="1">
-- q: write an if-then-else --- a:?
-- q: write a switch/case --- a: python doesn't have this, but we can have an if/elif chain or dict-based dispatch, but those do not support fall through, and this can be good or bad, depends on the point of view and problems you solve 
-</div>
-
-# loops
-
-`range()` used to be `xrange()` in python 2
-
-
-
-``` python
-for n in range(0,100000000):
-  pass
-
-int i = 0
-while i < 100000000:
-  i += 1
-```
-
-<http://stackoverflow.com/questions/869229/why-is-looping-over-range-in-python-faster-than-using-a-while-loop>
-
-TODO: range
-
-<div class="ryctoic-questions" markdown="1">
-- q: `range` vs `xrange`
-- q: write a for loop from 0 to n --- a: `for i in range(n): ...`
-- q: get a range with a step --- a: `range(start, end, step)`
-- q: get a range going backwards --- a: `range(99, 0)`
-- q: get a range from `0` to `-10` with a step `2` --- a: `range(0, -10, -2)`
-- q: get a range from `99` to `0` with a step `2` --- a: `range(99, 0, -2)`
-- q: check if any element in list satisfies some condition --- a: `any(l == 'x' for l in a_string)`
-- q: `for i in range(10**10): ...` vs `i=0; while i < 10**10: i+=1; ...;`? --- a: the former is faster, code for `range()` is optimized, `i+=1` is interpreted
-</div>
 
 # lists
 
@@ -368,20 +464,23 @@ d = {}
 d[1]   # raises ValueError 
 d[1] = 'whatever'   # sets the value
 ```
+
+interesting: Due to the way the Python C-level APIs developed, a lot of built-in functions and methods don't actually have names for their arguments. `.get(x, default=0)` throws `TypeError: get() takes no keyword arguments`, but `.get(x, 0)` works
+
 q: get number of key-value pairs in a dictionary --- a: `len(d)`
 q: create a dictionary --- a: `d = {}` or `d = { 1: 'a', 2: 'b'}`
-q: get a value from dict by a key --- a: `d['the key']` or `d.get('whatever', default='zero')`
-
+q: get a value from dict by a key --- a: `d['the key']` or `d.get('whatever', 'zero')`
 
 q: get list of keys of a dict --- a: `list(a_dict.keys())`, the `.keys()` returns a view of the dict's keys
 q: iterate over keys in a dict --- a: `for k in a_dict: ...`, everything is done here implicitly
 q: iterate over key-value pairs in a dict --- a: `for k,v in a_dict.items(): ...`
 q: check if a key exists in a dict --- a: `if k in a_dict: ...`
 q: check if a key doesn't exist in a dict --- a: `if k not in a_dict: ...`
-q: get a value for key in a dict, or default --- a: `d.get(k, default=0)`
+q: get a value for key in a dict, or default --- a: `d.get(k, 0)`; note that `.get(k, default=0)` will throw `TypeError: get() takes no keyword arguments`
+q: What happens when you do `a_dict.get(x, default=0)`? --- a: `TypeError: get() takes no keyword arguments`; just write `.get(x, 0)`
 q: set a value for key in a dict --- a: `d['whatever'] = 1`
-q: `a_dict[k]` vs `a_dict.get(k)` --- a: the latter never raises `KeyError`, returns `None` or provided default value `a_dict.get(k, default=0)`
-
+q: `a_dict[k]` vs `a_dict.get(k)` --- a: the latter never raises `KeyError`, returns `None` or provided default value `a_dict.get(k, 0)`
+q: `a_dict.get(k, defaultvalue)` vs `a_dict.setdefault(k, defaultvalue)` vs ``collections.defaultdict(init_func)`? --- a: TODO
 
 # sets
 
@@ -421,6 +520,7 @@ q: write a set comprehension
 ```
 
 TODO: print(..., sep=', ')
+TODO: print(..., end=' ')
 
 TODO: rjust, ljust, center, zfill vs string.format --- print('%s %s %s %s' % (str(i).rjust(p), oct(i)[2:].rjust(p), hex(i)[2:].rjust(p), bin(i)[2:].rjust(p)))
 q: print a string centered within width `w` with a minus `-` as padding char --- a: `print( string.centered(s, w, '-') )`
@@ -667,6 +767,14 @@ q: get difference in seconds between two datetimes --- a: `abs(dt2 - dt1).total_
 - q: get metadata of a file and get modification time and size --- a: `metadata = os.stat('python.md'); time.localtime(metadata.st_mtime); import humanize; humansize.approximate_size(metadata.st_size)`
 
 
+# generators
+
+TODO
+
+# coroutines
+
+TODO
+
 # misc
 [bool](https://docs.python.org/3/library/functions.html#bool)
 [object](https://docs.python.org/3/library/functions.html#object)
@@ -701,13 +809,13 @@ TODO: how to measure time
 $ python -m timeit "'somestring'.find('str', 2, 9)"
 $ python -m timeit "'somestring'[2:9].find('str')"
 
-q: write a lambda function --- a: `lambda x: x**2`
 
 TODO: shallow and deep copies
 
 q: how to get an integer `111...1` of lenght `n` without using string operations? --- a: `10**n//9`
 q: how to get a palindrome number like `123454321` up to `9` in the middle? --- a: `111..11` to the power of `2`
 
+- q: What does the `pass` do?
 
 TODO: add questions like this: in which module the `deque` is?
 
@@ -716,6 +824,8 @@ TODO: <https://pypi.python.org/pypi/PyMonad/>
 TODO: persistent data structures <https://github.com/tobgu/pyrsistent>
 TODO: <http://stackoverflow.com/questions/101268/hidden-features-of-python>
 TODO: generate random number
+
+
 
 ## skipped hackerrank challenges
 
@@ -776,6 +886,9 @@ q: check the import search path --- a: `sys.path`
 <http://stackoverflow.com/questions/2220699/whats-the-difference-between-eval-exec-and-compile-in-python>
 
 
+
+
+
 # numpy
 
 `numpy.array()`: <http://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html>
@@ -808,6 +921,12 @@ q: get a numpy nxm array with ones on the diagonal below the main one --- a: `nu
 q: get an element-wise sum, substraction, multiplication, division, floor, ceil, etc of two numpy arrays
 q: get a sum, max, mean, etc of a numpy array along a given axis --- a: `numpy.sum(an_array, axis=0)`
 q: get a value of a polynomial with given coefficients at point `x` --- a: numpy.polynomials.polyval(x, [3, 2, 1])
+
+
+
+
+
+
 
 
 

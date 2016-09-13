@@ -139,7 +139,13 @@ def has_cycle(head):
 ```
 
 {: .centered}
-![tortoise and hare meet point](./images/algorithms-and-data-structures.detect_loop_in_linked_list.tortoise_and_hare.001.svg)
+![tortoise and hare meet point](./images/algorithms-and-data-structures.detect_loop_in_linked_list.tortoise_and_hare.002.svg)
+
+{: start="0"}
+0. If we put two points on a circle and let them go in one direction, and one of them is twice as fast as the other, they meet again in the starting point after the slower one makes a full turn.
+1. Wind the part before the loop to the cycle. Tortoise and hare now meet at the point that corresponts to the head. If we are detecting a cycle, we are done.
+2. If we want to find the beginning of the cycle, we put another tortoise at the initial head and let tortoises meet. One will go through the initial part, the other will go through the same part, but wound to the cycle, and they meet at the beginning of the cycle.
+
 
 ``` python
 def has_cycle(head):
@@ -164,6 +170,54 @@ def has_cycle(head):
     return False
 ```
 
+<https://www.hackerrank.com/challenges/find-the-merge-point-of-two-joined-linked-lists>
+
+We can align two linked lists to their ends by skipping some steps on longer list after we know their lengths.
+Or we can connect end of one list to beginning of the other and vice versa.
+So after traversing of the longer one, we are now syncronized.
+
+{: .centered}
+![tortoise and hare meet point](./images/algorithms-and-data-structures.find_merge_point_of_two_linked_lists.001.svg)
+
+
+``` python
+def FindMergeNode(headA, headB):
+    a, b = headA, headB
+    while a is not b:
+        a = a.next if a.next else headB
+        b = b.next if b.next else headA
+    return a
+```
+
+<https://www.hackerrank.com/challenges/insert-a-node-into-a-sorted-doubly-linked-list>
+
+``` python
+def InsertNodeIntoSortedDoublyLinkedList(head, data):
+    if not head:
+        return Node(data)
+    h = head
+    while h.next and data > h.next.data:
+        h = h.next
+    new = Node(data, h.next, h)
+    if h.next:
+        h.next.prev = new
+    h.next = new
+    return head
+```
+
+<https://www.hackerrank.com/challenges/reverse-a-doubly-linked-list>
+
+``` python
+def ReverseDoublyLinkedList(head):
+    if not head:
+        return head
+    head.next, head.prev = head.prev, head.next
+    while head.prev:
+        head = head.prev
+        head.next, head.prev = head.prev, head.next
+    return head
+```
+
 <div class="ryctoic-questions" markdown="1">
 deck:
 algorithms and data structures --- linked lists
@@ -178,12 +232,12 @@ algorithms and data structures --- linked lists
 - q: Detect a loop in a linked list using reverse.
 - q: Detect a loop in a linked list using tortoise and hare algorithm.
 - q: Detect a loop in a linked list using teleporting tortoise algorithm.
+- q: Find beginning of a loop in a linked list.
+- q: Find merge point of two linked lists.
+- q: Insert a node into a sorted doubly linked list.
+- q: Reverse a doubly linked list.
 
-- q: When detecting a loop in a linked list using the tortoise and hare algorithm, where do they meet? --- a: TODO: proof they meet, and they meet at beginning of the loop: <http://stackoverflow.com/questions/2936213/explain-how-finding-cycle-start-node-in-cycle-linked-list-work>
-- q: Pollard's rho algorithm for integer factorization. <https://en.wikipedia.org/wiki/Pollard%27s_rho_algorithm>, <https://www.cs.colorado.edu/~srirams/courses/csci2824-spr14/pollardsRho.html> 
-
-TODO:
-
+TODO: 
 
 - q: print elements of a linked list
 - q: insert a node at the head of a linked list, return new head
@@ -195,8 +249,48 @@ TODO:
 </div>
 
 TODO: python doesn't have tail recursion. How to work with linked lists? 
+TODO: Pollard's rho algorithm for integer factorization. <https://en.wikipedia.org/wiki/Pollard%27s_rho_algorithm>, <https://www.cs.colorado.edu/~srirams/courses/csci2824-spr14/pollardsRho.html> 
+TODO: <https://wiki.haskell.org/H-99:_Ninety-Nine_Haskell_Problems>, <http://www.ic.unicamp.br/~meidanis/courses/mc336/2006s2/funcional/L-99_Ninety-Nine_Lisp_Problems.html>, <http://www.informatimago.com/develop/lisp/l99/>
 
 
+
+# Trees
+
+<https://www.hackerrank.com/challenges/tree-preorder-traversal>
+<https://www.hackerrank.com/challenges/tree-postorder-traversal>
+<https://www.hackerrank.com/challenges/tree-inorder-traversal>
+
+TODO: there are two definitions of top view of a tree: a simple one <https://www.hackerrank.com/challenges/tree-top-view>, and a complex one <http://www.geeksforgeeks.org/print-nodes-top-view-binary-tree/>
+
+``` C++
+void LevelOrder(node* root)
+{
+    queue<node*> q;
+    q.push(root);
+    while( ! q.empty() ) {
+        if ( q.front() ) {
+            cout << q.front()->data << ' ';
+            node* l = q.front()->left;
+            node* r = q.front()->right;
+            q.push(l);
+            q.push(r);
+        }
+        q.pop();
+    }
+}
+```
+
+{: .centered}
+![breadth-first search](./images/algorithms-and-data-structures.breadth-first_search.001.svg)
+
+
+<div class="ryctoic-questions" markdown="1">
+- q: Print a binary tree preorder traversal --- a: 
+- q: Print a binary tree postorder traversal --- a: 
+- q: Print a binary tree inorder traversal --- a: 
+- q: Get height of a binary tree
+- q: Print a binary tree using breadth-first search
+</div>
 
 # Trie
 
@@ -360,5 +454,6 @@ invert binary tree, yes
 | col 2 is      | centered        | $12    |
 | zebra stripes | are neat        | $1     |
 {: .mytable}
+
 
 

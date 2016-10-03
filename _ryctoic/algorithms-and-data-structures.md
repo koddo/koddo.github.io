@@ -283,6 +283,130 @@ void LevelOrder(node* root)
 {: .centered}
 ![breadth-first search](./images/algorithms-and-data-structures.breadth-first_search.001.svg)
 
+insert data into a binary search tree
+
+``` C++
+node * insert_into_bst(node * root, int value) {
+    if( !root ) {
+        node* r = new node();
+        r->data  = value;
+        r->left  = NULL;
+        r->right = NULL;
+        root = r;
+    }
+    else if(value < root->data) {
+      root->left  = insert_into_bst(root->left, value);
+    }
+    else {
+      root->right = insert_into_bst(root->right, value);
+    }
+    return root;
+}
+```
+
+``` C++
+node* insert(node* root, int value)
+{
+    node* c = root;
+    if( ! root ) {
+        node* r = new node();
+        r->data = value;
+        r->left = NULL;
+        r->right = NULL;
+        return r;
+    }
+    while(true) {
+        if(value < c->data) {
+            if(c->left) {
+                c = c->left;
+                continue;
+            } else{
+                node* r = new node();
+                r->data = value;
+                r->left = NULL;
+                r->right = NULL;
+                c->left = r;
+                break;
+            }
+        } else {
+            if(c->right) {
+                c = c->right;
+                continue;
+            } else{
+                node* r = new node();
+                r->data = value;
+                r->left = NULL;
+                r->right = NULL;
+                c->right = r;
+                break;
+            }
+        }
+    }
+    
+    return root;
+}
+```
+
+<https://leetcode.com/problems/validate-binary-search-tree/>
+
+{: .centered}
+![validate binary search tree](./images/algorithms-and-data-structures.validate_binary_search_tree.001.svg)
+
+``` C++
+bool check(Node* root, int min, int max) {
+    if( !root ) {
+        return true;
+    }
+    if( min < root->data && root->data < max && 
+        check(root->left, min, root->data) &&
+        check(root->right, root->data, max) ) 
+    {
+        return true;
+    }
+    return false;
+}
+
+bool checkBST(Node* root) {
+    return check(root, INT_MIN, INT_MAX);
+}
+```
+
+``` C++
+node* find_lca(node* root, int v1,int v2)
+{
+    if(v1 <= root->data && root->data <= v2) {
+        return root;
+    }
+    if(v2 < root->data) {
+        return find_lca(root->left, v1, v2);
+    }
+    if(root->data < v1) {
+        return find_lca(root->right, v1, v2);
+    }
+    return NULL;
+}
+```
+
+``` C++
+void decode_huff(node* root, string s)
+{
+    node* c = root;
+    
+    for(std::string::size_type i = 0; i < s.size(); ++i) {
+        if(s[i] == '0') {
+            c = c->left;
+        } else {
+            c = c->right;
+        }
+        if(c->data != '\0') {
+            cout << c->data;
+            c = root;
+            continue;
+        }
+
+    }
+}
+```
 
 <div class="ryctoic-questions" markdown="1">
 - q: Print a binary tree preorder traversal --- a: 
@@ -290,7 +414,56 @@ void LevelOrder(node* root)
 - q: Print a binary tree inorder traversal --- a: 
 - q: Get height of a binary tree
 - q: Print a binary tree using breadth-first search
+- q: Insert a new node into a binary search tree recursively.
+- q: Insert a new node into a binary search tree iteratively.
+- q: Validate binary search tree.
+- q: Find lowest common ancestor of two elements in a binary search tree. --- a: Do not forget to consider a case when an one element is above the another.
+- q: Decode a bitstring using a given huffman tree. 
 </div>
+
+
+# Stacks
+
+``` python
+# <https://www.hackerrank.com/challenges/maximum-element>
+n = int(input())
+s = []
+
+for _ in range(n):
+    l = list(map(int, input().split()))
+    if l[0] == 1:
+        m = s[-1][1] if s else l[1]
+        m = l[1] if m < l[1] else m
+        s.append((l[1], m))
+    if l[0] == 2:
+        s.pop()
+    if l[0] == 3:
+        print(s[-1][1])
+```
+
+``` Python
+def validate_balanced_brackets(s):
+    stack = []
+    for c in s:
+        if c in '{[(':
+            stack.append(c)
+        else:
+            try:
+                t = stack.pop()
+            except IndexError:
+                return False
+            if (t == '{' and c == '}') or (t == '[' and c == ']') or (t == '(' and c == ')'):
+                continue
+            else:
+                return False
+    if stack:
+        return False
+    return True
+```
+
+- q: Maximum element of a stack.
+- q: Validate balanced brackets.
+- q: Simplest text editor with undo.
 
 # Trie
 
@@ -438,7 +611,7 @@ invert binary tree, yes
 
 Алгоритмы и структуры данных в ядре Linux, Chromium --- https://habrahabr.ru/company/wunderfund/blog/277143/
 
-
+Разбор задач финального раунда RCC 2016 <https://habrahabr.ru/company/mailru/blog/310376/>
 
 # Trash
 
@@ -454,6 +627,9 @@ invert binary tree, yes
 | col 2 is      | centered        | $12    |
 | zebra stripes | are neat        | $1     |
 {: .mytable}
+
+
+
 
 
 

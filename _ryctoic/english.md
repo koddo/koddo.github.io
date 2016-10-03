@@ -18,3 +18,6 @@ q: which vs that --- a: for restrictive clauses both are fine, for non-restricti
 q: pronounciation: suite vs suit
 
 acquaintance
+peculiar
+
+from one to five _inclusive_

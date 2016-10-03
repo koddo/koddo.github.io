@@ -4,7 +4,7 @@ layout:  collection_page
 
 ---
 
-* this line is replaced with the generated table of contents
+* this line gets replaced with the generated table of contents
 {:toc}
 
 
@@ -190,7 +190,9 @@ else:
     ...
 ```
 
-TODO: range
+TODO: what if we do `for i in range(0)`?
+TODO: what if we do `for i in ...: else: ... use i`?
+
 
 <div class="ryctoic-questions" markdown="1">
 - q: Write an if-then-else.
@@ -208,13 +210,25 @@ TODO: range
 - q: Get a range going backwards. --- a: `range(99, 0, -1)`
 - q: Get a range from `99` to `0` with a step `2`. --- a: `range(99, 0, -2)`
 - q: Get a range from `0` to `-10`. --- a: `range(0, -10, -1)`
-- q: Check if any element in a list satisfies some condition. --- a: `any(l == 'x' for l in a_string)`
-- q: Check if all elements in a list satisfy some condition. --- a: `all(x > 0 for x in lst)`
 - q: `for i in range(10**10): ...` vs `i=0; while i < 10**10: i+=1; ...;`? --- a: The former should be faster, code for `range()` is optimized.
 - q: Write a while statement. --- a: `while condition: ...`
 - q: What does `else` do after `for` and `while` statements? --- a: The `else` code is executed after the loop ends if there was no `break`.
 - q: What are `break` and `continue` for? --- a: `continue` is for moving forward to the next iteration, `break` is for ending the loop.
 </div>
+
+# comprehensions
+
+``` python
+[(x,y) for x in range(2) for y in range(3)]
+```
+
+- q: Write multidimensional list comprehension. --- a: `[ (x,y) for x in ... for y in ... if x>1 if y>1 ]`
+- q: Write a list comprehension to get squares of odd numbers from 1 to 8. --- a: `[x**2 for x in range(1, 9) if x%2==1]`
+- q: Write a dictionary comprehension. --- a: `l = [1, 1, 2, 3]; d = { x : l.count(x)   for x in l}`; for this particular example there is `collections.Counter(l)` though.
+- q: Write a set comprehension. --- a: `set_of_primes = { i for i in range(101) if is_prime(i) }`
+- q: Check if any element in a list satisfies some condition. --- a: `any(l == 'x' for l in a_string)`
+- q: Check if all elements in a list satisfy some condition. --- a: `all(x > 0 for x in lst)`
+
 
 
 # exceptions
@@ -271,28 +285,108 @@ except Exception as err:
  ###    raise TypeError("Oups!")
 ```
 
-TODO: with statement
-TODO: supress <http://stackoverflow.com/questions/574730/python-how-to-ignore-an-exception-and-proceed/15566001#15566001>
-TODO: with pytest.raises(ExpectedException) <http://doc.pytest.org/en/latest/assert.html>
+``` Python
+def func1():
+    try:
+        return 1
+    finally:
+        return 2
 
-- q: write a new exception class
+def func2():
+    try:
+        raise ValueError()
+    except:
+        return 1
+    finally:
+        return 3
+
+func1()   # returns 2
+func2()   # returns 3
+```
+
+``` Shell
+>>> try:
+...     print(1 / 0)
+... except Exception as exc:
+...     raise RuntimeError("Something bad happened") from exc
+...
+Traceback (most recent call last):
+  File "<stdin>", line 2, in <module>
+ZeroDivisionError: int division or modulo by zero
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<stdin>", line 4, in <module>
+RuntimeError: Something bad happened
+```
+
+``` Python
+try:
+    self.file = open(filename)
+except IOError as e:
+    raise DatabaseError('failed to open') from e
+```
+
+``` Python
+class MyError(Exception):
+    """Raise for my specific kind of exception"""
+```
+
+``` Python
+class Error():
+    pass
+
+class InputError(Error):
+    def __init__(self, message, expression):
+        self.message = message
+        self.expression = expression
+```
+
+``` Python
+def KelvinToFahrenheit(Temperature):
+    assert (Temperature >= 0),"Colder than absolute zero!"
+    return ((Temperature-273)*1.8)+32
+```
+
+<https://docs.python.org/3/tutorial/errors.html#user-defined-exceptions>
+<https://www.python.org/dev/peps/pep-0352/>
+<https://hg.python.org/cpython/file/3.5/Objects/exceptions.c#l24>
+<https://bugs.python.org/issue1692335>
+
+TODO: - q: Write a custom exception class with a value besides message in a portable manner: <http://stackoverflow.com/questions/1319615/proper-way-to-declare-custom-exceptions-in-modern-python> 
+
+
+TODO: with statement, contextlib
+TODO: with pytest.raises(ExpectedException) <http://doc.pytest.org/en/latest/assert.html>
+TODO: more from <https://docs.python.org/3/library/traceback.html>
+
+TODO: <https://docs.python.org/3/library/exceptions.html#exception-hierarchy>
 
 <div class="ryctoic-questions" markdown="1">
-- q: catch an exception. --- a: `except ValueError: ...`
-- q: catch an exception and name it to use in the except clause. --- a: `except ValueError as e: ...`
-- q: catch multiple exceptions in one except block --- a: `except (IDontLIkeYouException, YouAreBeingMeanException) as e: ...`
-- q: catch different exceptions in different except blocks.
-- q: How to catch every exception and just ignore them? --- a: Just `except:`, but never do this.
-- q: `else` in try-catch
-- q: `finally`
-- q: how to get exception info in the finally block? --- a: The exception variable is excplicitly deleted after the except block is left.
-- q: `assert`
-- q: What happens here? `assert( 2+2==5, 'Houston, we have a problem' )` --- a: `assert`, unlike `print`, which is a function, is still a statement, so this is equivalent to `assert True`, because we have a non-empty tuple here.
-- q: `assert`, `__debug__`, `-O` flag
-- q: `Exception` vs `BaseException` --- a: The latter should only be used as a base class for exceptions that should only be handled at the top level, such as `SystemExit` or `KeyboardInterrupt`. The recommended idiom for handling all exceptions except for this latter category is to use `except Exception:`.
-- q: how to raise an exception? --- a: `raise SomeException(args)`
-- q: how to re-raise an exception in an except block? --- a: Just `raise` without arguments.
-- q: how to print traceback of an exception? --- a: In the exception block: `traceback.print_exc()`
+- q: Write a new exception class. --- a: `class SomeError(Exception): pass` --- but generally it's a good idea to look for an appropriate existing exception first. See python exception hierarchy.
+- q: Write a custom exception class with a value besides message. --- a: If you do not need portability, you can write the exception class with `__init__(self, message, value)` that just sets these fields and do not run the `super().__init__()`, because `self.args = args` is already set in `super().__new__()`, this is done for historical reasons.
+- q: `Exception` vs `BaseException` as a base class of a custom exception. --- a: The latter should only be used as a base class for exceptions that should only be handled at the top level, such as `SystemExit` or `KeyboardInterrupt`. The recommended idiom for handling all exceptions except for this latter category is to use `except Exception:`. Catching `BaseException` will break `ctrl-c`.
+- q: How to raise an exception? --- a: `raise ValueError('Some message')`; raise exception as specific to the problem as possible, don't `raise Exception('message')`, as catching it will also catch any other more specific ones.
+- q: Raise an exception with an argument besides the message. --- a: `ValueError('message', 99).args(1) == 99` or, when using a custom exception class, `CustomError('message', 99).custom_field == 99`
+- q: How to re-raise the same exception in an except block? --- a: Just `raise` without arguments. Don't do `except ValueError: ... raise ValueError` as you will lose the stack trace.
+- q: Naming convention for exception classes. a: From [PEP 8](https://www.python.org/dev/peps/pep-0008/#exception-names): "Because exceptions should be classes, the class naming convention applies here. However, you should use the suffix "Error" on your exception names (if the exception actually is an error). ... Class names should normally use the CapWords convention.". `BeerNotFound` is probably even better then `BeerError`. But again, you could use already existing `LookupError`.
+- q: Catch an exception. --- a: `except ValueError as e: ...`
+- q: Catch multiple exceptions in one except block. --- a: `except (IDontLIkeYouException, YouAreBeingMeanException) as e: ...`
+- q: Catch different exceptions in different except blocks. --- a: `except ValueError: ... except LookupError: ...`
+- q: How to catch all existing exceptions and just ignore them? --- a: Just `except:`, but never do this.
+- q: How to ignore an exception? Like ignoring file existance before removing it. --- a: `except FileNotFoundError: pass` or `with contextlib.suppress(FileNotFoundError): os.remove('somefile.tmp')` --- it is equivalent to catching and doing `pass` though, this is purely for readability: if we have an exception in a middle of a block, like in `f()` when `z = f(x) * g(y)`, we can't just move on ignoring it.
+- q: What is `else` in try-catch for? --- a: Think of it as a part of `try` block which is not interested in catching exceptions. When there are no exceptions, `try` and `else` blocks are run together, but when exceptions are raised, after that only `catch` and `finally` blocks are executed.
+- q: What is `finally` for? --- a: When an exception has occurred in the try clause and has not been handled by an except clause (or it has occurred in an except or else clause), it is re-raised after the `finally` clause has been executed.
+- q: What if we have `return` in both `try/catch` and `finally` blocks? --- a: `finally` block is guaranteed to be executed, so if we have `return` in both `try/except` and `finally` blocks, only the one in latter is run.
+- q: How to get exception info in the finally block? --- a: Please don't handle anything in the finally block. It is for exception-independent finalization. Also the exception variable is excplicitly deleted after the except block is left, and exception info is unavailable through it.
+- q: What is `assert` for? --- a: Asserts should be used to test conditions that should never happen. The purpose is to crash early in the case of a corrupt program state. They add a tiny overhead, but before making a program fast we have to make it work first. And we can turn asserts off when needed with `-O` flag.
+- q: What does `assert` do? --- a: `assert cond, message` is roughly equivalent to `if __debug__ and not cond: raise AssertionError(message)`
+- q: What happens here? `assert( 2+2==5, 'Houston, we have a problem' )` --- a: `assert`, unlike `print`, which is a function, is still a statement, so this is equivalent to `assert True`, because syntactically we have a non-empty tuple here. Good news is python and lint gives you warning for this.
+- q: Exception chaining. --- a: `except ValueException as exc: raise RuntimeError("Something bad happened") from exc` --- this will give a nice trace back which mentions that `ValueException` is a direct cause of the `RuntimeError("Something bad happened")`. And we have `exc.__cause__`.
+- q: What are `exception.__context__` and `exception.__cause__`? --- a: When raising (or re-raising) an exception in an `except` or `finally` clause `__context__` is automatically set to the last exception caught. `raise new_exc from original_exc` sets `new_exc.__cause__`.
+- q: How to print traceback of an exception? --- a: In the except block: `traceback.print_exc()`
+- q: How to log traceback of an exception? --- a: Use `traceback.format_exc()` and your favorite logger.
 </div>
 
 
@@ -307,12 +401,52 @@ int( input().strip() )
 ```
 
 <div class="ryctoic-questions" markdown="1">
-- q: `input()` vs `raw_input()`
-- q: get a string from input with a prompt
-- q: get a string from input
-- q: get an integer from input
-- q: get a float from input
+- q: `input()` vs `raw_input()` --- a: `input()` used to be called `raw_input()` in python 2.
+- q: Get a string from input. --- a: `resp = input()`
+- q: Get a string from input with a prompt, e.g., "please enter your name". --- a: `resp = input('please enter your name: ')`
+- q: Get an integer from input. --- a: `int(input())`
+- q: Get a list of integers from input in a single line, e.g., `1 2 3 4`. --- a: `list(map(int, input().split()))`
 </div>
+
+
+
+
+
+# slicing
+
+``` python
+a = [0, 1, 2, 3, 4, 5, 6, 7]
+b = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+a[::2] = b[::2]
+a == ['a', 1, 'c', 3, 'e', 5, 'g', 7]
+```
+
+q: Get a sublist of a list including elements from second to fifth inclusive. --- a: `a_list[1:6]`
+q: Get a sublist of a list including elements from second to the one before last inclusive. --- a: `a_list[1:-1]`
+q: Get a sublist of a list including elements from third to last inclusive. --- a: `a_list[2:]`
+q: Get a sublist of a list including elements from first to third inclusive. --- a: `a_list[:3]`
+q: Replace every nth element in a list with value of variable `t`. --- a: `lst[n-1::n] = t`; be careful with mutable objects.
+q: Replace every element with index `n*k, k=0,1,2,...` in a list with value of variable `t`. --- a: `lst[::n] = t`; be careful with mutable objects.
+q: Replace every element with index `n*k, k=0,1,2,...` in a list with elements from another list using slicing. --- a: `lst[::n] = another_list`, assuming `len(another_list) == len(lst[::n])`.
+q: How to reuse slice parameters? E.g., we want to take same slices of different lists. --- a: `s[slice(0,5)]` is equivalent to `s[0:5]`.
+
+
+# shallow and deep copy
+
+<http://www.python-course.eu/deep_copy.php>
+
+q: What are shallow copy and deep copy? --- When you do `a = [1, 2, 3]; b = a`, you bind both variables to a list object. Now, if you operate on `a` and modify it, you modify the object, so you'll see changes through the `b` variable. If the list is flat, you can create a shallow copy, so different vars are bound to different list objects. But if a list contains other lists, a shallow copy is not enough, you need to create a deep copy. The same can be said about other mutable containers like dicts and sets.
+q: In which molule are the `copy()` and `deepcopy()`? --- a: `import copy`; for lists you can just use `lst.copy()` or `lst[:]`, dicts and sets also support `.copy()`.
+q: Get a shallow copy of a list. --- a: `lst[:]` or `lst.copy()` or `copy.copy(lst)`
+q: Get a shallow copy of a list using slicing. --- a: `a_list[:]`
+q: Get a shallow copy of a dict. --- a: `dct.copy()` or `copy.copy(dct)`
+q: Get a shallow copy of a set. --- a: `a_set.copy()` or `copy.copy(a_set)`
+q: Get a shallow copy of a deque. --- a: `dq.copy()` or `copy.copy(dq)`
+q: Get a deep copy of a list. --- a: `copy.deepcopy(lst)`
+q: Get a deep copy of a dict. --- a: `copy.deepcopy(dct)`
+q: Get a deep copy of a set. --- a: `copy.deepcopy(a_set)`
+q: Get a deep copy of a deque. --- a: `copy.deepcopy(dq)`
+q: What does `a_list[:]` mean? --- a: Creates a copy of entire list, a shallow copy to be precise.
 
 
 # lists
@@ -333,131 +467,112 @@ sorted(lst)
 
 pre-allocating a list benchmark: <http://stackoverflow.com/questions/22225666/pre-allocating-a-list-of-none>
 
+`lst.index(e)` raises `ValueError` when `e` is not in the list, because a value like `-1` could lead to obscure bugs
+
 TODO: destructive and non-destructive insert, remove, append, extend, sort, pop
 
 
+
 <div class="ryctoic-questions" markdown="1">
-- q: `sorted(l)` vs `l.sort()` --- a: `l.sort()` is destructive and, therefore, a bit faster
-- q: sort in descending order --- a: `sorted(l, reverse=True)` or `l.sort(reverse=True)`
-- q: get a list in reversed order --- a: `reversed(lst)` or `lst.reverse()` or `lst[::-1]`
-- q: sort by multiple criteria --- a: sorting is stable, so sort twice, or sort by tuples `sorted(lst, key = lambda x: (-x[1], x[0]))`, or `sorted(lst, key = operator.itemgetter(1, 2))`
-- q: pre-allocate a list of size `n` with a default value --- a: `lst = [None] * n` or `lst = [0] * n` with default value `0`, but try appending or list comprehension instead
-- q: pre-allocation of a list vs appending elements vs list comprehension --- a: pre-allocation is useful when elements you fill the list with come out of order, appending has complexity of `O(1)`, so no difference with list comprehension (unless you try to optimize, measure it yourself then) 
-- q: add an element to the end of a list --- a: `lst.append(e)`
-- q: concatenate two lists --- a: `lst1 + [1, 2]`
-- q: `lst1+lst2` vs `lst1.extend(lst2)` vs `lst1 += lst2` --- a: `.extend()` and `+=` are destructive, there is virtually no difference in performance; `.extend()` accepts any iterable, can do chaining like `getlst1().extend(lst2)`
-- q: add an element to a list, not at the end, but at a given position --- a: `lst.insert(pos, value)`, same as `lst[pos:pos] = [value]`
-- q: what does mean `lst[i:i] = [v]`? --- a: same as `lst.insert(i, v)`
-- q: `lst.append()` vs `lst.extend()` --- a: `.append(e)` appends an element, `.extend(l)` extends the list with elements from an iterable
-- q: what does `lst.sort()` return? --- a: `None`, this is to prevent chaining like `lst.sort().reverse()`
-- q: remove all elements from a list --- a: `lst.clear()`
-- q: `a, b, c` vs `(a, b, c) ` --- a: exactly the same, it is actually the comma which makes a tuple, not the parentheses, which are useful to avoid ambiguity, e.g., `f(a, b)` is different from `f( (a, b) )`
-- q: unpack `[1, [2, 3]]` into three variables --- a: `a, (b, c) = [1, [2, 3]]`
+- q: Check if an element is in the list. --- a: `elt in lst` or `not in`
+- q: Create a list that contains ten copies of a letter. --- `['a'] * 10`
+- q: Get length of a list. --- a: `len(lst)`
+- q: Get min in a list. --- a: `min(lst)`
+- q: Get max in a list. --- a: `max(lst)`
+- q: What if we do `min([])` or `max([])`? ---a: Raises `ValueError`.
+- q: Get an index of an element in a list. --- a: `lst.index(e)`, raises `ValueError` when not found.
+- q: What happens when `lst.index(x)` doesn't find the element? --- Raises `ValueError`.
+- q: Get position of an element in a list between given start and end positions. --- a: `lst.index(e, start, end)`, raises `ValueError`
+- q: How many occurrences of a given element are in the list? --- a: `lst.count(elt)`
+- q: Delete an element from a list at a given position. --- a: `del lst[3]` or `s[3:4] = []`
+- q: Delete elements from a list at a given slice. --- a: `del lst[3:11:2]` or `s[3:11:2] = []`
+- q: Delete the first occurrence of a value from a list. --- a: `lst.remove('a')`
+- q: What if we do `lst.remove('a')` and there is no such element in the list? --- a: Raises `ValueError`.
+- q: Delete all occurrences of a value in a list. --- a: `a[:] = [e for e in lst when e!=value]`, keep `[:]` if you want it in-place.
+- q: Delete all occurrences of a value in a list in-place. --- a: `a[:] = [e for e in lst when e!=value]`, keep `[:]` if you want it in-place.
+- q: Get and remove an item at the end of a list. --- a: `lst.pop()`, same as `lst.pop(-1)`
+- q: Get and remove an item at the given position in a list. --- a: `lst.pop(position)`
+- q: What if we do `lst.pop()` when the list is empty? --- a: Raises `IndexError`.
+- q: What does `lst[-k]` mean? --- a: Get kth element from end, equivalent to `lst[ len(lst) - k ]`.
+- q: What if `lst = [1, 2, 3]` and we try to do `lst[3]`? --- a: Raises `IndexError`.
+- q: `sorted(l)` vs `l.sort()` --- a: `l.sort()` is in-place, and destructive, and, therefore, should be a bit faster.
+- q: What does `lst.sort()` return? --- a: `None`, this is to prevent chaining like `lst.sort().reverse()`
+- q: Sort in descending order. --- a: `sorted(l, reverse=True)` or `l.sort(reverse=True)`
+- q: Get a list in reversed order. --- a: `reversed(lst)` or `lst.reverse()` or `lst[::-1]`
+- q: `reversed(lst)` vs `lst.reverse()` vs `lst[::-1]` --- a: `reversed(a_list)` returns an iterator, `lst[::-1]` is equivalent to `list(reversed(lst))`; `lst.reverse()` does it in-place and returns `None` to prevent chaining.
+- q: What does `lst.reverse()` return? --- a: `None` to prevent chaining.
+- q: What does `reversed(lst)` return? --- a: An iterator object of type `list_reverseiterator`. Usage: `for x in reversed(lst): ...`. Or `list(reversed(lst))`, with all dangers of shallow copy.
+- q: Sort by multiple criteria. --- a: Sorting is stable, so sort twice, or sort by tuples `sorted(lst, key = lambda x: (-x[1], x[0]))`, or `sorted(lst, key = operator.itemgetter(1, 2))`.
+- q: Pre-allocate a list of size `n` with a default value. --- a: `lst = [None] * n` or `lst = [0] * n` with default value `0`, but do you really need this? Try appending or list comprehension instead.
+- q: Pre-allocation of a list vs appending elements vs list comprehension. --- a: Pre-allocation is useful when elements you fill the list with come out of order, appending has complexity of `O(1)`, so no difference with list comprehension (unless you try to optimize, measure it yourself then). 
+- q: Add an element to the end of a list. --- a: `lst.append(e)`
+- q: Concatenate two lists. --- a: `lst1 + [1, 2]`
+- q: `lst1+lst2` vs `lst1.extend(lst2)` vs `lst1 += lst2` --- a: `lst1+lst2` is non-destructive, creates new list; `.extend()` accepts any iterable; `.extend()` and `+=` are destructive, there is virtually no difference in performance.
+- q: Add an element to a list, not at the end, but at a given position. --- a: `lst.insert(pos, value)`, same as `lst[pos:pos] = [value]`.
+- q: What does mean `lst[i:i] = [v]`? --- a: Same as `lst.insert(i, v)`.
+- q: `lst.append()` vs `lst.extend()` --- a: `.append(e)` appends an element, `.extend(l)` extends the list with elements from an iterable.
+- q: Remove all elements from a list. --- a: `lst.clear()`
+- q: `a, b, c` vs `(a, b, c)` --- a: Exactly the same, it is actually the comma which makes a tuple, not the parentheses, which are useful to avoid ambiguity, e.g., `f(a, b)` is different from `f( (a, b) )`.
+- q: Unpack `[1, [2, 3]]` into three variables `a = 1; b = 2; c = 3`. --- a: `a, (b, c) = [1, [2, 3]]`
 </div>
-
-## slicing
-
-``` python
-a = [0, 1, 2, 3, 4, 5, 6, 7]
-b = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-a[::2] = b[::2]
-a == ['a', 1, 'c', 3, 'e', 5, 'g', 7]
-```
-
-q: get a sublist of a list including elements from second to fifth --- a: `a_list[1:6]`
-q: get a sublist of a list including elements from second to the one before last --- a: `a_list[1:-1]`
-q: get a sublist of a list including elements from third to last --- a: `a_list[2:]`
-q: get a sublist of a list including elements from first to third --- a: `a_list[:3]`
-q: replace every nth element of a list with elements from another list --- a:`lst[::n] = another_list`, assuming `len(another_list) == len(lst[::n])`
-q: replace every nth element of a list with a value `t` --- a:`lst[::n] = t`
-
-q: get a shallow copy of a list using slicing --- a: `a_list[:]`
-q: what is a shallow copy? --- TODO
-q: what does mean `a_list[:]`? --- a: same as `a_list.copy()`, which is shallow copy
-
-
-
-
-## itertools module
-
-``` python
-lst = [('USA', 'LA'), ('Russia', 'Moscow'), ('USA', 'NY'), ('Russia', 'St. Petersburg'), ('England', 'London')]
-
-[(k, list(g)) 
-   for k, g in 
-   itertools.groupby( sorted(lst), key = lambda x: x[0] )]
-             ## [('England', [('England', 'London')]), ('Russia', [('Russia', 'Moscow'), ('Russia', 'St. Petersburg')]), ('USA', [('USA', 'LA'), ('USA', 'NY')])]
-
-[(k, [j for i,j in g]) 
-   for k, g in 
-   itertools.groupby( sorted(lst), key = lambda x: x[0] )]
-             ## [('England', ['London']), ('Russia', ['Moscow', 'St. Petersburg']), ('USA', ['LA', 'NY'])]
-
-
-
-```
-
-product
-permutations
-combinations
-
-count(start=0[, step=1])
-cycle(lst)
-repeat(elem[, times=10])
-
-groupby
-accumulate
-chain
-dropwhile, takewhile
-zip_longest
-
-TODO: compress, better groupby, tee
-
-q: get a cartesian product of two sequences --- a: `itertools.product(s1, s2)`
-q: get permutations of length `k` of elements in a list --- a: `itertools.permutations(a_list, k)`
-q: get combinations of length `k` of elements in a list --- a: `itertools.combinations(a_list, k)`
-q: get combinations with repetitions of length `k` of elements in a list --- a: `itertools.combinations_with_replacement(a_list, k)`
-q: divide a string into groups of repeated consecutive elements, e.g., `'AAAABBBCCDAA'` into `['AAAA', 'BBB', 'CC', 'D', 'AA']` --- a: `[''.join(list(g)) for k, g in itertools.groupby('AAAABBBCCDAA')]`
-q: group elements of a list by some key, e.g., `[..., ('Russia', 'Moscow'), ..., ('Russia', 'St. Petersburg'), ...]` into  `[..., ('Russia', ['Moscow', 'St. Petersburg']), ...]`--- a: `[(k, [j for i,j in g]) for k, g in itertools.groupby(sorted(lst), lambda x: x[0])]`
-
-q: get an iterator for an infinite sequence of numbers like `10, 15, 20, 25, ...` --- a: `from itertools import count; for i in count(start10, step=5): ...`
-q: get an iterator, which infinitely goes through a list like `a, b, c -> a, b, c, a, b, c, a, ...` --- a: `from itertools import cycle; for i in cycle('abc'): ...`
-q: get an iterator, which infinitely (or optionally for a given number of times) returns an element --- a: `from itertools import cycle; for i in repeat('a'): ...` or `repeat('a', times=10)`
-
-q: get an iterator, which is similar to reduce, but returns an intermediate results --- a: `itertools.accumulate(lst, operator.mul)`
-q: how to iterate over multiple lists, one after another, without concatenating --- a: `itertools.chain( [1, 2, 3], [4, 5, 6] )`
-q: `itertools.chain()` vs `itertools.chain.from_iterable()` --- a: the latter gets lazily iterates over input, which can be infinite sequence
-q: get rid of head of a list before a predicate becomes false --- a: `list(itertools.dropwhile(lambda x: x<3, [1, 2, 3, 1, 2, 3])) == [3, 1, 2, 3]`
-q: get rid of tail of a list after a predicate becomes false --- a: `list(itertools.takewhile(lambda x: x<3, [1, 2, 3, 1, 2, 3])) == [1, 2]`
-q: `slice()` vs `itertools.islice()` --- a: the latter is for iterators, which don't support indexing, consumes data on them; in most cases just use the former
-q: `map()` vs `itertools.starmap()` --- a: the latter is for data, which has been pre-zipped, `list( itertools.starmap(pow, [(5,2), (3,2), (10,3)]) ) == [25, 9, 1000]`
-q: `zip()` two sequences until the longest one is exhauseted, with a given value for missing bits --- a: `itertools.zip_longest(lst1, lst2, fillvalue=None)`
-q: `zip()` vs `itertools.zip_longest()` --- a: the former stops when the shortest iterator is exhausted, the latter stops when the longest one is done
-
-## collections module
-
-q: get a dict, which which counts distinct elements in a list --- a: `collections.Counter(list)`
-q: get a dict with default value `'foo'` --- a: `collections.defaultdict(lambda: 'foo')`
-q: get a dict with default value `0` --- a: `collections.defaultdict(int)`
-q: get a dict with default value `[]` --- a: `collections.defaultdict(list)`
-q: `dict` vs `collections.defaultdict` --- a: `d['non-existent key']` raises `KeyError`, `defaultdict` adds and returns a default value
-q: what happens when you try to acces a non-existent key in a dict? --- a: it raises `KeyError`
-q: create a named tuple --- a: `Point = collections.namedtuple('Point', 'x, y')`
-q: get a dictionary, which preserves the order in which its elements are added --- a: `od = collections.OrderedDict(); od['a'] = 1; od['b'] = 2`
-q: how to initialize a `collections.OrderedDict()` with some content --- a: `OrderedDict( [('a', 1), ('b', 2), ...] )` is the right way, while `OrderedDict({'a': 1, 'b': 2, ...})` and `OrderedDict(a=1, b=2, ...)` are not (`kwargs` is a dict)
-
 
 
 
 # tuples
 
-q: tuples vs lists --- a: tuples are immutable lists, they have no methods to change them
-q: create a tuple of one element --- `(1,)`
-q: create an empty tuple --- `()`
+- q: What is the difference between tuples and lists. --- a: Tuples are immutable lists, they have no methods to change them.
+- q: Create a tuple of one element. --- `(1,)`
+- q: Create an empty tuple. --- `()`
+
+- q: Check if an element is in the tuple. --- a: `elt in tpl` or `not in`
+- q: Create a tuple that contains ten copies of a letter. --- `('a',) * 10`
+- q: Get length of a tuple. --- a: `len(tpl)`
+- q: Get min element in a tuple. --- a: `min(tpl)`
+- q: Get max element in a tuple. --- a: `max(tpl)`
+- q: What if we do `min(())` or `max(())`? ---a: Raises `ValueError`.
+- q: Get an index of an element in a tuple. --- a: `tpl.index(e)`, raises `ValueError` when not found.
+- q: What happens when `a_tuple.index(x)` doesn't find the element? --- Raises `ValueError`.
+- q: Get position of an element in a tuple between given start and end positions. --- a: `tuple.index(e, start, end)`, raises `ValueError`.
+- q: Gow many occurrences of a given element are in the tuple? --- a: `tpl.count(elt)`
+- q: Concatenate two tuples. --- a: `(1,) + (2, 3) == (1, 2, 3)`
+- q: Add an element to a tuple. --- a: You can't modify a tuple, but you can create a new one: `tpl += (1,)`.
+- q: Remove an element from a tuple. --- a: You can't modify a tuple, but you can create a new one: `(1, 2, 3, 4)[1:3] + (5,)`
+- q: Slice a tuple. --- a: Same rules as for lists, except you can't modify the tuple.
+
+
+# deques
+
+TODO: use cases for deques
+TODO: `Queue.Queue` for thread safety, because `collections.deque` is only threadsafe by accident due to the existence of the GIL
+
+- q: create a stack data structure --- a: use a list, it supports `.append(elt)` and `.pop()` operations
+- q: create a queue data structure --- a: use a `collections.deque`, it supports `.append(elt)` and `.popleft()` operations
+- q: in which module the deque is? --- a: `collections`
+- q: how to set a size boundary for a deque? --- a: `deque(maxlen=10)`
+- q: add elements to the left and to the right sides of a deque --- a: `dq.appendleft(e)` and `dq.append(e)`, or `dq.extendleft(lst)` and `dq.extend(lst)` 
+- q: add a list of elements to the left and to the right sides of a deque --- a: `dq.extendleft(lst)` and `dq.extend(lst)`
+- q: pop elements from the left and from the right of a deque --- a: `dq.popleft()` and `dq.pop()`
+- q: rotate a deque --- a: `dq.rotate(1)` rotates to the right, equivalent to `dq.appendleft(dq.pop())`
+- q: get a slice of a deque --- a: `collections.deque` itself doesn't support slices, use `itertools.isslice` when needed or a list comprehension `[d[i] for i in range(...)]`
+
+- q: check if an element is in the deque --- a: `elt in lst`, `not in`
+- q: get length of a deque --- a: `len(dq)`
+- q: get min in a deque --- a: `min(dq)`
+- q: get max in a deque --- a: `max(dq)`
+- q: What if we do `min()` or `max()` on empty deque? ---a: Raises `ValueError`.
+- q: get number of occurrences of an element in a deque --- a: `dq.count(e)`
+- q: what happens when `a_deque.index(x)` doesn't find the element? --- raises `ValueError`
+- q: get position of an element in a deque between given start and end positions --- a: `dq.index(e, start, end)`, raises `ValueError`
+- q: get position of an element in a deque --- a: `dq.index(e)`, raises `ValueError`
+- q: insert an element into a deque at a position --- a: `dq.insert(i, e)`
+- q: delete the first occurrence of a value in a deque --- a: `lst.remove(elt)`
+- q: reverse a deque --- a: `dq.reverse()` or `reversed(dq)`
+- q: remove all elements from a deque --- a: `dq.clear()`
+
 
 # dicts
 
-interesting thing: `d[k]` raises `ValueError` when the `k` is not in the dict, while `d[k] = 'whatever'`  sets the new value
+interesting thing: `d[k]` raises `ValueError` when the `k` is not in the dict, while `d[k] = 'whatever'` sets the new value
 
 ``` python
 d = {}
@@ -467,26 +582,40 @@ d[1] = 'whatever'   # sets the value
 
 interesting: Due to the way the Python C-level APIs developed, a lot of built-in functions and methods don't actually have names for their arguments. `.get(x, default=0)` throws `TypeError: get() takes no keyword arguments`, but `.get(x, 0)` works
 
-q: get number of key-value pairs in a dictionary --- a: `len(d)`
-q: create a dictionary --- a: `d = {}` or `d = { 1: 'a', 2: 'b'}`
-q: get a value from dict by a key --- a: `d['the key']` or `d.get('whatever', 'zero')`
 
-q: get list of keys of a dict --- a: `list(a_dict.keys())`, the `.keys()` returns a view of the dict's keys
-q: iterate over keys in a dict --- a: `for k in a_dict: ...`, everything is done here implicitly
-q: iterate over key-value pairs in a dict --- a: `for k,v in a_dict.items(): ...`
-q: check if a key exists in a dict --- a: `if k in a_dict: ...`
-q: check if a key doesn't exist in a dict --- a: `if k not in a_dict: ...`
-q: get a value for key in a dict, or default --- a: `d.get(k, 0)`; note that `.get(k, default=0)` will throw `TypeError: get() takes no keyword arguments`
+q: Check if a key exists in a dict. --- a: `if k in a_dict: ...`, `not in`
+q: Get number of key-value pairs in a dictionary --- a: `len(d)`
+q: Create a dictionary. --- a: `d = {}` or `d = { 1: 'a', 2: 'b'}`
+q: Get a value from dict by a key. --- a: `d['the key']` or `d.get('whatever', 'zero')` when you want a default value. The former raises `KeyError`.
+q: Get list of keys of a dict. --- a: `list(a_dict.keys())`, the `.keys()` returns a dictview.
+q: Iterate over keys in a dict. --- a: `for k in dct: ...`, equivalent to `for k in iter(dct): ...` or `for k in iter(dct.keys())`
+q: Iterate over key-value pairs in a dict. --- a: `for k,v in dct.items(): ...`
+q: Get a value for key in a dict, or default value when not found. --- a: `d.get(k, 0)`; note that `.get(k, default=0)` will throw `TypeError: get() takes no keyword arguments`
 q: What happens when you do `a_dict.get(x, default=0)`? --- a: `TypeError: get() takes no keyword arguments`; just write `.get(x, 0)`
-q: set a value for key in a dict --- a: `d['whatever'] = 1`
-q: `a_dict[k]` vs `a_dict.get(k)` --- a: the latter never raises `KeyError`, returns `None` or provided default value `a_dict.get(k, 0)`
-q: `a_dict.get(k, defaultvalue)` vs `a_dict.setdefault(k, defaultvalue)` vs ``collections.defaultdict(init_func)`? --- a: TODO
+q: Set a value for key in a dict. --- a: `d['whatever'] = 1`
+q: `a_dict[k]` vs `a_dict.get(k)` --- a: The latter never raises `KeyError`, returns `None` or provided default value, e.g., `a_dict.get(k, 0)`.
+q: What does `a_dict.setdefault(k, defaultvalue)` do? --- a: Returns `a_dict[k]` when `k` exists or sets `a_dict[k] = defaultvalue` and then returns it, instead of just returning it like the `.get()` does.
+q: `a_dict.get(k, defaultvalue)` vs `a_dict.setdefault(k, defaultvalue)` vs `collections.defaultdict(init_func)` --- a: When the key does not exist, `.get()` just returns the `defaultvalue`, `.setdefault` sets `d[k] = default_value` and then returns it, `defaultdict` does the same, but initializes the value with `init_func`, it's called `defaultfactory` in docs.
+q: What is a `dictview`? --- a:  Provids a dynamic view on the dictionary’s entries, which means that when the dictionary changes, the view reflects these changes.
+q: What does `a_dict.items()` return? --- a: A `dictview` object.
+q: What does `a_dict.keys()` return? --- a: A `dictview` object.
+q: What does `a_dict.values()` return? --- a: A `dictview` object.
+q: What can we do with a `dictview` returned by `dct.items()`, `dct.keys()`, `dct.values()`? --- a: `list(dv)`, `len(dv)`, check `x in dv`; iterate `iter(dv)`; `dct.keys()` and `dct.items()` are set-like, can do `dct.keys() & set(...)`
+
 
 # sets
 
 q: create a set --- a: empty set is created like `a_set = set()`, not `{}`; non-empty is `a_set = {1, 2, 3}`
 q: create an empty set --- a: `a_set = set()`, not `{}`, because the latter is an empty dict
 q: create a set from a given list --- a: `a_set = set([1, 2, 3])`
+q: check if an element is in the set, and vice versa --- a: `elt in a_set` and `elt not in a_set`
+q: get number of elements in a set --- a: `len(a_set)`
+- q: Get min in a set. --- a: `min(a_set)`
+- q: Get max in a set. --- a: `max(a_set)`
+- q: What if we do `min()` or `max()` on empty set? ---a: Raises `ValueError`.
+- q: Get an index of an element in a set. --- a: Sets do not support indexing, slicing, or other sequence-like behaviour.
+- q: Get a slice of a set. --- a: Sets do not support indexing, slicing, or other sequence-like behaviour.
+- q: 
 q: add an element to a set --- a: `a_set.add(e)`
 q: given a set, add elements from another set to it --- a: `a_set.update(another_set)`
 q: `a_set.add()` vs `a_set.update()`? --- a: `a_set.add(elt)` adds an element, `a_set.update(another_set)` adds elements from another set
@@ -494,23 +623,21 @@ q: remove an element from a set --- a: `a_set.remove(e)` raises KeyError when th
 q: `a_set.remove(e)` vs `a_set.discard(e)`? --- a: `a_set.remove(e)` raises `KeyError` when the element doesn't exist, `a_set.discard(e)` just silently discards it
 q: what does `a_set.pop()` do? --- a: it pops an arbitrary element, pretty useless function
 q: remove all elements from a set --- a: `a_set.clear()`
-q: what are set theory functions on sets? --- a: `a_set.union(b_set)` or `|`, `a_set.intersection(b_set)` or `&`, `a_set.difference(b_set)` or `-`, `a_set.symmetric_difference(b_set)` or `^` --- all of them are non-destructive
+q: what are set theory functions on sets? --- a: `a_set.union(b_set)` or `|`; `a_set.intersection(b_set)` or `&`; `a_set.difference(b_set)` or `-`; `a_set.symmetric_difference(b_set)` or `^` --- all of them are non-destructive.
+q: What does `a_set & b_set` do? --- a: Set intersection.
+q: What does `a_set | b_set` do? --- a: Set union.
+q: What does `a_set - b_set` do? --- a: Set difference.
+q: What does `a_set ^ b_set` do? --- a: Set symmetric difference.
+q: Are set theory operations or corresponding functions on sets destructive? --- a: No, they are all non-destructive.
+q: What happens here? `set('abc') & 'cbs'` --- a: Set theory operators require their arguments to be sets, `TypeError` is raised.
+q: What happens here? `set('abc').intersection('cbs')` --- a: Set theory functions (but not operators) accept any iterable as argument.
 q: check if a set is a subset or superset of another set --- a: `a_set.issubset(another_set)` and `a_set.issuperset(another_set)`; `<`, `<=` and `>`, `>=` respectively
 q: check if two sets intersect --- a: `a_set.isdisjoint(another_set)`
-q: check if an element is in the set, and vice versa --- a: `elt in a_set` and `elt not in a_set`
-
-
-
-# comprehensions
-
-``` python
-[(x,y) for x in range(2) for y in range(3)]
-```
-
-q: write multidimensional list comprehension --- a: `[(x,y) for x in ... for y in ...]`
-q: write a list comprehension for getting squares of odd numbers from 1 to 8 --- a: `[x**2 for x in range(1, 9) if x%2==1]`
-q: write a dictionary comprehension
-q: write a set comprehension
+q: Iterate over elements of a set. --- a: `for x in a_set: ...`; note, sets don't preserve order.
+q: In which order is a set is iterated here? `for x in a_set: ...`. --- a: The order is arbitraty, sets don't preserve order.
+q: `frozenset` vs `set`? --- a: The `frozenset` is an immutable set, it's hashable, so it can be a key in a `dict` and it can be an element of another `set`. It doesn't support operations like `.add`, `.remove`, `&=`, etc.
+q: What if we do `frozenset('abc') | set('bcd')`? --- a: Binary operations that mix `set` instances with `frozenset` return the type of the first operand.
+q: Can `set` and `frozenset` be compared? --- a: Yes, instances of set are compared to instances of frozenset based on their members.
 
 # strings
 
@@ -525,7 +652,7 @@ TODO: print(..., end=' ')
 TODO: rjust, ljust, center, zfill vs string.format --- print('%s %s %s %s' % (str(i).rjust(p), oct(i)[2:].rjust(p), hex(i)[2:].rjust(p), bin(i)[2:].rjust(p)))
 q: print a string centered within width `w` with a minus `-` as padding char --- a: `print( string.centered(s, w, '-') )`
 
-q: split a string, using space as separator --- a: `str.split()`
+q: split a string, using space as separator --- a: `a_str.split()`
 q: split a string into two pieces, using comma as a separator --- a: `'a,b,c,d'.split(',', maxsplit=1)`
 q: split a string from the end into two pieces, using comma as a separator --- a: `'a,b,c,d'.rsplit(',', maxsplit=1)`
 q: print float up to three digits after the point --- a: `print('%.3f' % (2.718281828))`
@@ -612,8 +739,6 @@ arbitrarily grouped
 <http://stackoverflow.com/questions/30079879/is-divmod-faster-than-using-the-and-operators>
 
 
-q: get max of sequence --- a: `max(s)`
-q: get min of sequence --- a: `min(s)`
 q: get absolute value of `x` --- a: `abs(x)`
 q: get number `x` rounded to nearest integer --- a: `round(2.77) == 3`
 q: get number `x` rounded to `n` digits from the decimal point --- a: `round(2,33, 1) == 2.3`
@@ -660,19 +785,12 @@ q: get greatest common divisor of two numbers --- a: `math.gcd(a, b)`
 
 
 # structs and iteration
-[all](https://docs.python.org/3/library/functions.html#all)
-[any](https://docs.python.org/3/library/functions.html#any)
 [filter](https://docs.python.org/3/library/functions.html#filter)
 [map](https://docs.python.org/3/library/functions.html#map)
 [zip](https://docs.python.org/3/library/functions.html#zip)
 [enumerate](https://docs.python.org/3/library/functions.html#enumerate)
 [len](https://docs.python.org/3/library/functions.html#len)
 [next](https://docs.python.org/3/library/functions.html#next)
-
-[sorted](https://docs.python.org/3/library/functions.html#sorted)
-[reversed](https://docs.python.org/3/library/functions.html#reversed)
-[slice](https://docs.python.org/3/library/functions.html#slice)
-[range](https://docs.python.org/3/library/functions.html#range)
 
 [dict](https://docs.python.org/3/library/functions.html#dict)
 [iter](https://docs.python.org/3/library/functions.html#iter)
@@ -681,7 +799,6 @@ q: get greatest common divisor of two numbers --- a: `math.gcd(a, b)`
 [set](https://docs.python.org/3/library/functions.html#set)
 [frozenset](https://docs.python.org/3/library/functions.html#frozenset)
 
-s[slice(0,5)] ~= s[0:5]
 
 
 q: get length of x --- a: [len(x)](https://docs.python.org/3/library/functions.html#len)
@@ -694,7 +811,6 @@ q: merge two lists into a list of pairs --- a: `zip('abcd', [1,2,3,4])`
 [ascii](https://docs.python.org/3/library/functions.html#ascii)
 [chr](https://docs.python.org/3/library/functions.html#chr)
 [format](https://docs.python.org/3/library/functions.html#format)
-[input](https://docs.python.org/3/library/functions.html#input)
 [open](https://docs.python.org/3/library/functions.html#open)
 [ord](https://docs.python.org/3/library/functions.html#ord)
 [print](https://docs.python.org/3/library/functions.html#print)
@@ -711,6 +827,8 @@ q: merge two lists into a list of pairs --- a: `zip('abcd', [1,2,3,4])`
 
 # oop
 
+TODO: multimethods, dispatch
+
 [classmethod](https://docs.python.org/3/library/functions.html#classmethod)
 [staticmethod](https://docs.python.org/3/library/functions.html#staticmethod)
 [property](https://docs.python.org/3/library/functions.html#property)
@@ -719,32 +837,19 @@ q: merge two lists into a list of pairs --- a: `zip('abcd', [1,2,3,4])`
 q: classmethod vs staticmethod, a: <http://stackoverflow.com/questions/12179271/python-classmethod-and-staticmethod-for-beginner/12179752#12179752>
 
 
+@property
+@name.setter
 
+TODO: maybe later metaclass <http://stackoverflow.com/questions/100003/what-is-a-metaclass-in-python/6581949#6581949>
 
-# deques
+TODO: multiple inherirance and super()
+<https://fuhm.net/super-harmful/>
+<https://rhettinger.wordpress.com/2011/05/26/super-considered-super/>
+<http://blog.codekills.net/2014/04/02/the-sadness-of-pythons-super/>
+Порядок разрешения методов в Python, method resolution order <https://habrahabr.ru/post/62203/>
 
-q: in which module the deque is? --- a: `collections`
-
-q: add elements to the left and to the right sides of a deck --- a: `dq.appendleft(e)` and `dq.append(e)`, or `dq.extendleft(lst)` and `dq.extend(lst)` 
-q: pop elements from the left and from the right of a deque --- a: `dq.popleft()` and `dq.pop()`
-
-
-
-`lst.index(e)` raises `ValueError` when `e` is not in the list, because a value like `-1` could lead to obscure bugs
-TODO: are these same for lists?
-q: what happens when `a_deque.index(x)` doesn't find the element? --- raises `ValueError`
-q: get position of an element in a deque between given start and end positions --- a: `dq.index(e, start, end)`, raises `ValueError`
-q: get position of an element in a deque --- a: `dq.index(e)`, raises `ValueError`
-q: get number of occurrences of an element in a deque --- a: `dq.count(e)`
-q: insert an element into a deque at a position --- a: `dq.insert(i, e)`
-
-q: delete an element from a list at a given position --- a: `del lst[3]`, same as `s[3:4] = []`
-q: delete the first occurrence of a value in a list --- a: `lst.remove('a')`
-q: delete all occurrences of a value in a list --- a: `a[:] = [e for e in lst when e!=value]`, keep `[:]` if you want it in-place
-q: get and remove an item at the end of a list --- a: `lst.pop()`
-q: get and remove an item at the given position in a list --- a: `lst.pop(position)`
-
-TODO: what are deques useful for?
+TODO: multiple inheritance vs composition
+TODO: multiple inheritance when sets of functions are disjoint
 
 
 # date and time
@@ -767,9 +872,14 @@ q: get difference in seconds between two datetimes --- a: `abs(dt2 - dt1).total_
 - q: get metadata of a file and get modification time and size --- a: `metadata = os.stat('python.md'); time.localtime(metadata.st_mtime); import humanize; humansize.approximate_size(metadata.st_size)`
 
 
-# generators
+# iterators and generators
 
 TODO
+
+TODO: iterable vs iterator
+TODO: generators
+<http://stackoverflow.com/questions/2776829/difference-between-pythons-generators-and-iterators>
+<http://stackoverflow.com/questions/9884132/what-exactly-are-pythons-iterator-iterable-and-iteration-protocols>
 
 # coroutines
 
@@ -780,6 +890,8 @@ TODO
 [object](https://docs.python.org/3/library/functions.html#object)
 [id](https://docs.python.org/3/library/functions.html#id)
 [hash](https://docs.python.org/3/library/functions.html#hash)
+
+abstract base classes for containers <https://docs.python.org/3/library/collections.abc.html>
 
 q: how to assign an attribute to the built-in object class? a: prohibited, intentionally --- <http://stackoverflow.com/questions/5741699/attribute-assignment-to-built-in-object/22103924#22103924>, <http://stackoverflow.com/questions/1529002/cant-set-attributes-of-object-class/1529099#1529099>
 
@@ -793,7 +905,7 @@ q: what is `None == ''`? --- a: `False`
 q: what is `None == False`? --- a: `False`
 q: what if we compare `None` to something? --- a: `None == None` is `True`, while comparing to anything else is `False`
 
-
+q: what does `map()` return?
 
 <https://www.quora.com/What-are-good-Python-interview-questions>
 <http://www.ilian.io/python-interview-question-and-answers/>
@@ -889,6 +1001,76 @@ q: check the import search path --- a: `sys.path`
 
 
 
+
+# collections module
+
+q: get a dict, which which counts distinct elements in a list --- a: `collections.Counter(list)`
+q: get a dict with default value `'foo'` --- a: `collections.defaultdict(lambda: 'foo')`
+q: get a dict with default value `0` --- a: `collections.defaultdict(int)`
+q: get a dict with default value `[]` --- a: `collections.defaultdict(list)`
+q: `dict` vs `collections.defaultdict` --- a: `d['non-existent key']` raises `KeyError`, `defaultdict` adds and returns a default value
+q: what happens when you try to acces a non-existent key in a dict? --- a: it raises `KeyError`
+q: create a named tuple --- a: `Point = collections.namedtuple('Point', 'x, y')`
+q: get a dictionary, which preserves the order in which its elements are added --- a: `od = collections.OrderedDict(); od['a'] = 1; od['b'] = 2`
+q: how to initialize a `collections.OrderedDict()` with some content --- a: `OrderedDict( [('a', 1), ('b', 2), ...] )` is the right way, while `OrderedDict({'a': 1, 'b': 2, ...})` and `OrderedDict(a=1, b=2, ...)` are not (`kwargs` is a dict)
+
+# itertools module
+
+``` python
+lst = [('USA', 'LA'), ('Russia', 'Moscow'), ('USA', 'NY'), ('Russia', 'St. Petersburg'), ('England', 'London')]
+
+[(k, list(g)) 
+   for k, g in 
+   itertools.groupby( sorted(lst), key = lambda x: x[0] )]
+             ## [('England', [('England', 'London')]), ('Russia', [('Russia', 'Moscow'), ('Russia', 'St. Petersburg')]), ('USA', [('USA', 'LA'), ('USA', 'NY')])]
+
+[(k, [j for i,j in g]) 
+   for k, g in 
+   itertools.groupby( sorted(lst), key = lambda x: x[0] )]
+             ## [('England', ['London']), ('Russia', ['Moscow', 'St. Petersburg']), ('USA', ['LA', 'NY'])]
+
+
+
+```
+
+product
+permutations
+combinations
+
+count(start=0[, step=1])
+cycle(lst)
+repeat(elem[, times=10])
+
+groupby
+accumulate
+chain
+dropwhile, takewhile
+zip_longest
+
+TODO: compress, better groupby, tee
+
+q: get a cartesian product of two sequences --- a: `itertools.product(s1, s2)`
+q: get permutations of length `k` of elements in a list --- a: `itertools.permutations(a_list, k)`
+q: get combinations of length `k` of elements in a list --- a: `itertools.combinations(a_list, k)`
+q: get combinations with repetitions of length `k` of elements in a list --- a: `itertools.combinations_with_replacement(a_list, k)`
+q: divide a string into groups of repeated consecutive elements, e.g., `'AAAABBBCCDAA'` into `['AAAA', 'BBB', 'CC', 'D', 'AA']` --- a: `[''.join(list(g)) for k, g in itertools.groupby('AAAABBBCCDAA')]`
+q: group elements of a list by some key, e.g., `[..., ('Russia', 'Moscow'), ..., ('Russia', 'St. Petersburg'), ...]` into  `[..., ('Russia', ['Moscow', 'St. Petersburg']), ...]`--- a: `[(k, [j for i,j in g]) for k, g in itertools.groupby(sorted(lst), lambda x: x[0])]`
+
+q: get an iterator for an infinite sequence of numbers like `10, 15, 20, 25, ...` --- a: `from itertools import count; for i in count(start10, step=5): ...`
+q: get an iterator, which infinitely goes through a list like `a, b, c -> a, b, c, a, b, c, a, ...` --- a: `from itertools import cycle; for i in cycle('abc'): ...`
+q: get an iterator, which infinitely (or optionally for a given number of times) returns an element --- a: `from itertools import repeat; for i in repeat('a'): ...` or `repeat('a', times=10)`
+
+q: get an iterator, which is similar to reduce, but returns an intermediate results --- a: `itertools.accumulate(lst, operator.mul)`
+q: how to iterate over multiple lists, one after another, without concatenating --- a: `itertools.chain( [1, 2, 3], [4, 5, 6] )`
+q: `itertools.chain()` vs `itertools.chain.from_iterable()` --- a: the latter gets lazily iterates over input, which can be infinite sequence
+q: get rid of head of a list before a predicate becomes false --- a: `list(itertools.dropwhile(lambda x: x<3, [1, 2, 3, 1, 2, 3])) == [3, 1, 2, 3]`
+q: get rid of tail of a list after a predicate becomes false --- a: `list(itertools.takewhile(lambda x: x<3, [1, 2, 3, 1, 2, 3])) == [1, 2]`
+q: `slice()` vs `itertools.islice()` --- a: the latter is for iterators, which don't support indexing, consumes data on them; in most cases just use the former
+q: `map()` vs `itertools.starmap()` --- a: the latter is for data, which has been pre-zipped, `list( itertools.starmap(pow, [(5,2), (3,2), (10,3)]) ) == [25, 9, 1000]`
+q: `zip()` two sequences until the longest one is exhauseted, with a given value for missing bits --- a: `itertools.zip_longest(lst1, lst2, fillvalue=None)`
+q: `zip()` vs `itertools.zip_longest()` --- a: the former stops when the shortest iterator is exhausted, the latter stops when the longest one is done
+
+
 # numpy
 
 `numpy.array()`: <http://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html>
@@ -921,6 +1103,22 @@ q: get a numpy nxm array with ones on the diagonal below the main one --- a: `nu
 q: get an element-wise sum, substraction, multiplication, division, floor, ceil, etc of two numpy arrays
 q: get a sum, max, mean, etc of a numpy array along a given axis --- a: `numpy.sum(an_array, axis=0)`
 q: get a value of a polynomial with given coefficients at point `x` --- a: numpy.polynomials.polyval(x, [3, 2, 1])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

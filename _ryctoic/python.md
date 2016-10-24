@@ -349,6 +349,17 @@ def KelvinToFahrenheit(Temperature):
     return ((Temperature-273)*1.8)+32
 ```
 
+
+``` python
+from contextlib import suppress
+import os
+with suppress(FileNotFoundError):
+    print(1')
+    os.remove('1.tmp')
+    os.remove('2.tmp')
+    print(2')
+```
+
 <https://docs.python.org/3/tutorial/errors.html#user-defined-exceptions>
 <https://www.python.org/dev/peps/pep-0352/>
 <https://hg.python.org/cpython/file/3.5/Objects/exceptions.c#l24>
@@ -376,6 +387,7 @@ TODO: <https://docs.python.org/3/library/exceptions.html#exception-hierarchy>
 - q: Catch different exceptions in different except blocks. --- a: `except ValueError: ... except LookupError: ...`
 - q: How to catch all existing exceptions and just ignore them? --- a: Just `except:`, but never do this.
 - q: How to ignore an exception? Like ignoring file existance before removing it. --- a: `except FileNotFoundError: pass` or `with contextlib.suppress(FileNotFoundError): os.remove('somefile.tmp')` --- it is equivalent to catching and doing `pass` though, this is purely for readability: if we have an exception in a middle of a block, like in `f()` when `z = f(x) * g(y)`, we can't just move on ignoring it.
+- q: What is a problem with this: `with suppress(FileNotFoundError): os.remove(1.tmp'); os.remove(2.tmp')`? -- a: The second file won't be deleted if the first `remove` throws the exception. Use the `with suppress()` carefully.
 - q: What is `else` in try-catch for? --- a: Think of it as a part of `try` block which is not interested in catching exceptions. When there are no exceptions, `try` and `else` blocks are run together, but when exceptions are raised, after that only `catch` and `finally` blocks are executed.
 - q: What is `finally` for? --- a: When an exception has occurred in the try clause and has not been handled by an except clause (or it has occurred in an except or else clause), it is re-raised after the `finally` clause has been executed.
 - q: What if we have `return` in both `try/catch` and `finally` blocks? --- a: `finally` block is guaranteed to be executed, so if we have `return` in both `try/except` and `finally` blocks, only the one in latter is run.
@@ -471,7 +483,11 @@ pre-allocating a list benchmark: <http://stackoverflow.com/questions/22225666/pr
 
 TODO: destructive and non-destructive insert, remove, append, extend, sort, pop
 
-
+``` python
+l = [1, 2]
+def f():
+    l += [3]
+```
 
 <div class="ryctoic-questions" markdown="1">
 - q: Check if an element is in the list. --- a: `elt in lst` or `not in`
@@ -507,7 +523,7 @@ TODO: destructive and non-destructive insert, remove, append, extend, sort, pop
 - q: Pre-allocation of a list vs appending elements vs list comprehension. --- a: Pre-allocation is useful when elements you fill the list with come out of order, appending has complexity of `O(1)`, so no difference with list comprehension (unless you try to optimize, measure it yourself then). 
 - q: Add an element to the end of a list. --- a: `lst.append(e)`
 - q: Concatenate two lists. --- a: `lst1 + [1, 2]`
-- q: `lst1+lst2` vs `lst1.extend(lst2)` vs `lst1 += lst2` --- a: `lst1+lst2` is non-destructive, creates new list; `.extend()` accepts any iterable; `.extend()` and `+=` are destructive, there is virtually no difference in performance.
+- q: `lst1+lst2` vs `lst1.extend(lst2)` vs `lst1 += lst2` --- a: `lst1+lst2` is non-destructive, creates new list; `.extend()` accepts any iterable; `.extend()` and `+=` are destructive, there is virtually no difference in performance (except `.extend()` has involves function call overhead).
 - q: Add an element to a list, not at the end, but at a given position. --- a: `lst.insert(pos, value)`, same as `lst[pos:pos] = [value]`.
 - q: What does mean `lst[i:i] = [v]`? --- a: Same as `lst.insert(i, v)`.
 - q: `lst.append()` vs `lst.extend()` --- a: `.append(e)` appends an element, `.extend(l)` extends the list with elements from an iterable.
@@ -542,32 +558,34 @@ TODO: destructive and non-destructive insert, remove, append, extend, sort, pop
 
 # deques
 
-TODO: use cases for deques
-TODO: `Queue.Queue` for thread safety, because `collections.deque` is only threadsafe by accident due to the existence of the GIL
+TODO: better question for deque rotation
 
-- q: create a stack data structure --- a: use a list, it supports `.append(elt)` and `.pop()` operations
-- q: create a queue data structure --- a: use a `collections.deque`, it supports `.append(elt)` and `.popleft()` operations
-- q: in which module the deque is? --- a: `collections`
-- q: how to set a size boundary for a deque? --- a: `deque(maxlen=10)`
-- q: add elements to the left and to the right sides of a deque --- a: `dq.appendleft(e)` and `dq.append(e)`, or `dq.extendleft(lst)` and `dq.extend(lst)` 
-- q: add a list of elements to the left and to the right sides of a deque --- a: `dq.extendleft(lst)` and `dq.extend(lst)`
-- q: pop elements from the left and from the right of a deque --- a: `dq.popleft()` and `dq.pop()`
-- q: rotate a deque --- a: `dq.rotate(1)` rotates to the right, equivalent to `dq.appendleft(dq.pop())`
-- q: get a slice of a deque --- a: `collections.deque` itself doesn't support slices, use `itertools.isslice` when needed or a list comprehension `[d[i] for i in range(...)]`
+- q: `Queue.Queue` vs `collections.deque` for implementing a queue. -- a: If you don't need thread safety, use `collections.deque`. Otherwise use `Queue.Queue`, because the deque is not designed for this and some operations of `collections.deque` are only threadsafe by accident due to the existence of the GIL.
+- q: Create a stack data structure. --- a: Use a list, it supports `.append(elt)` and `.pop()` operations.
+- q: Create a queue data structure. --- a: Use a `collections.deque`, it supports `.append(elt)` and `.popleft()` operations. When you need thread safety, use `Queue.Queue`, because the deque is not designed for this and some operations of `collections.deque` are only threadsafe by accident due to the existence of the GIL.
+- q: In which module is the deque? --- a: `collections`
+- q: How to set a size boundary for a deque? --- a: `deque(maxlen=10)`
+- q: What happens if we have a full `deque(maxlen=10)` and we add elements to it? -- a: When new items are added, a corresponding number of items are discarded from the opposite end. Similar to `tail` unix util. Only the most recent activity is of interest.
+- q: Add elements to the left and to the right sides of a deque. --- a: `dq.appendleft(e)` and `dq.append(e)`; `dq.extendleft(lst)` and `dq.extend(lst)` 
+- q: Add a list of elements to the left and to the right sides of a deque. --- a: `dq.extendleft(lst)` and `dq.extend(lst)`
+- q: Pop elements from the left and from the right of a deque. --- a: `dq.popleft()` and `dq.pop()`
+- q: Rotate a deque. --- a: `dq.rotate(1)` rotates to the right, equivalent to `dq.appendleft(dq.pop())`
+- q: Get a slice of a deque. --- a: `collections.deque` itself doesn't support slices, it's a doubly linked list internally; use a list comprehension `[d[i] for i in range(...)]` or `itertools.isslice` when needed.
+- q: How are deques implemented? -- a: In python deques are implemented using doubly linked lists.
 
-- q: check if an element is in the deque --- a: `elt in lst`, `not in`
-- q: get length of a deque --- a: `len(dq)`
-- q: get min in a deque --- a: `min(dq)`
-- q: get max in a deque --- a: `max(dq)`
+- q: Check if an element is in the deque. --- a: `elt in lst`, `not in`
+- q: Get length of a deque. --- a: `len(dq)`
+- q: Get min in a deque. --- a: `min(dq)`
+- q: Get max in a deque. --- a: `max(dq)`
 - q: What if we do `min()` or `max()` on empty deque? ---a: Raises `ValueError`.
-- q: get number of occurrences of an element in a deque --- a: `dq.count(e)`
-- q: what happens when `a_deque.index(x)` doesn't find the element? --- raises `ValueError`
-- q: get position of an element in a deque between given start and end positions --- a: `dq.index(e, start, end)`, raises `ValueError`
-- q: get position of an element in a deque --- a: `dq.index(e)`, raises `ValueError`
-- q: insert an element into a deque at a position --- a: `dq.insert(i, e)`
-- q: delete the first occurrence of a value in a deque --- a: `lst.remove(elt)`
-- q: reverse a deque --- a: `dq.reverse()` or `reversed(dq)`
-- q: remove all elements from a deque --- a: `dq.clear()`
+- q: Get number of occurrences of an element in a deque. --- a: `dq.count(el)`
+- q: What happens when `a_deque.index(x)` doesn't find the element? --- Raises `ValueError`.
+- q: Get position of an element in a deque between given start and end positions. --- a: `dq.index(e, start, end)`, raises `ValueError`
+- q: Get position of an element in a deque. --- a: `dq.index(e)`, raises `ValueError`
+- q: Insert an element into a deque at a position. --- a: `dq.insert(i, e)`
+- q: Delete the first occurrence of a value in a deque. --- a: `lst.remove(elt)`
+- q: Reverse a deque. --- a: `dq.reverse()` or `reversed(dq)`
+- q: Remove all elements from a deque. --- a: `dq.clear()`
 
 
 # dicts
@@ -582,6 +600,14 @@ d[1] = 'whatever'   # sets the value
 
 interesting: Due to the way the Python C-level APIs developed, a lot of built-in functions and methods don't actually have names for their arguments. `.get(x, default=0)` throws `TypeError: get() takes no keyword arguments`, but `.get(x, 0)` works
 
+q: How to iterate over a dict and remove items based on a condition? -- a: Do not add or remove items from data structures while iterating over them. In the best case this causes `RunTimeError`, sometimes it leads to infinite loop, sometimes to skipping items. For example, given a dict, our choices are: iterate over a copy of keys `for k in list(dct.keys())`; create a list of keys to delete after iteration; use dict comprehension, which creates a new dict.
+q: Why we can't simply iterate over keys in a dict to remove some items in the same dict like in `for k in dct.keys(): if cond: del dct[k]`? -- a: Iterators are not informed when a data structure is modified. In best case this causes `RunTimeError`, sometimes it leads to infinite loop, sometimes to skipping items.
+TODO: same for lists
+
+q: Construct a dict from two lists. -- a: First, make sure they are of same length (or you know what you are doing when not), and then `dict(zip(keys, values))`.
+q: Construct a dict from list of 2-lists.  -- a: `dict( [[1, 'a'], [2, 'b']] )`
+q: Construct a dict from list of 2-tuples. -- a: `dict( [(1, 'a'), (2, 'b')] )`
+q: Convert a dict to a list of 2-tuples. -- a: `list(dct.items())` or dict comprehension.
 
 q: Check if a key exists in a dict. --- a: `if k in a_dict: ...`, `not in`
 q: Get number of key-value pairs in a dictionary --- a: `len(d)`
@@ -595,7 +621,7 @@ q: What happens when you do `a_dict.get(x, default=0)`? --- a: `TypeError: get()
 q: Set a value for key in a dict. --- a: `d['whatever'] = 1`
 q: `a_dict[k]` vs `a_dict.get(k)` --- a: The latter never raises `KeyError`, returns `None` or provided default value, e.g., `a_dict.get(k, 0)`.
 q: What does `a_dict.setdefault(k, defaultvalue)` do? --- a: Returns `a_dict[k]` when `k` exists or sets `a_dict[k] = defaultvalue` and then returns it, instead of just returning it like the `.get()` does.
-q: `a_dict.get(k, defaultvalue)` vs `a_dict.setdefault(k, defaultvalue)` vs `collections.defaultdict(init_func)` --- a: When the key does not exist, `.get()` just returns the `defaultvalue`, `.setdefault` sets `d[k] = default_value` and then returns it, `defaultdict` does the same, but initializes the value with `init_func`, it's called `defaultfactory` in docs.
+q: `a_dict.get(k, defaultvalue)` vs `a_dict.setdefault(k, defaultvalue)` vs `collections.defaultdict(init_func)` --- a: When the key does not exist, `.get()` just returns the `defaultvalue`, `.setdefault()` sets `d[k] = default_value` and then returns it, `defaultdict` does the same, but initializes the value with `init_func`, it's called `defaultfactory` in docs. The `defaultdict` is considered a modern version of `.setdefault()`, since its name is much more obvious.
 q: What is a `dictview`? --- a:  Provids a dynamic view on the dictionary’s entries, which means that when the dictionary changes, the view reflects these changes.
 q: What does `a_dict.items()` return? --- a: A `dictview` object.
 q: What does `a_dict.keys()` return? --- a: A `dictview` object.
@@ -646,11 +672,31 @@ q: Can `set` and `frozenset` be compared? --- a: Yes, instances of set are compa
 
 ```
 
+
+``` python
+>>> '{0:.1f} {1}'.format(698.243, 'GB')
+'698.2 GB'
+```
+
+- q: `s.format()` vs `%`-interpolation --- a: Just use the `.format()`, the `%`-style formatting is left in the language for backward compatibility.
+
+format
+can rearrange and duplicate: `print '{0} {2} {1} {2}'.format(*tu)`
+can be passed as parameter: `map('%Y-%m-%d'.format, lst)`
+
+lower()
+splitlines()
+
+- q: Get a number of (non-overlapping) occurrences of a substring in a string. -- a: `str.count(sub)`, can also pass start and end positions.
+
+
 TODO: print(..., sep=', ')
 TODO: print(..., end=' ')
 
 TODO: rjust, ljust, center, zfill vs string.format --- print('%s %s %s %s' % (str(i).rjust(p), oct(i)[2:].rjust(p), hex(i)[2:].rjust(p), bin(i)[2:].rjust(p)))
 q: print a string centered within width `w` with a minus `-` as padding char --- a: `print( string.centered(s, w, '-') )`
+
+q: Strings `+=` vs `.join()` -- a: `O(n^2)` vs `O(n)`. And although the `+=` is optimized in some cases, it's better to just never use it, because in (pretty unpredictable) cases when it doesn't get optimized, we are going to have quadratic slowdowns. <http://stackoverflow.com/questions/1349311/python-string-join-is-faster-than-but-whats-wrong-here/21964653#21964653>
 
 q: split a string, using space as separator --- a: `a_str.split()`
 q: split a string into two pieces, using comma as a separator --- a: `'a,b,c,d'.split(',', maxsplit=1)`
@@ -670,6 +716,8 @@ q: get an uppercase alphabet string --- a: `string.ascii_uppercase`
 q: get a string, which constists of all printable chars --- a: `string.printable`
 q: get a string, which constists of all punctuation chars --- a: `string.punctuation`
 q: reverse a string --- a: `a_string[::-1]`
+
+
 
 # math
 
@@ -817,12 +865,13 @@ q: merge two lists into a list of pairs --- a: `zip('abcd', [1,2,3,4])`
 [repr](https://docs.python.org/3/library/functions.html#repr)
 [str](https://docs.python.org/3/library/functions.html#str)
 
-# byte arrays
+# bytes and bytearrays
 
 [bytearray](https://docs.python.org/3/library/functions.html#bytearray)
 [bytes](https://docs.python.org/3/library/functions.html#bytes)
 [memoryview](https://docs.python.org/3/library/functions.html#memoryview)
 
+- q: `bytes` vs `bytearray` -- a: `bytes` are immutable, just like strings, while `bytearray` objects are mutable and algorightms with them can be faster when we have lots of modifications, because we avoid lots of copying.
 
 
 # oop
@@ -881,11 +930,29 @@ TODO: generators
 <http://stackoverflow.com/questions/2776829/difference-between-pythons-generators-and-iterators>
 <http://stackoverflow.com/questions/9884132/what-exactly-are-pythons-iterator-iterable-and-iteration-protocols>
 
+q: `sum([x in x in range(10)])` vs `sum(x in x in range(10))` -- a: The latter uses a generator, has lower memory consumption, because it doesn't create a list.
+
 # coroutines
 
 TODO
 
 # misc
+
+``` python
+def make_counter():
+    count = 0
+    def counter():
+        nonlocal count
+        count += 1
+        return count
+    return counter
+```
+
+
+- q: Closures in python. -- a: To capture a binding in the outer scope, use `nonlocal x`.
+
+TODO: complexity of all operations for lists, dicts, sets, deques considering their internal structure
+
 [bool](https://docs.python.org/3/library/functions.html#bool)
 [object](https://docs.python.org/3/library/functions.html#object)
 [id](https://docs.python.org/3/library/functions.html#id)
@@ -938,6 +1005,7 @@ TODO: <http://stackoverflow.com/questions/101268/hidden-features-of-python>
 TODO: generate random number
 
 
+- q: Default character encoding of python3 files? -- a: `utf-8`
 
 ## skipped hackerrank challenges
 
@@ -987,6 +1055,7 @@ q: dir() vs vars(...).keys() a: <http://stackoverflow.com/questions/980249/diffe
 q: check the import search path --- a: `sys.path`
 
 
+- q: `type(s) is str` vs `type(s) == str` vs `isinstance(s, str)` -- a: Virtually no difference between `is` and `==` here, but people tend to use `is`. Type comparison answers the strict question: is this a type of object. `isinstance(o, cls)` considers type hierarcy.
 
 
 ## code evaluation
@@ -1003,6 +1072,12 @@ q: check the import search path --- a: `sys.path`
 
 
 # collections module
+
+TODO: q:
+ChainMap -- constructing `O(n)`, lookup `O(n)`
+using dict update chain -- constructing `O(nm)`, lookup `O(1)`
+This means that if you construct often and only perform a few lookups each time, or if M is big, ChainMap's lazy-construction approach works in your favor.
+<http://stackoverflow.com/questions/23392976/what-is-the-purpose-of-collections-chainmap/23441777#23441777>
 
 q: get a dict, which which counts distinct elements in a list --- a: `collections.Counter(list)`
 q: get a dict with default value `'foo'` --- a: `collections.defaultdict(lambda: 'foo')`
@@ -1048,6 +1123,8 @@ dropwhile, takewhile
 zip_longest
 
 TODO: compress, better groupby, tee
+
+TODO: `itertools.isslice`
 
 q: get a cartesian product of two sequences --- a: `itertools.product(s1, s2)`
 q: get permutations of length `k` of elements in a list --- a: `itertools.permutations(a_list, k)`
@@ -1130,6 +1207,25 @@ q: get a value of a polynomial with given coefficients at point `x` --- a: numpy
 
 
 
+
+
+
+
+
+# context managers
+
+`@cache` implements lru cache
+# xml
+
+``` python
+import xml.etree.ElementTree as etree
+tree = etree.ElementTree(etree.fromstring( s ))
+
+for child in tree.getroot():
+    pass
+
+isinstance(tree.getroot().attrib, dict) == True
+```
 
 
 

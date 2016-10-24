@@ -55,6 +55,8 @@ TODO: check if there are more under these names
 
 \\[ P(A \, \| \, B) \ = \ \frac{P(AB)}{P(B)} \\]
 
+<https://en.wikipedia.org/wiki/Penney%27s_game>
+
 # independence
 
 Threre are two equivalent definitions:
@@ -111,4 +113,20 @@ Example of _not independent_, but _conditionally independent_. There are two coi
 
 
 
+
+
+# distributions eli5
+
+from <https://www.reddit.com/r/AskStatistics/comments/52vt7n/this_is_the_best_explanation_of_distributions_ive/d7o64th>:
+
+> (Binomial) The binomial answers the question "if I flip a coin n times, how many times will I get a heads?" It models any sort of yes-no counting process.
+> (Negative Binomial) The negative binomial is the opposite of the binomial. It answers the question, "how many coin flips will it take for me to get x heads?"
+> (Geometric) The geometric distribution answers the question "How many times do I have to flip a coin until the first heads/tails appears?" or "How many times do I have to throw a die until the first '6' appears?"
+> (Poisson) The poisson is the answer to the question "if people arrive at my store once every 5 minutes, how many people can I expect in x minutes?" It models how many events happen in a given time interval.
+> (Uniform) The uniform distribution is the answer to the question "If I spin an arrow at the center of a circle of circumference 1, how likely is it that it falls into an arc of a specific length?"
+> (Normal) The Normal distribution could be considered as the approximate answer to the question "If a lot small random lengths (which we have some information about) are added together, what is the chance the total length is between these two numbers?"
+> (Triangular) The Triangular distribution could be considered a simple best guess distribution, that is, "If all I know are the maximum, minimum and most likely value, what should I use as my distribution? A triangle."
+> (Exponential) The exponential is the opposite of the Poisson: "if people arrive once every 5 minutes, then what is the expected amount of time between arrivals?"
+> (Gamma) The gamma is related to the exponential, and is the answer to the question: "If people arrive once every 5 minutes, then how long do I have to wait for a specific number of people to arrive".
+> (Weibull) The Weibull distribution is the answer to the question: "If I have a machine that crushes rocks into sand, what proportion of grains will be with-in this specific size range?"
 

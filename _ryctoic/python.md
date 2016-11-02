@@ -8,6 +8,10 @@ layout:  collection_page
 {:toc}
 
 
+
+?????????????????????????? sum  ???
+
+
 # true, false, and comparisons
 
 {% comment %}
@@ -506,6 +510,8 @@ def f():
 - q: What if we do `lst.remove('a')` and there is no such element in the list? --- a: Raises `ValueError`.
 - q: Delete all occurrences of a value in a list. --- a: `a[:] = [e for e in lst when e!=value]`, keep `[:]` if you want it in-place.
 - q: Delete all occurrences of a value in a list in-place. --- a: `a[:] = [e for e in lst when e!=value]`, keep `[:]` if you want it in-place.
+- q: How to iterate over a list and remove items based on a condition? -- a: Do not add or remove items from data structures while iterating over them. In the best case this causes `RunTimeError`, sometimes it leads to infinite loop, sometimes to skipping items. Our choices are: iterate over a copy; create a list of elements to delete after iteration; use list comprehension, e.g., `lst[:] = [x for x in lst if ...]`, keep `[:]` to mutate the original list object.
+- q: Why can't we simply iterate over a list to remove some items in the same list like in `for x in lst: if cond: lst.remove(x)`? -- a: Iterators are not informed when a data structure is modified. In the best case this causes `RunTimeError`, sometimes it leads to infinite loop, sometimes to skipping items.
 - q: Get and remove an item at the end of a list. --- a: `lst.pop()`, same as `lst.pop(-1)`
 - q: Get and remove an item at the given position in a list. --- a: `lst.pop(position)`
 - q: What if we do `lst.pop()` when the list is empty? --- a: Raises `IndexError`.
@@ -530,6 +536,9 @@ def f():
 - q: Remove all elements from a list. --- a: `lst.clear()`
 - q: `a, b, c` vs `(a, b, c)` --- a: Exactly the same, it is actually the comma which makes a tuple, not the parentheses, which are useful to avoid ambiguity, e.g., `f(a, b)` is different from `f( (a, b) )`.
 - q: Unpack `[1, [2, 3]]` into three variables `a = 1; b = 2; c = 3`. --- a: `a, (b, c) = [1, [2, 3]]`
+
+TODO: add: - q: merge two lists into a list of pairs --- a: `zip('abcd', [1,2,3,4])`
+
 </div>
 
 
@@ -600,29 +609,30 @@ d[1] = 'whatever'   # sets the value
 
 interesting: Due to the way the Python C-level APIs developed, a lot of built-in functions and methods don't actually have names for their arguments. `.get(x, default=0)` throws `TypeError: get() takes no keyword arguments`, but `.get(x, 0)` works
 
-q: How to iterate over a dict and remove items based on a condition? -- a: Do not add or remove items from data structures while iterating over them. In the best case this causes `RunTimeError`, sometimes it leads to infinite loop, sometimes to skipping items. For example, given a dict, our choices are: iterate over a copy of keys `for k in list(dct.keys())`; create a list of keys to delete after iteration; use dict comprehension, which creates a new dict.
-q: Why we can't simply iterate over keys in a dict to remove some items in the same dict like in `for k in dct.keys(): if cond: del dct[k]`? -- a: Iterators are not informed when a data structure is modified. In best case this causes `RunTimeError`, sometimes it leads to infinite loop, sometimes to skipping items.
-TODO: same for lists
+
+TODO: `iteritems`, `iterkeys`, `itervalues` are no longer supported
 
 q: Construct a dict from two lists. -- a: First, make sure they are of same length (or you know what you are doing when not), and then `dict(zip(keys, values))`.
 q: Construct a dict from list of 2-lists.  -- a: `dict( [[1, 'a'], [2, 'b']] )`
 q: Construct a dict from list of 2-tuples. -- a: `dict( [(1, 'a'), (2, 'b')] )`
-q: Convert a dict to a list of 2-tuples. -- a: `list(dct.items())` or dict comprehension.
-
-q: Check if a key exists in a dict. --- a: `if k in a_dict: ...`, `not in`
-q: Get number of key-value pairs in a dictionary --- a: `len(d)`
-q: Create a dictionary. --- a: `d = {}` or `d = { 1: 'a', 2: 'b'}`
+q: Convert a dict to a list of 2-tuples. -- a: `list(dct.items())` or a comprehension.
+q: Check if a key exists in a dict. --- a: `if k in a_dict: ...` or `not in`
+q: Get number of key-value pairs in a dictionary. --- a: `len(d)`
+q: Create an empty dictionary. --- a: `d = {}`
+q: Create an dictionary with key-value pairs `1: 'a', 2: 'b'`. --- a: `d = { 1: 'a', 2: 'b' }`
 q: Get a value from dict by a key. --- a: `d['the key']` or `d.get('whatever', 'zero')` when you want a default value. The former raises `KeyError`.
 q: Get list of keys of a dict. --- a: `list(a_dict.keys())`, the `.keys()` returns a dictview.
-q: Iterate over keys in a dict. --- a: `for k in dct: ...`, equivalent to `for k in iter(dct): ...` or `for k in iter(dct.keys())`
+q: Iterate over keys in a dict. --- a: `for k in dct: ...`, equivalent to `for k in dct.keys(): ...`
 q: Iterate over key-value pairs in a dict. --- a: `for k,v in dct.items(): ...`
+q: How to iterate over a dict and remove items based on a condition? -- a: Do not add or remove items from data structures while iterating over them. In the best case this causes `RunTimeError`, sometimes it leads to infinite loop, sometimes to skipping items. For example, given a dict, our choices are: iterate over a copy of keys `for k in list(dct.keys())`; create a list of keys to delete after iteration; use dict comprehension, which creates a new dict.
+q: Why can't we simply iterate over keys in a dict to remove some items in the same dict like in `for k in dct.keys(): if cond: del dct[k]`? -- a: Iterators are not informed when a data structure is modified. In the best case this causes `RunTimeError`, sometimes it leads to infinite loop, sometimes to skipping items.
 q: Get a value for key in a dict, or default value when not found. --- a: `d.get(k, 0)`; note that `.get(k, default=0)` will throw `TypeError: get() takes no keyword arguments`
 q: What happens when you do `a_dict.get(x, default=0)`? --- a: `TypeError: get() takes no keyword arguments`; just write `.get(x, 0)`
 q: Set a value for key in a dict. --- a: `d['whatever'] = 1`
 q: `a_dict[k]` vs `a_dict.get(k)` --- a: The latter never raises `KeyError`, returns `None` or provided default value, e.g., `a_dict.get(k, 0)`.
-q: What does `a_dict.setdefault(k, defaultvalue)` do? --- a: Returns `a_dict[k]` when `k` exists or sets `a_dict[k] = defaultvalue` and then returns it, instead of just returning it like the `.get()` does.
+q: What does `a_dict.setdefault(k, defaultvalue)` do? --- a: Returns `a_dict[k]` when `k` exists or sets `a_dict[k] = defaultvalue` and then returns it, instead of just returning it like the `.get()` does. Note that `defaultdict` is a modern replacement for the `.setdefault()`, because its name is much more obvious.
 q: `a_dict.get(k, defaultvalue)` vs `a_dict.setdefault(k, defaultvalue)` vs `collections.defaultdict(init_func)` --- a: When the key does not exist, `.get()` just returns the `defaultvalue`, `.setdefault()` sets `d[k] = default_value` and then returns it, `defaultdict` does the same, but initializes the value with `init_func`, it's called `defaultfactory` in docs. The `defaultdict` is considered a modern version of `.setdefault()`, since its name is much more obvious.
-q: What is a `dictview`? --- a:  Provids a dynamic view on the dictionary’s entries, which means that when the dictionary changes, the view reflects these changes.
+q: What is a `dictview`? --- a: Provids a dynamic view on the dictionary’s entries, which means that when the dictionary changes, the view reflects these changes. Once it's converted to a list, this property disappears.
 q: What does `a_dict.items()` return? --- a: A `dictview` object.
 q: What does `a_dict.keys()` return? --- a: A `dictview` object.
 q: What does `a_dict.values()` return? --- a: A `dictview` object.
@@ -631,83 +641,160 @@ q: What can we do with a `dictview` returned by `dct.items()`, `dct.keys()`, `dc
 
 # sets
 
-q: create a set --- a: empty set is created like `a_set = set()`, not `{}`; non-empty is `a_set = {1, 2, 3}`
-q: create an empty set --- a: `a_set = set()`, not `{}`, because the latter is an empty dict
-q: create a set from a given list --- a: `a_set = set([1, 2, 3])`
-q: check if an element is in the set, and vice versa --- a: `elt in a_set` and `elt not in a_set`
-q: get number of elements in a set --- a: `len(a_set)`
-- q: Get min in a set. --- a: `min(a_set)`
-- q: Get max in a set. --- a: `max(a_set)`
+- q: Create a set of elements `1, 2, 3`. --- a: `st = {1, 2, 3}`
+- q: Create an empty set. --- a: `st = set()`, not `{}`, because the latter is an empty dict.
+- q: Create a set from a given list. --- a: `st = set([1, 2, 3])`
+- q: Check if an element is in the set, and vice versa. --- a: `elt in st` and `elt not in st`
+- q: Get number of elements in a set. --- a: `len(st)`
+- q: Get min in a set. --- a: `min(st)`
+- q: Get max in a set. --- a: `max(st)`
 - q: What if we do `min()` or `max()` on empty set? ---a: Raises `ValueError`.
 - q: Get an index of an element in a set. --- a: Sets do not support indexing, slicing, or other sequence-like behaviour.
 - q: Get a slice of a set. --- a: Sets do not support indexing, slicing, or other sequence-like behaviour.
-- q: 
-q: add an element to a set --- a: `a_set.add(e)`
-q: given a set, add elements from another set to it --- a: `a_set.update(another_set)`
-q: `a_set.add()` vs `a_set.update()`? --- a: `a_set.add(elt)` adds an element, `a_set.update(another_set)` adds elements from another set
-q: remove an element from a set --- a: `a_set.remove(e)` raises KeyError when the element doesn't exist, `a_set.discard(e)` just silently discards it
-q: `a_set.remove(e)` vs `a_set.discard(e)`? --- a: `a_set.remove(e)` raises `KeyError` when the element doesn't exist, `a_set.discard(e)` just silently discards it
-q: what does `a_set.pop()` do? --- a: it pops an arbitrary element, pretty useless function
-q: remove all elements from a set --- a: `a_set.clear()`
-q: what are set theory functions on sets? --- a: `a_set.union(b_set)` or `|`; `a_set.intersection(b_set)` or `&`; `a_set.difference(b_set)` or `-`; `a_set.symmetric_difference(b_set)` or `^` --- all of them are non-destructive.
-q: What does `a_set & b_set` do? --- a: Set intersection.
-q: What does `a_set | b_set` do? --- a: Set union.
-q: What does `a_set - b_set` do? --- a: Set difference.
-q: What does `a_set ^ b_set` do? --- a: Set symmetric difference.
-q: Are set theory operations or corresponding functions on sets destructive? --- a: No, they are all non-destructive.
-q: What happens here? `set('abc') & 'cbs'` --- a: Set theory operators require their arguments to be sets, `TypeError` is raised.
-q: What happens here? `set('abc').intersection('cbs')` --- a: Set theory functions (but not operators) accept any iterable as argument.
-q: check if a set is a subset or superset of another set --- a: `a_set.issubset(another_set)` and `a_set.issuperset(another_set)`; `<`, `<=` and `>`, `>=` respectively
-q: check if two sets intersect --- a: `a_set.isdisjoint(another_set)`
-q: Iterate over elements of a set. --- a: `for x in a_set: ...`; note, sets don't preserve order.
-q: In which order is a set is iterated here? `for x in a_set: ...`. --- a: The order is arbitraty, sets don't preserve order.
-q: `frozenset` vs `set`? --- a: The `frozenset` is an immutable set, it's hashable, so it can be a key in a `dict` and it can be an element of another `set`. It doesn't support operations like `.add`, `.remove`, `&=`, etc.
-q: What if we do `frozenset('abc') | set('bcd')`? --- a: Binary operations that mix `set` instances with `frozenset` return the type of the first operand.
-q: Can `set` and `frozenset` be compared? --- a: Yes, instances of set are compared to instances of frozenset based on their members.
+- q: Add an element to a set. --- a: `st.add(el)`
+- q: Given a set, add elements from another set to it. --- a: `st |= another_set` or `st.update(another_set)`
+- q: Given a set, add elements from a list to it. --- a: `st.update(lst)`, it accepts iterables; but not the `|=` operator, it accepts sets only.
+- q: Given a set, leave only elements which are also in a given list. --- a: `a_set.intersection_update(lst)`, but not `&=`, it accepts sets only.
+- q: `&=` is for `.intersection_update()`. What is `|=` for? --- a: Just `.update()`, there is no `.union_update()`.
+- q: `a_set.add()` vs `a_set.update()`? --- a: `a_set.add(el)` adds one element, `a_set.update(another_set)` adds multiple elements from an iterable.
+- q: Remove an element from a set. --- a: `st.remove(el)` or `a_set.discard(el)`. The former raises `KeyError` when the element doesn't exist, the latter just silently discards it.
+- q: `a_set.remove(el)` vs `a_set.discard(el)`? --- a: `a_set.remove(el)` raises `KeyError` when the element doesn't exist, `a_set.discard(el)` just silently discards it.
+- q: Remove all elements from a set. --- a: `st.clear()`
+- q: What are set theory functions on sets? --- a: `a_set.union(b_set)` or `|`; `a_set.intersection(b_set)` or `&`; `a_set.difference(b_set)` or `-`; `a_set.symmetric_difference(b_set)` or `^` --- all of them are non-destructive.
+- q: What does `a_set & b_set` do? --- a: Set intersection.
+- q: What does `a_set | b_set` do? --- a: Set union.
+- q: What does `a_set - b_set` do? --- a: Set difference.
+- q: What does `a_set ^ b_set` do? --- a: Set symmetric difference.
+- q: What operator is for set intersection? --- a: `a_set & b_set`
+- q: What operator is for set union? --- a: `a_set | b_set`
+- q: What operator is for set difference? --- a: `a_set - b_set`
+- q: What operator is for set symmetric difference? --- a: `a_set ^ b_set`
+- q: Are set theory operators or corresponding functions on sets destructive? --- a: Operators and functions like `&` and `.intersection()` are non-destructive; `&=` and `.intersection_update()` are destructive.
+- q: What happens here? `set('abc') & 'bcd'`? --- a: Set theory operators require their arguments to be sets, `TypeError` is raised.
+- q: What happens here? `set('abc').intersection(bcd')`? --- a: Set theory functions (but not operators) accept any iterable as argument.
+- q: Do set theory operators and corresponding functions require their arguments to be sets? --- a: Set theory operators require their arguments to be sets, `TypeError` is raised. Set theory functions accept any iterable as argument.
+- q: Check if a set is a subset or superset of another set. --- a: `a_set.issubset(another_set)` and `a_set.issuperset(another_set)`; `<`, `<=` and `>`, `>=` respectively.
+- q: Check if two sets intersect. --- a: `a_set.isdisjoint(another_set)`
+- q: Iterate over elements of a set. --- a: `for x in a_set: ...`; note, sets don't preserve order.
+- q: In which order is a set is iterated here? `for x in a_set: ...`. --- a: The order is arbitraty, sets don't preserve order.
+- q: `frozenset` vs `set`? --- a: The `frozenset` is an immutable set, it's hashable, so it can be a key in a `dict` and it can be an element of another `set`. It doesn't support operations like `.add`, `.remove`, `&=`, etc.
+- q: What if we do `frozenset('abc') | set('bcd')`? --- a: Binary operations that mix `set` instances with `frozenset` return the type of the first operand.
+- q: Can `set` and `frozenset` be compared? --- a: Yes, instances of `set` and `frozenset` are compared based on their members.
+
+
+TODO: why do does `a_set.pop()` even exist? - q: What does `a_set.pop()` do? --- a: it pops an arbitrary element, pretty useless function.
+
+TODO: a good question about `.update()`, `.intersection_update()`, `.difference_update()`, etc --- I don't like existing ones
+
+TODO:
+> Note, the elem argument to the __contains__(), remove(), and discard() methods may be a set. To support searching for an equivalent frozenset, the elem set is temporarily mutated during the search and then restored. During the search, the elem set should not be read or mutated since it does not have a meaningful value.
+
 
 # strings
+## misc
 
-``` python
-'a b c'.split() == ['a', 'b', 'c']
+Strings `.join()` vs `+=` in a loop.: <http://stackoverflow.com/questions/1349311/python-string-join-is-faster-than-but-whats-wrong-here/21964653#21964653>
 
-```
+TODO: a question on string immutability
 
+- q: How are string literals written in python? --- a: `'Single'` or `"double"` or `'''three single'''` or `"""three double"""` quotes. Triple quoted strings may span multiple lines.
+- q: What does this return if there is no separate character type in python: `s[0]`? --- a: Returns a string of length 1, `s[0]` is equivalent to `s[0:1]`.
+- q: Get length of a string. --- a: `len(s)`
+- q: What if `s = 'abc'` and we try to get `s[3]`? --- a: Raises `IndexError`.
+- q: Strings `.join()` vs `+=`. --- a: When you do not join strings in a loop, then pretty much the same. If you do, then this is `O(n)` vs `O(n^2)`. 
+- q: Strings `.join()` vs `+=` in a loop. -- a:  `O(n)` vs `O(n^2)`. And although the `+=` is optimized in some cases, it's better to just never use it in loops, because in (pretty unpredictable) cases when it doesn't get optimized, we are going to have quadratic slowdowns. 
+- q: Get a number of non-overlapping occurrences of a substring in a string. -- a: `str.count(sub)`, can also pass start and end positions.
 
-``` python
->>> '{0:.1f} {1}'.format(698.243, 'GB')
-'698.2 GB'
-```
-
-- q: `s.format()` vs `%`-interpolation --- a: Just use the `.format()`, the `%`-style formatting is left in the language for backward compatibility.
-
-format
-can rearrange and duplicate: `print '{0} {2} {1} {2}'.format(*tu)`
-can be passed as parameter: `map('%Y-%m-%d'.format, lst)`
-
-lower()
-splitlines()
-
-- q: Get a number of (non-overlapping) occurrences of a substring in a string. -- a: `str.count(sub)`, can also pass start and end positions.
+TODO: `str(bytes, encoding, errors)` is equivalent to `bytes.decode(encoding, errors)`
+TODO: `str.encode(encoding="utf-8", errors="strict")`
+TODO: `io.StringIO`, `io.BytesIO`, `tempfile.SpooledTemporaryFile`
 
 
-TODO: print(..., sep=', ')
-TODO: print(..., end=' ')
+- q: What are `str.maketrans()` and `str.translate` for? --- a: For character substitution. `l->1, e->3, t->7` is done like this: `'leet'.translate(str.maketrans('let', '137'))`
 
+## split and strip
+
+strip
+lstrip
+rstrip
+
+partition
+rpartition
+
+split
+rsplit
+
+TODO: partition vs split
+
+- q: `partition` vs `split` --- a: The former returns a 3-tuple no matter what. Examples: `'a-b-c'.partition('-') == ('a', '-', 'b-c')` and `'a+b+c'.partition('-') == ('a+b+c', '', '')`.
+
+q: Split a string by whitespaces and trim results. --- a: `a_str.split()` --- when the `sep` argument is not specified or `None`, runs of consecutive whitespace are regarded as a single separator, so it splits and trims separated pieces.
+q: Split a string into two pieces by whitespaces and trim results. --- a: Be careful, the following is not enough: `'  1   2   3  '.split(None, 1) == ['1', '2   3  ']`.
+q: Split a string by comma and trim results. --- a: `[x.strip() for x in s.split(',')]` or `list(map(str.strip, s.split(',')))`
+q: Split a string by comma without trimming. --- a: `'1,   2,   3'.split(',') == ['1', '   2', '   3']`
+q: Split a `'1<>2<>3'` string using `<>` as a separator. --- a: `'1<>2<>3'.split('<>')`
+q: Split a string into two pieces by comma without trimming. --- a: `'a, b, c, d'.split(',', maxsplit=1) == ['a', ' b, c, d']` or `'a, b, c, d'.partition(',') == ('a', ',', ' b, c, d')`.
+q: Split a string from the end into two pieces by comma without trimming. --- a: `'a, b, c, d'.rsplit(',', maxsplit=1) == ['a, b, c', ' d']` or `rpartition`.
+q: Split a multiline string into a list of lines. --- a: `s.splitlines()`, if the `keepends` arg is true, it keeps line breaks.
+q: Split a multiline string into a list of lines, keeping line breaks. --- a: `s.splitlines(keepends=True)`
+q: What do string methods return when the string is empty? --- a: If a `sep` arg is not specified or `None`, an empty string is split into an empty list: `''.split() == []`; otherwise: `''.split(',') ==['']`.
+q: What do string split methods return when the string is actually not split by given separator? --- a: An empty list containing the string. `'  a  '.split(',') == ['  a  ']`. If a `sep` arg is not specified or `None`, it also trims it: `'  a  '.split() == ['a']`
+
+
+
+## methods
+
+<https://docs.python.org/3/library/stdtypes.html#string-methods>
+
+isidentifier?
+isalnum
+isalpha
+isdecimal
+isdigit
+islower
+isnumeric
+isprintable
+isspace
+istitle
+isupper
+
+endswith
+startswith
+
+casefold?
+capitalize
+lower
+upper
+title
+swapcase
+
+
+center
+ljust
+rjust
+zfill
 TODO: rjust, ljust, center, zfill vs string.format --- print('%s %s %s %s' % (str(i).rjust(p), oct(i)[2:].rjust(p), hex(i)[2:].rjust(p), bin(i)[2:].rjust(p)))
-q: print a string centered within width `w` with a minus `-` as padding char --- a: `print( string.centered(s, w, '-') )`
 
-q: Strings `+=` vs `.join()` -- a: `O(n^2)` vs `O(n)`. And although the `+=` is optimized in some cases, it's better to just never use it, because in (pretty unpredictable) cases when it doesn't get optimized, we are going to have quadratic slowdowns. <http://stackoverflow.com/questions/1349311/python-string-join-is-faster-than-but-whats-wrong-here/21964653#21964653>
 
-q: split a string, using space as separator --- a: `a_str.split()`
-q: split a string into two pieces, using comma as a separator --- a: `'a,b,c,d'.split(',', maxsplit=1)`
-q: split a string from the end into two pieces, using comma as a separator --- a: `'a,b,c,d'.rsplit(',', maxsplit=1)`
+
+
+not covered: `expandtabs`
+
+index
+rindex
+find
+rfind
+replace
+
+q: `substr in a_string` vs `a_string.find(substr)` vs `a_string.index(substr)` --- a: `in` returns a boolean, `find()` returns index or `-1`, `index()` is quite like find, but raises `ValueError` when not found.
+
+
 q: print float up to three digits after the point --- a: `print('%.3f' % (2.718281828))`
 q: print 'hello, f l', getting those as args --- a: `print('hello, %s %s' % (f, l))`
 q: reverse case of a string, lower case to upper case and vice versa --- a: `string.swapcase(str)`
 q: concatenate a list of strings --- a: `''.join( lst ) `
-q: concatenate a list of strings and numbers into comma-separated string --- a: `','.join( map(str, mylist) ) `
+q: concatenate a list of strings and numbers into comma-separated string --- a: `', '.join( map(str, ['a', 1, 'b', 2]) ) == 'a, 1, b, 2'`
 q: replace a character in string at given position --- a: `l = list('hello'); l[4]='!'; ''.join(l) == 'hell!'` or `s = '2+2'; s2 = s[:1] + '**' + s[2:]; s2 == '2**2'` --- the latter is faster
-q: `substr in a_string` vs `a_string.find(substr)` vs `a_string.index(substr)` --- a: `in` is a bit faster, `find()` returns index or `-1`, `index()` is quite like find, but raises `ValueError` when not found
 q: check if a substring is in a string: --- a: `substring in a_string`, which is fastest, or `a_string.find(substring) != -1` or `a_string.index(substring)` and catch `ValueError`
 q: find index of a substring in a string --- a: `a_string[n:m].find(substring)` or `a_string.find(substring, n, m)`, which is faster; same with `.index()` with its `ValueError`
 q: get a string of `n` minuses `-` --- a: `'-'*n`
@@ -717,6 +804,40 @@ q: get a string, which constists of all printable chars --- a: `string.printable
 q: get a string, which constists of all punctuation chars --- a: `string.punctuation`
 q: reverse a string --- a: `a_string[::-1]`
 
+- q: print a string centered within width `w` with a minus `-` as padding char --- a: `print( string.centered(s, w, '-') )`
+
+
+
+
+
+## format
+
+``` python
+>>> '{0:.1f} {1}'.format(698.243, 'GB')
+'698.2 GB'
+```
+
+can rearrange and duplicate: `print '{0} {2} {1} {2}'.format(*tu)`
+can be passed as parameter: `map('%Y-%m-%d'.format, lst)`
+
+TODO: print(..., sep=', ')
+TODO: print(..., end=' ')
+
+
+- q: `s.format()` vs `%`-interpolation --- a: Just use the `.format()`, the `%`-style formatting is left in the language for backward compatibility.
+- q: `str.format_map(dct)` vs `str.format(**dct)`? --- a: Unpacking produces a `dict`, so this fails if it doesn't contain a needed key. But with `.format_map()` we can use `defaultdict`.
+TODO: `str.format_map` example
+
+
+
+
+# bytes and bytearrays
+
+[bytearray](https://docs.python.org/3/library/functions.html#bytearray)
+[bytes](https://docs.python.org/3/library/functions.html#bytes)
+[memoryview](https://docs.python.org/3/library/functions.html#memoryview)
+
+- q: `bytes` vs `bytearray` -- a: `bytes` are immutable, just like strings, while `bytearray` objects are mutable and algorightms with them can be faster when we have lots of modifications, because we avoid lots of copying.
 
 
 # math
@@ -833,25 +954,17 @@ q: get greatest common divisor of two numbers --- a: `math.gcd(a, b)`
 
 
 # structs and iteration
+
 [filter](https://docs.python.org/3/library/functions.html#filter)
 [map](https://docs.python.org/3/library/functions.html#map)
 [zip](https://docs.python.org/3/library/functions.html#zip)
 [enumerate](https://docs.python.org/3/library/functions.html#enumerate)
 [len](https://docs.python.org/3/library/functions.html#len)
-[next](https://docs.python.org/3/library/functions.html#next)
-
-[dict](https://docs.python.org/3/library/functions.html#dict)
-[iter](https://docs.python.org/3/library/functions.html#iter)
-[list](https://docs.python.org/3/library/functions.html#list)
-[tuple](https://docs.python.org/3/library/functions.html#tuple)
-[set](https://docs.python.org/3/library/functions.html#set)
-[frozenset](https://docs.python.org/3/library/functions.html#frozenset)
 
 
 
 q: get length of x --- a: [len(x)](https://docs.python.org/3/library/functions.html#len)
 q: `len(x)` vs `x.__len__` --- a: TODO: `__len__` is slower than `len()`, because `__len__` involves a dict lookup [link](http://stackoverflow.com/questions/20302558/why-python-function-len-is-faster-than-len-method/20302670#20302670)
-q: merge two lists into a list of pairs --- a: `zip('abcd', [1,2,3,4])`
 
 
 # input/output
@@ -864,14 +977,6 @@ q: merge two lists into a list of pairs --- a: `zip('abcd', [1,2,3,4])`
 [print](https://docs.python.org/3/library/functions.html#print)
 [repr](https://docs.python.org/3/library/functions.html#repr)
 [str](https://docs.python.org/3/library/functions.html#str)
-
-# bytes and bytearrays
-
-[bytearray](https://docs.python.org/3/library/functions.html#bytearray)
-[bytes](https://docs.python.org/3/library/functions.html#bytes)
-[memoryview](https://docs.python.org/3/library/functions.html#memoryview)
-
-- q: `bytes` vs `bytearray` -- a: `bytes` are immutable, just like strings, while `bytearray` objects are mutable and algorightms with them can be faster when we have lots of modifications, because we avoid lots of copying.
 
 
 # oop
@@ -923,14 +1028,18 @@ q: get difference in seconds between two datetimes --- a: `abs(dt2 - dt1).total_
 
 # iterators and generators
 
-TODO
+TODO: - q: iterators can be used just once
+TODO: - q: `for x in struct: ...` is equivalent to `for x in iter(struct): ...`
 
-TODO: iterable vs iterator
-TODO: generators
 <http://stackoverflow.com/questions/2776829/difference-between-pythons-generators-and-iterators>
 <http://stackoverflow.com/questions/9884132/what-exactly-are-pythons-iterator-iterable-and-iteration-protocols>
 
 q: `sum([x in x in range(10)])` vs `sum(x in x in range(10))` -- a: The latter uses a generator, has lower memory consumption, because it doesn't create a list.
+
+TODO: reset iterator, tee vs list <http://stackoverflow.com/questions/3266180/can-iterators-be-reset-in-python/3267069#3267069>
+TODO: - q: iterator and iterable <http://stackoverflow.com/a/9884501/159149>
+
+TODO: generators
 
 # coroutines
 
@@ -950,6 +1059,7 @@ def make_counter():
 
 
 - q: Closures in python. -- a: To capture a binding in the outer scope, use `nonlocal x`.
+
 
 TODO: complexity of all operations for lists, dicts, sets, deques considering their internal structure
 

@@ -57,6 +57,10 @@ TODO: check if there are more under these names
 
 <https://en.wikipedia.org/wiki/Penney%27s_game>
 
+Monty Hall problem circle diagram <https://math.ucsd.edu/~crypto/Monty/montybg.html>, <http://blog.room34.com/archives/192>, <https://habrahabr.ru/post/313452/?utm_source=habrahabr&utm_medium=rss&utm_campaign=best>
+TODO: conditional
+hint: consider 100 doors and after you chose on
+
 # independence
 
 Threre are two equivalent definitions:

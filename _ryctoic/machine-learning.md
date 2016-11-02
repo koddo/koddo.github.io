@@ -84,3 +84,53 @@ impurity of split
 > Why someone would call an algorithm a machine? I have no clue, it was invented by a russian.
 > 
 > --- Sebastian Thrun, <cite><a href="https://www.youtube.com/watch?v=mzKPXz-Yhwk&index=68&list=PLAwxTw4SYaPkQXg8TkVdIvYv4HfLG7SiH">Intro to Machine Learning</a></cite>
+# neural networks
+
+
+## universal approximation theorem
+
+<http://neuralnetworksanddeeplearning.com/chap4.html>
+<https://en.wikipedia.org/wiki/Universal_approximation_theorem>
+<http://stackoverflow.com/questions/25609347/can-neural-networks-approximate-any-function-given-enough-hidden-neurons>
+<http://cstheory.stackexchange.com/questions/17545/universal-approximation-theorem-neural-networks>
+Regarding your example of f(x) = x2, yes you can approximate it with a neural network within any finite range: [-1,1], [0, 1000], etc.
+But again, there is no neural network (or any other approximation structure) with a finite number of parameters that can approximate f(x) = x2 for all x in [-∞, +∞].
+
+<https://theneural.wordpress.com/2013/01/07/universal-approximation-and-depth/>
+Hidden layer grows $O(e^d)$, where $d$ is dimensionality of input space.
+
+<http://stackoverflow.com/questions/8160183/neural-nets-as-universal-approximators>
+the theorem only says that a function can be represented by a neural net. It does not say whether this representation can be learned or that it would be efficient. In fact, for a single-layer net approximating a highly varying function, the size grows exponentially with the function's complexity.
+
+
+Quite. It's not hard to come up with models or families of functions which share this property.
+What matters is not only whether they can learn it but how much data they need to learn it to a given degree of accuracy. This is the kind of question addressed by nonparametric statistics and statistical learning theory.
+the Weierstrass approximation theorem states that every continuous function defined on a closed interval [a, b] can be uniformly approximated as closely as desired by a polynomial function.
+
+
+`max(0, x)` for activation function: <http://stats.stackexchange.com/questions/141960/deep-neural-nets-relus-removing-non-linearity>
+
+TODO: does svm has this property?
+
+
+## sigmoid vs tanh
+
+<http://stats.stackexchange.com/questions/101560/tanh-activation-function-vs-sigmoid-activation-function>
+<http://stats.stackexchange.com/questions/142348/tanh-vs-sigmoid-in-neural-net>
+<https://www.quora.com/In-machine-learning-algorithms-why-is-sigmoid-function-used-primarily-and-not-functions-like-tanh-x-In-tanhx-for-eg-seem-to-split-y-axis-evenly-and-flatten-out-fast-as-x-approaches-+-infinity-The-range-being-sigmoid-0-1-and-tanh-x-1-1>
+
+Sign(sum) can be useful as an example of non-linear activation function.
+
+## perceptron
+
+A single perceptron can only solve linearly separable problems.
+XOR is not one of them.
+
+TODO: my own illustration
+From <http://natureofcode.com/book/chapter-10-neural-networks/>:
+
+![alt](images/20161026-1344-763ctN.screenshot.png)
+
+![alt](images/20161026-1345-763p3T.screenshot.png)
+
+

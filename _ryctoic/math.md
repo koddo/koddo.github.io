@@ -10,3 +10,5 @@ mathjax: true
 TODO: sequences, areas/volumes
 
 \\( \sum \| a_{ij} \| < \inf \\)  &nbsp; ⇒ order of summation doesn't matter
+
+<https://www.reddit.com/r/bestof/comments/50cao5/ufunctor7_explains_the_problem_with_the_way/>

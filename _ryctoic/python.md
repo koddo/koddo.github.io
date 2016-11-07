@@ -691,11 +691,11 @@ TODO:
 
 
 # strings
-## misc
 
-Strings `.join()` vs `+=` in a loop.: <http://stackoverflow.com/questions/1349311/python-string-join-is-faster-than-but-whats-wrong-here/21964653#21964653>
+Strings `.join()` vs `+=` in a loop: <http://stackoverflow.com/questions/1349311/python-string-join-is-faster-than-but-whats-wrong-here/21964653#21964653>
 
 TODO: a question on string immutability
+TODO: slice
 
 - q: How are string literals written in python? --- a: `'Single'` or `"double"` or `'''three single'''` or `"""three double"""` quotes. Triple quoted strings may span multiple lines.
 - q: What does this return if there is no separate character type in python: `s[0]`? --- a: Returns a string of length 1, `s[0]` is equivalent to `s[0:1]`.
@@ -703,31 +703,35 @@ TODO: a question on string immutability
 - q: What if `s = 'abc'` and we try to get `s[3]`? --- a: Raises `IndexError`.
 - q: Strings `.join()` vs `+=`. --- a: When you do not join strings in a loop, then pretty much the same. If you do, then this is `O(n)` vs `O(n^2)`. 
 - q: Strings `.join()` vs `+=` in a loop. -- a:  `O(n)` vs `O(n^2)`. And although the `+=` is optimized in some cases, it's better to just never use it in loops, because in (pretty unpredictable) cases when it doesn't get optimized, we are going to have quadratic slowdowns. 
+q: concatenate a list of strings --- a: `''.join( lst ) `
+q: concatenate a list of strings and numbers into comma-separated string --- a: `', '.join( map(str, ['a', 1, 'b', 2]) ) == 'a, 1, b, 2'`
+q: get a string of `n` minuses `-` --- a: `'-'*n`
+
+
+- q: `substr in a_string` vs `a_string.find(substr)` vs `a_string.index(substr)` --- a: `in` returns a boolean, `find()` returns index or `-1`, `index()` is quite like find, but raises `ValueError` when not found.
+- q: check if a substring is in a string: --- a: `substring in a_string`, which is fastest, or `a_string.find(substring) != -1` or `a_string.index(substring)` and catch `ValueError`
+- q: find index of a substring in a string --- a: `a_string[n:m].find(substring)` or `a_string.find(substring, n, m)`, which is faster; same with `.index()` with its `ValueError`
 - q: Get a number of non-overlapping occurrences of a substring in a string. -- a: `str.count(sub)`, can also pass start and end positions.
+- q: Replace all occurrences of a substring in a string. --- a: `'ababa'.replace('aba', '1') == '1ba'`
+- q: Replace two first occurrences of a substring in a string. --- a: `'ababab'.replace('ab', '1', 2) == '11ab'`
 
-TODO: `str(bytes, encoding, errors)` is equivalent to `bytes.decode(encoding, errors)`
-TODO: `str.encode(encoding="utf-8", errors="strict")`
-TODO: `io.StringIO`, `io.BytesIO`, `tempfile.SpooledTemporaryFile`
+q: replace a character in string at given position --- a: `l = list('hello'); l[4]='!'; ''.join(l) == 'hell!'` or `s = '2+2'; s2 = s[:1] + '**' + s[2:]; s2 == '2**2'` --- the latter is faster
 
+q: reverse a string --- a: `a_string[::-1]`; the `reversed(s)` returns a generator, so if you want to use it, do `''.join(reversed(s))`.
+- q: Why there is no `str.reverse()`? --- a: Because strings are immutable in python, we can't modify them, we can only construct new strings. Use the `s[::1]` or `''.join(reversed(s))`.
 
-- q: What are `str.maketrans()` and `str.translate` for? --- a: For character substitution. `l->1, e->3, t->7` is done like this: `'leet'.translate(str.maketrans('let', '137'))`
+- q: Get a string centered within width `w` with a minus `-` as padding char --- a: `'asdf'.center(w, '-')`
+- q: Get a string left justified in a string of length `w`. --- a: `'abc'.ljust(4) == 'abc '`
+- q: Get a string right justified in a string of length `w`. --- a: `'abc'.rjust(4) == ' abc'`
+- q: `str.zfill()` vs `str.ljust()` --- a: The former correctly adds a sign before zeroes: `-00123` vs `00-123`.
 
-## split and strip
-
-strip
-lstrip
-rstrip
-
-partition
-rpartition
-
-split
-rsplit
-
-TODO: partition vs split
+- q: Check if a string starts with `abc`. --- a: `'abcdefgh'.startswith('abc')`
+- q: Check if a substring of a string from index `2` starts with `abc`. --- a: `'00abcdefgh'.startswith('abc', 2)`
+- q: Check if a string ends with `fgh`. --- a: `'abcdefgh'.endswith('fgh')`
+- q: Check if a substring of a string up to index `8` non-inclusive ends with `fgh`. --- a: `'abcdefgh00'.endswith('fgh', None, 8)`
 
 - q: `partition` vs `split` --- a: The former returns a 3-tuple no matter what. Examples: `'a-b-c'.partition('-') == ('a', '-', 'b-c')` and `'a+b+c'.partition('-') == ('a+b+c', '', '')`.
-
+- q: What does `''.partition('-')` return? --- a: `('', '', '')`
 q: Split a string by whitespaces and trim results. --- a: `a_str.split()` --- when the `sep` argument is not specified or `None`, runs of consecutive whitespace are regarded as a single separator, so it splits and trims separated pieces.
 q: Split a string into two pieces by whitespaces and trim results. --- a: Be careful, the following is not enough: `'  1   2   3  '.split(None, 1) == ['1', '2   3  ']`.
 q: Split a string by comma and trim results. --- a: `[x.strip() for x in s.split(',')]` or `list(map(str.strip, s.split(',')))`
@@ -740,77 +744,19 @@ q: Split a multiline string into a list of lines, keeping line breaks. --- a: `s
 q: What do string methods return when the string is empty? --- a: If a `sep` arg is not specified or `None`, an empty string is split into an empty list: `''.split() == []`; otherwise: `''.split(',') ==['']`.
 q: What do string split methods return when the string is actually not split by given separator? --- a: An empty list containing the string. `'  a  '.split(',') == ['  a  ']`. If a `sep` arg is not specified or `None`, it also trims it: `'  a  '.split() == ['a']`
 
+- q: What are `str.maketrans()` and `str.translate` for? --- a: For character substitution. `l->1, e->3, t->7` is done like this: `'leet'.translate(str.maketrans('let', '137'))`
 
+TODO: `str(bytes, encoding, errors)` is equivalent to `bytes.decode(encoding, errors)`
+TODO: `str.encode(encoding="utf-8", errors="strict")`
+TODO: `io.StringIO`, `io.BytesIO`, `tempfile.SpooledTemporaryFile`
 
-## methods
-
-<https://docs.python.org/3/library/stdtypes.html#string-methods>
-
-isidentifier?
-isalnum
-isalpha
-isdecimal
-isdigit
-islower
-isnumeric
-isprintable
-isspace
-istitle
-isupper
-
-endswith
-startswith
-
-casefold?
-capitalize
-lower
-upper
-title
-swapcase
-
-
-center
-ljust
-rjust
-zfill
-TODO: rjust, ljust, center, zfill vs string.format --- print('%s %s %s %s' % (str(i).rjust(p), oct(i)[2:].rjust(p), hex(i)[2:].rjust(p), bin(i)[2:].rjust(p)))
-
-
-
-
-not covered: `expandtabs`
-
-index
-rindex
-find
-rfind
-replace
-
-q: `substr in a_string` vs `a_string.find(substr)` vs `a_string.index(substr)` --- a: `in` returns a boolean, `find()` returns index or `-1`, `index()` is quite like find, but raises `ValueError` when not found.
-
-
-q: print float up to three digits after the point --- a: `print('%.3f' % (2.718281828))`
-q: print 'hello, f l', getting those as args --- a: `print('hello, %s %s' % (f, l))`
-q: reverse case of a string, lower case to upper case and vice versa --- a: `string.swapcase(str)`
-q: concatenate a list of strings --- a: `''.join( lst ) `
-q: concatenate a list of strings and numbers into comma-separated string --- a: `', '.join( map(str, ['a', 1, 'b', 2]) ) == 'a, 1, b, 2'`
-q: replace a character in string at given position --- a: `l = list('hello'); l[4]='!'; ''.join(l) == 'hell!'` or `s = '2+2'; s2 = s[:1] + '**' + s[2:]; s2 == '2**2'` --- the latter is faster
-q: check if a substring is in a string: --- a: `substring in a_string`, which is fastest, or `a_string.find(substring) != -1` or `a_string.index(substring)` and catch `ValueError`
-q: find index of a substring in a string --- a: `a_string[n:m].find(substring)` or `a_string.find(substring, n, m)`, which is faster; same with `.index()` with its `ValueError`
-q: get a string of `n` minuses `-` --- a: `'-'*n`
-q: get an alphabet string --- a: `string.ascii_lowercase`
-q: get an uppercase alphabet string --- a: `string.ascii_uppercase`
-q: get a string, which constists of all printable chars --- a: `string.printable`
-q: get a string, which constists of all punctuation chars --- a: `string.punctuation`
-q: reverse a string --- a: `a_string[::-1]`
-
-- q: print a string centered within width `w` with a minus `-` as padding char --- a: `print( string.centered(s, w, '-') )`
-
-
-
+{: .centered}
+![python strings methods](./images/python.strings.001.svg)
 
 
 ## format
+
+<https://docs.python.org/3/library/string.html#formatstrings>
 
 ``` python
 >>> '{0:.1f} {1}'.format(698.243, 'GB')
@@ -827,6 +773,42 @@ TODO: print(..., end=' ')
 - q: `s.format()` vs `%`-interpolation --- a: Just use the `.format()`, the `%`-style formatting is left in the language for backward compatibility.
 - q: `str.format_map(dct)` vs `str.format(**dct)`? --- a: Unpacking produces a `dict`, so this fails if it doesn't contain a needed key. But with `.format_map()` we can use `defaultdict`.
 TODO: `str.format_map` example
+
+
+## misc
+
+<https://docs.python.org/3/library/stdtypes.html#string-methods>
+
+TODO:
+casefold?
+capitalize
+lower
+upper
+title
+swapcase
+
+TODO: <https://docs.python.org/3/library/string.html#string-constants>
+isidentifier?
+isalnum
+isalpha
+isdecimal
+isdigit
+islower
+isnumeric
+isprintable
+isspace
+istitle
+isupper
+
+q: reverse case of a string, lower case to upper case and vice versa --- a: `string.swapcase(str)`
+q: get an alphabet string --- a: `string.ascii_lowercase`
+q: get an uppercase alphabet string --- a: `string.ascii_uppercase`
+q: get all printable chars --- a: `string.printable`
+q: get all punctuation chars --- a: `string.punctuation`
+
+
+not covered: `expandtabs`
+
 
 
 

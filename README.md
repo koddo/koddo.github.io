@@ -8,12 +8,14 @@ M-x ym-jekyll-post-template
 ...
 M-x ym-jekyll-regenerate-date-and-filename
 
-## how to publish
+## how to use
 
 ```
 $ ssh -t alex@debian.local "cd ~/mnt/koddo.github.io && ./jekyll-serve.sh"
-$ ./publish.sh
+$ cd ~/Dropbox/ && python3 -m http.server 4001
 $ open -a Firefox http://my-jekyll.dev.dnsdock:4000/
+
+$ ./publish.sh
 ```
 
 before the first run create an image with installed gems

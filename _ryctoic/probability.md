@@ -59,7 +59,7 @@ TODO: check if there are more under these names
 
 Monty Hall problem circle diagram <https://math.ucsd.edu/~crypto/Monty/montybg.html>, <http://blog.room34.com/archives/192>, <https://habrahabr.ru/post/313452/?utm_source=habrahabr&utm_medium=rss&utm_campaign=best>
 TODO: conditional
-hint: consider 100 doors and after you chose on
+hint: consider 100 doors and after you chose one, you are left with two
 
 # independence
 

@@ -441,9 +441,9 @@ q: Get a sublist of a list including elements from second to fifth inclusive. --
 q: Get a sublist of a list including elements from second to the one before last inclusive. --- a: `a_list[1:-1]`
 q: Get a sublist of a list including elements from third to last inclusive. --- a: `a_list[2:]`
 q: Get a sublist of a list including elements from first to third inclusive. --- a: `a_list[:3]`
-q: Replace every nth element in a list with value of variable `t`. --- a: `lst[n-1::n] = t`; be careful with mutable objects.
-q: Replace every element with index `n*k, k=0,1,2,...` in a list with value of variable `t`. --- a: `lst[::n] = t`; be careful with mutable objects.
-q: Replace every element with index `n*k, k=0,1,2,...` in a list with elements from another list using slicing. --- a: `lst[::n] = another_list`, assuming `len(another_list) == len(lst[::n])`.
+q: Get a sublist of a list including every nth element starting from index `0`. --- a: `a_list[::n]`
+q: Get a sublist of a list including every nth element starting from index `n-1`. --- a: `a_list[n-1::n]`
+q: Replace every nth element in a list starting from index `0` with elements from another list using slicing. --- a: `lst[::n] = another_list`, assuming `len(another_list) == len(lst[::n])`, or else the `ValueError` is thrown.
 q: How to reuse slice parameters? E.g., we want to take same slices of different lists. --- a: `s[slice(0,5)]` is equivalent to `s[0:5]`.
 
 
@@ -694,11 +694,12 @@ TODO:
 
 Strings `.join()` vs `+=` in a loop: <http://stackoverflow.com/questions/1349311/python-string-join-is-faster-than-but-whats-wrong-here/21964653#21964653>
 
+TODO: unicode
 TODO: a question on string immutability
 TODO: slice
 
 - q: How are string literals written in python? --- a: `'Single'` or `"double"` or `'''three single'''` or `"""three double"""` quotes. Triple quoted strings may span multiple lines.
-- q: What does this return if there is no separate character type in python: `s[0]`? --- a: Returns a string of length 1, `s[0]` is equivalent to `s[0:1]`.
+- q: What does this return if there is no character type in python: `s[0]`? --- a: Returns a string of length 1, `s[0]` is equivalent to `s[0:1]`.
 - q: Get length of a string. --- a: `len(s)`
 - q: What if `s = 'abc'` and we try to get `s[3]`? --- a: Raises `IndexError`.
 - q: Strings `.join()` vs `+=`. --- a: When you do not join strings in a loop, then pretty much the same. If you do, then this is `O(n)` vs `O(n^2)`. 
@@ -717,8 +718,9 @@ q: get a string of `n` minuses `-` --- a: `'-'*n`
 
 q: replace a character in string at given position --- a: `l = list('hello'); l[4]='!'; ''.join(l) == 'hell!'` or `s = '2+2'; s2 = s[:1] + '**' + s[2:]; s2 == '2**2'` --- the latter is faster
 
-q: reverse a string --- a: `a_string[::-1]`; the `reversed(s)` returns a generator, so if you want to use it, do `''.join(reversed(s))`.
+q: reverse a string --- a: `a_string[::-1]`; the `reversed(s)` returns an iterator, so if you really want to use it despite the performance penalty, do `''.join(reversed(s))`.
 - q: Why there is no `str.reverse()`? --- a: Because strings are immutable in python, we can't modify them, we can only construct new strings. Use the `s[::1]` or `''.join(reversed(s))`.
+- q: What does `reversed(a_string)` return? --- a: An iterator object of type `reversed object`, not a string, so if you really want to use it despite the performance penalty, do `''.join(reversed(s))`. Otherwise, use `s[::-1]`.
 
 - q: Get a string centered within width `w` with a minus `-` as padding char --- a: `'asdf'.center(w, '-')`
 - q: Get a string left justified in a string of length `w`. --- a: `'abc'.ljust(4) == 'abc '`
@@ -744,7 +746,7 @@ q: Split a multiline string into a list of lines, keeping line breaks. --- a: `s
 q: What do string methods return when the string is empty? --- a: If a `sep` arg is not specified or `None`, an empty string is split into an empty list: `''.split() == []`; otherwise: `''.split(',') ==['']`.
 q: What do string split methods return when the string is actually not split by given separator? --- a: An empty list containing the string. `'  a  '.split(',') == ['  a  ']`. If a `sep` arg is not specified or `None`, it also trims it: `'  a  '.split() == ['a']`
 
-- q: What are `str.maketrans()` and `str.translate` for? --- a: For character substitution. `l->1, e->3, t->7` is done like this: `'leet'.translate(str.maketrans('let', '137'))`
+- q: What are `str.maketrans()` and `str.translate` for? --- a: For character substitution. `l->1, e->3, t->7` is done like this: `'leet'.translate(str.maketrans('let', '137')) == '1337'`
 
 TODO: `str(bytes, encoding, errors)` is equivalent to `bytes.decode(encoding, errors)`
 TODO: `str.encode(encoding="utf-8", errors="strict")`
@@ -753,6 +755,7 @@ TODO: `io.StringIO`, `io.BytesIO`, `tempfile.SpooledTemporaryFile`
 {: .centered}
 ![python strings methods](./images/python.strings.001.svg)
 
+- q: We can't do `a_string[::n] = a_char`, so how to write an equivalent? -- a: `''.join(a_char if i % n == 0 else c for i, c in enumerate(string))`
 
 ## format
 
@@ -940,7 +943,6 @@ q: get greatest common divisor of two numbers --- a: `math.gcd(a, b)`
 [filter](https://docs.python.org/3/library/functions.html#filter)
 [map](https://docs.python.org/3/library/functions.html#map)
 [zip](https://docs.python.org/3/library/functions.html#zip)
-[enumerate](https://docs.python.org/3/library/functions.html#enumerate)
 [len](https://docs.python.org/3/library/functions.html#len)
 
 
@@ -948,6 +950,8 @@ q: get greatest common divisor of two numbers --- a: `math.gcd(a, b)`
 q: get length of x --- a: [len(x)](https://docs.python.org/3/library/functions.html#len)
 q: `len(x)` vs `x.__len__` --- a: TODO: `__len__` is slower than `len()`, because `__len__` involves a dict lookup [link](http://stackoverflow.com/questions/20302558/why-python-function-len-is-faster-than-len-method/20302670#20302670)
 
+- q: Using a `for` loop, how to access the loop index? -- a: `for i, el in enumerate(a_list): ...`
+- q: What does the `enumerate(a_list)` return? -- a: An `enumerate object`, for iterating over tuples `(index, element)`.
 
 # input/output
 
@@ -1098,6 +1102,8 @@ TODO: generate random number
 
 
 - q: Default character encoding of python3 files? -- a: `utf-8`
+
+- q: How to run a simple http server to serve static files? -- a: `$ cd path && python3 -m http.server 4001`
 
 ## skipped hackerrank challenges
 

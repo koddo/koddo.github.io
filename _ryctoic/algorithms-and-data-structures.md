@@ -13,6 +13,12 @@ layout:  collection_page
 * this line is replaced with the generated table of contents
 {:toc}
 
+# cracking the coding interview
+
+minimum <http://127.0.0.1:4001/interview_questions/Cracking_the_Coding_Interview.by_Gayle_Laakmann_McDowell.5th.pdf#56>
+
+
+
 # Linked lists
 
 ``` python

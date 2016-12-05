@@ -698,40 +698,52 @@ TODO: unicode
 TODO: a question on string immutability
 TODO: slice
 
+misc:
 - q: How are string literals written in python? --- a: `'Single'` or `"double"` or `'''three single'''` or `"""three double"""` quotes. Triple quoted strings may span multiple lines.
 - q: What does this return if there is no character type in python: `s[0]`? --- a: Returns a string of length 1, `s[0]` is equivalent to `s[0:1]`.
 - q: Get length of a string. --- a: `len(s)`
 - q: What if `s = 'abc'` and we try to get `s[3]`? --- a: Raises `IndexError`.
+- q: We can't do `a_string[::n] = a_char`, so how to write an equivalent? -- a: `''.join(a_char if i % n == 0 else c for i, c in enumerate(string))`
+- q: What are `str.maketrans()` and `str.translate` for? --- a: For character substitution. `l->1, e->3, t->7` is done like this: `'leet'.translate(str.maketrans('let', '137')) == '1337'`
+
+concatenation:
 - q: Strings `.join()` vs `+=`. --- a: When you do not join strings in a loop, then pretty much the same. If you do, then this is `O(n)` vs `O(n^2)`. 
 - q: Strings `.join()` vs `+=` in a loop. -- a:  `O(n)` vs `O(n^2)`. And although the `+=` is optimized in some cases, it's better to just never use it in loops, because in (pretty unpredictable) cases when it doesn't get optimized, we are going to have quadratic slowdowns. 
 q: concatenate a list of strings --- a: `''.join( lst ) `
 q: concatenate a list of strings and numbers into comma-separated string --- a: `', '.join( map(str, ['a', 1, 'b', 2]) ) == 'a, 1, b, 2'`
 q: get a string of `n` minuses `-` --- a: `'-'*n`
 
-
+substrings:
 - q: `substr in a_string` vs `a_string.find(substr)` vs `a_string.index(substr)` --- a: `in` returns a boolean, `find()` returns index or `-1`, `index()` is quite like find, but raises `ValueError` when not found.
 - q: check if a substring is in a string: --- a: `substring in a_string`, which is fastest, or `a_string.find(substring) != -1` or `a_string.index(substring)` and catch `ValueError`
 - q: find index of a substring in a string --- a: `a_string[n:m].find(substring)` or `a_string.find(substring, n, m)`, which is faster; same with `.index()` with its `ValueError`
 - q: Get a number of non-overlapping occurrences of a substring in a string. -- a: `str.count(sub)`, can also pass start and end positions.
 - q: Replace all occurrences of a substring in a string. --- a: `'ababa'.replace('aba', '1') == '1ba'`
 - q: Replace two first occurrences of a substring in a string. --- a: `'ababab'.replace('ab', '1', 2) == '11ab'`
-
-q: replace a character in string at given position --- a: `l = list('hello'); l[4]='!'; ''.join(l) == 'hell!'` or `s = '2+2'; s2 = s[:1] + '**' + s[2:]; s2 == '2**2'` --- the latter is faster
-
-q: reverse a string --- a: `a_string[::-1]`; the `reversed(s)` returns an iterator, so if you really want to use it despite the performance penalty, do `''.join(reversed(s))`.
-- q: Why there is no `str.reverse()`? --- a: Because strings are immutable in python, we can't modify them, we can only construct new strings. Use the `s[::1]` or `''.join(reversed(s))`.
-- q: What does `reversed(a_string)` return? --- a: An iterator object of type `reversed object`, not a string, so if you really want to use it despite the performance penalty, do `''.join(reversed(s))`. Otherwise, use `s[::-1]`.
-
-- q: Get a string centered within width `w` with a minus `-` as padding char --- a: `'asdf'.center(w, '-')`
-- q: Get a string left justified in a string of length `w`. --- a: `'abc'.ljust(4) == 'abc '`
-- q: Get a string right justified in a string of length `w`. --- a: `'abc'.rjust(4) == ' abc'`
-- q: `str.zfill()` vs `str.ljust()` --- a: The former correctly adds a sign before zeroes: `-00123` vs `00-123`.
-
+- q: replace a character in string at given position --- a: `l = list('hello'); l[4]='!'; ''.join(l) == 'hell!'` or `s = '2+2'; s2 = s[:1] + '**' + s[2:]; s2 == '2**2'` --- the latter is faster
 - q: Check if a string starts with `abc`. --- a: `'abcdefgh'.startswith('abc')`
 - q: Check if a substring of a string from index `2` starts with `abc`. --- a: `'00abcdefgh'.startswith('abc', 2)`
 - q: Check if a string ends with `fgh`. --- a: `'abcdefgh'.endswith('fgh')`
 - q: Check if a substring of a string up to index `8` non-inclusive ends with `fgh`. --- a: `'abcdefgh00'.endswith('fgh', None, 8)`
 
+
+reverse:
+- q: reverse a string --- a: `a_string[::-1]`; the `reversed(s)` returns an iterator, so if you really want to use it despite the performance penalty, do `''.join(reversed(s))`.
+- q: Why there is no `str.reverse()`? --- a: Because strings are immutable in python, we can't modify them, we can only construct new strings. Use the `s[::1]` or `''.join(reversed(s))`.
+- q: What does `reversed(a_string)` return? --- a: An iterator object of type `reversed object`, not a string, so if you really want to use it despite the performance penalty, do `''.join(reversed(s))`. Otherwise, use `s[::-1]`.
+
+adjustments:
+- q: Get a string centered within width `w` with a minus `-` as padding char --- a: `'asdf'.center(w, '-')`
+- q: Get a string left justified in a string of length `w`. --- a: `'abc'.ljust(4) == 'abc '`
+- q: Get a string right justified in a string of length `w`. --- a: `'abc'.rjust(4) == ' abc'`
+- q: `str.zfill()` vs `str.ljust()` --- a: The former correctly adds a sign before zeroes: `-00123` vs `00-123`.
+
+strip:
+- What is a function to trim a string? --- a: `a_str.strip()`, it also accepts multiple characters to strip: `title.rstrip(',.-')`.
+- How to remove leading/trailing whitespaces from a string in Python? --- a: `a_str.rstrip()`, `lstrip()`
+- Remove all trailing commas, periods and hyphens from a string. --- a: `title.rstrip(',.-')`
+
+split:
 - q: `partition` vs `split` --- a: The former returns a 3-tuple no matter what. Examples: `'a-b-c'.partition('-') == ('a', '-', 'b-c')` and `'a+b+c'.partition('-') == ('a+b+c', '', '')`.
 - q: What does `''.partition('-')` return? --- a: `('', '', '')`
 q: Split a string by whitespaces and trim results. --- a: `a_str.split()` --- when the `sep` argument is not specified or `None`, runs of consecutive whitespace are regarded as a single separator, so it splits and trims separated pieces.
@@ -743,10 +755,9 @@ q: Split a string into two pieces by comma without trimming. --- a: `'a, b, c, d
 q: Split a string from the end into two pieces by comma without trimming. --- a: `'a, b, c, d'.rsplit(',', maxsplit=1) == ['a, b, c', ' d']` or `rpartition`.
 q: Split a multiline string into a list of lines. --- a: `s.splitlines()`, if the `keepends` arg is true, it keeps line breaks.
 q: Split a multiline string into a list of lines, keeping line breaks. --- a: `s.splitlines(keepends=True)`
-q: What do string methods return when the string is empty? --- a: If a `sep` arg is not specified or `None`, an empty string is split into an empty list: `''.split() == []`; otherwise: `''.split(',') ==['']`.
+q: What do string split methods return when the string is empty? --- a: If a `sep` arg is not specified or `None`, an empty string is split into an empty list: `''.split() == []`; otherwise: `''.split(',') ==['']`.
 q: What do string split methods return when the string is actually not split by given separator? --- a: An empty list containing the string. `'  a  '.split(',') == ['  a  ']`. If a `sep` arg is not specified or `None`, it also trims it: `'  a  '.split() == ['a']`
 
-- q: What are `str.maketrans()` and `str.translate` for? --- a: For character substitution. `l->1, e->3, t->7` is done like this: `'leet'.translate(str.maketrans('let', '137')) == '1337'`
 
 TODO: `str(bytes, encoding, errors)` is equivalent to `bytes.decode(encoding, errors)`
 TODO: `str.encode(encoding="utf-8", errors="strict")`
@@ -755,27 +766,101 @@ TODO: `io.StringIO`, `io.BytesIO`, `tempfile.SpooledTemporaryFile`
 {: .centered}
 ![python strings methods](./images/python.strings.001.svg)
 
-- q: We can't do `a_string[::n] = a_char`, so how to write an equivalent? -- a: `''.join(a_char if i % n == 0 else c for i, c in enumerate(string))`
 
 ## format
 
-<https://docs.python.org/3/library/string.html#formatstrings>
+<https://docs.python.org/3/library/string.html#format-specification-mini-language>
 
 ``` python
->>> '{0:.1f} {1}'.format(698.243, 'GB')
-'698.2 GB'
+'hello, {}'.format(username)
+
+'{:.1f} {}'.format(698.243, 'GB') == '698.2 GB'
+
+'{0} is better than {1}'.format('emacs', 'vim')
+'{1} is better than {0}'.format('emacs', 'vim')
+'{0} {2} {1} {2}'.format(*tpl)
+map('%Y-%m-%d'.format, lst)
+
+'{0!s}'.format(an_obj)   # calls str() on the argument
+'{0!r}'.format(an_obj)   # calls repr() on the argument
+'{0!a}'.format(an_obj)   # calls ascii() on the argument
+'repr() shows quotes: {0!r}; str() doesn't: {0!s}'.format('test')
+
+'{0.real}, {0.imag}'.format(1-1j)
+
+'Coordinates: {latitude}, {longitude}'.format(latitude='37.24N', longitude='-115.81W')
+coord = {'latitude': '37.24N', 'longitude': '-115.81W'}
+'Coordinates: {latitude}, {longitude}'.format(**coord)
+
+coord = (3, 5)
+'X: {0[0]};  Y: {0[1]}'.format(coord)
+
+'{first} {last}'.format(first='John', last='Smith')
+'{first} {last}'.format(**{'first': 'John', 'last': 'Smith'})
+
+'{:f}'.format(1) == '1.000000'
+
+'{:+f}; {:+f}'.format(3.14, -3.14) == '+3.140000; -3.140000'   # always show sign
+'{: f}; {: f}'.format(3.14, -3.14) == ' 3.140000; -3.140000'
+
+'{:-f}; {:-f}'.format(3.14, -3.14)    # default, same as just {:f}
+
+'{:#5x}'.format(15) == '  0xf'
+'{:#5X}'.format(15) == '  0XF'
 ```
 
-can rearrange and duplicate: `print '{0} {2} {1} {2}'.format(*tu)`
-can be passed as parameter: `map('%Y-%m-%d'.format, lst)`
+``` python
+>>> '{:<30}'.format('left aligned')
+'left aligned                  '
+>>> '{:>30}'.format('right aligned')
+'                 right aligned'
+>>> '{:^30}'.format('centered')
+'           centered           '
+>>> '{:*^30}'.format('centered')  # use '*' as a fill char
+
+
+'{:%Y-%m-%d %H:%M:%S}'.format(datetime(2010, 7, 4, 12, 15, 58))
+
+'***********centered***********'
+
+'{:f} is for fixed point'
+'{:d} is for decimal'
+'{:n} is like {:d}, but also uses current locale to insert number separator characters'
+import locale
+## in this example we set a locale to see the difference:
+locale.setlocale(locale.LC_ALL, 'en_US')
+'{:n}'.format(10**6) == '1,000,000'
+locale.setlocale(locale.LC_ALL, locale.getdefaultlocale())
+
+'{:.1%}'.format(0.33) == '33.0%'
+'{:.3}'.format('xylophone') == 'xyl'
+
+'{:{fill}{align}{width}}'.format('hello', fill='*', align='^', width=11) == '***hello***'
+```
 
 TODO: print(..., sep=', ')
 TODO: print(..., end=' ')
 
-
+misc:
 - q: `s.format()` vs `%`-interpolation --- a: Just use the `.format()`, the `%`-style formatting is left in the language for backward compatibility.
 - q: `str.format_map(dct)` vs `str.format(**dct)`? --- a: Unpacking produces a `dict`, so this fails if it doesn't contain a needed key. But with `.format_map()` we can use `defaultdict`.
 TODO: `str.format_map` example
+
+
+
+basics:
+- q: What happens when we mix replacement fields like this: `'{} {1}'.format(1, 2)`? --- a: `ValueError: cannot switch from automatic field numbering to manual field specification`
+- q: How to `str.format()` curly braces? --- a: `'left curly brace:{{, and the right one: }}'`
+- q: How to `str.format()` a decimal with comma as thousands separator? --- a: `'{:,d}'.format(10**6)`
+- q: How to `str.format()` a decimal usign current locale to insert number separator characters? --- a: `'{:n}'.format(10**6)``
+- q: How to `str.format()` a float? --- a: `{:f}`
+
+advanced:
+- q: `str()` vs `repr()` --- a: `repr()` is meant to generate representations which can be read by the interpreter, `str()` is for end-users.
+- q: What are outputs of `str('hello')` and `repr('hello')`? --- a: `'hello'` and `"'hello'"`
+- q: What is `ascii()` for? --- It's the `repr()` with escaped non-ASCII characters.
+- q: What is conversion flag to call `repr()` on an argument of `str.format()`? --- a: `'{!r}'.format('hello') == "'hello'"`
+- q: What is conversion flag to call `str()` on an argument of `str.format()`? --- a: `'{!s}'.format('hello') == 'hello'`
 
 
 ## misc
@@ -955,14 +1040,12 @@ q: `len(x)` vs `x.__len__` --- a: TODO: `__len__` is slower than `len()`, becaus
 
 # input/output
 
-[ascii](https://docs.python.org/3/library/functions.html#ascii)
 [chr](https://docs.python.org/3/library/functions.html#chr)
 [format](https://docs.python.org/3/library/functions.html#format)
 [open](https://docs.python.org/3/library/functions.html#open)
 [ord](https://docs.python.org/3/library/functions.html#ord)
 [print](https://docs.python.org/3/library/functions.html#print)
-[repr](https://docs.python.org/3/library/functions.html#repr)
-[str](https://docs.python.org/3/library/functions.html#str)
+
 
 
 # oop

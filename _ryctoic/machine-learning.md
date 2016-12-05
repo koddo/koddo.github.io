@@ -86,6 +86,7 @@ impurity of split
 > --- Sebastian Thrun, <cite><a href="https://www.youtube.com/watch?v=mzKPXz-Yhwk&index=68&list=PLAwxTw4SYaPkQXg8TkVdIvYv4HfLG7SiH">Intro to Machine Learning</a></cite>
 # neural networks
 
+<http://www.asimovinstitute.org/neural-network-zoo/>
 
 ## universal approximation theorem
 

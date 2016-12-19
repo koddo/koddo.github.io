@@ -771,34 +771,41 @@ TODO: `io.StringIO`, `io.BytesIO`, `tempfile.SpooledTemporaryFile`
 
 <https://docs.python.org/3/library/string.html#format-specification-mini-language>
 
+``` Text
+format_spec     ::=  [[fill]align][sign][#][0][width][grouping_option][.precision][type]
+fill            ::=  <any character>
+align           ::=  "<" | ">" | "=" | "^"
+sign            ::=  "+" | "-" | " "
+width           ::=  integer
+grouping_option ::=  "_" | ","
+precision       ::=  integer
+type            ::=  "b" | "c" | "d" | "e" | "E" | "f" | "F" | "g" | "G" | "n" | "o" | "s" | "x" | "X" | "%"
+```
+
 ``` python
 'hello, {}'.format(username)
-
-'{:.1f} {}'.format(698.243, 'GB') == '698.2 GB'
 
 '{0} is better than {1}'.format('emacs', 'vim')
 '{1} is better than {0}'.format('emacs', 'vim')
 '{0} {2} {1} {2}'.format(*tpl)
-map('%Y-%m-%d'.format, lst)
 
 '{0!s}'.format(an_obj)   # calls str() on the argument
 '{0!r}'.format(an_obj)   # calls repr() on the argument
 '{0!a}'.format(an_obj)   # calls ascii() on the argument
 'repr() shows quotes: {0!r}; str() doesn't: {0!s}'.format('test')
 
-'{0.real}, {0.imag}'.format(1-1j)
+'{first} {last}'.format(first='John', last='Smith')
+'{first} {last}'.format(**{'first': 'John', 'last': 'Smith'})
 
-'Coordinates: {latitude}, {longitude}'.format(latitude='37.24N', longitude='-115.81W')
-coord = {'latitude': '37.24N', 'longitude': '-115.81W'}
-'Coordinates: {latitude}, {longitude}'.format(**coord)
+'{0.real}, {0.imag}'.format(1-1j)
 
 coord = (3, 5)
 'X: {0[0]};  Y: {0[1]}'.format(coord)
 
-'{first} {last}'.format(first='John', last='Smith')
-'{first} {last}'.format(**{'first': 'John', 'last': 'Smith'})
 
 '{:f}'.format(1) == '1.000000'
+'{:.1f} {}'.format(698.243, 'GB') == '698.2 GB'
+'{0} {0:g}'.format(1.0)
 
 '{:+f}; {:+f}'.format(3.14, -3.14) == '+3.140000; -3.140000'   # always show sign
 '{: f}; {: f}'.format(3.14, -3.14) == ' 3.140000; -3.140000'
@@ -807,6 +814,8 @@ coord = (3, 5)
 
 '{:#5x}'.format(15) == '  0xf'
 '{:#5X}'.format(15) == '  0XF'
+
+map('%Y-%m-%d'.format, lst)
 ```
 
 ``` python
@@ -817,18 +826,10 @@ coord = (3, 5)
 >>> '{:^30}'.format('centered')
 '           centered           '
 >>> '{:*^30}'.format('centered')  # use '*' as a fill char
-
-
-'{:%Y-%m-%d %H:%M:%S}'.format(datetime(2010, 7, 4, 12, 15, 58))
-
 '***********centered***********'
 
-'{:f} is for fixed point'
-'{:d} is for decimal'
-'{:n} is like {:d}, but also uses current locale to insert number separator characters'
 import locale
-## in this example we set a locale to see the difference:
-locale.setlocale(locale.LC_ALL, 'en_US')
+locale.setlocale(locale.LC_ALL, 'en_US')   ## in this example we set a locale to see the difference:
 '{:n}'.format(10**6) == '1,000,000'
 locale.setlocale(locale.LC_ALL, locale.getdefaultlocale())
 
@@ -838,22 +839,56 @@ locale.setlocale(locale.LC_ALL, locale.getdefaultlocale())
 '{:{fill}{align}{width}}'.format('hello', fill='*', align='^', width=11) == '***hello***'
 ```
 
+for formatting dates see the dates section
+
+not covered: besides `<`, `>`, and `^` alignment options there is another one, `=`, for putting the sign before fill chars: `'{:0=5}'.format(-1) == '-0001'`
+not covered: printing binary and octal
+Note, we don't have questions for formatting floats with reserved space for sign, we only have question about meaning of those options: `'{:+f} {: f} {:-f}'`.
+
 TODO: print(..., sep=', ')
 TODO: print(..., end=' ')
 
-misc:
-- q: `s.format()` vs `%`-interpolation --- a: Just use the `.format()`, the `%`-style formatting is left in the language for backward compatibility.
-- q: `str.format_map(dct)` vs `str.format(**dct)`? --- a: Unpacking produces a `dict`, so this fails if it doesn't contain a needed key. But with `.format_map()` we can use `defaultdict`.
-TODO: `str.format_map` example
-
-
-
 basics:
+- q: `s.format()` vs `%`-interpolation --- a: Just use the `.format()`, the `%`-style formatting is left in the language for backward compatibility.
+- q: TODO: Explicit and implicit positional arguments. --- a: Implicit: `'hello, {}'.format(username)`; explicit: `'{1} is cooler than {0}'.format('vim', 'emacs')`.
 - q: What happens when we mix replacement fields like this: `'{} {1}'.format(1, 2)`? --- a: `ValueError: cannot switch from automatic field numbering to manual field specification`
-- q: How to `str.format()` curly braces? --- a: `'left curly brace:{{, and the right one: }}'`
-- q: How to `str.format()` a decimal with comma as thousands separator? --- a: `'{:,d}'.format(10**6)`
-- q: How to `str.format()` a decimal usign current locale to insert number separator characters? --- a: `'{:n}'.format(10**6)``
-- q: How to `str.format()` a float? --- a: `{:f}`
+- q: How to `str.format()` curly braces? --- a: `'left curly brace:{{, and the right one: }}'.format()`
+- q: named arguments --- a: `'{first} {last}'.format(first='John', last='Smith')` and `'{first} {last}'.format( **{'first': 'John', 'last': 'Smith'} )`
+- q: accessing argument's attributes --- a: `'{0.real}, {0.imag}'.format(1-1j) == '1.0, -1.0'`
+- q: accessing argument's items --- a: `'X: {0[0]};  Y: {0[1]}'.format( (2, 3) ) == 'X: 2;  Y: 3'`
+- q: How to format arguments out of order they come? --- a: `'{1} is cooler than {0}'.format('vim', 'emacs')`
+- q: How precision affects formatting of strings? `'{:.3}'.format('xylophone')` --- a: `'{:.3}'.format('xylophone') == 'xyl'`
+- q: How to format only the first n chars of a string usign `str.format()`? --- a: `'{:.3}'.format('xylophone') == 'xyl'`
+
+numbers:
+- q: `str.format()`: `'{}'` vs `'{:s}'` for strings? --- a: These are equivalent.
+- q: `str.format()`: `'{}'` vs `'{:d}'` for integers? --- a: These are equivalent.
+
+- q: `'{}'` vs `'{:f}'` vs `'{:g}'` for floats? --- a: They are similar, except that with the former the fixed-point notation, when used, has at least one digit past the decimal point. The default precision is as high as needed to represent the particular value. The overall effect is to match the output of str() as altered by the other format modifiers.
+- q: `'{}'` vs `'{:f}'` vs `'{:g}'` (and vs `'{:n}'`) for formatting floating point numbers? --- TODO, `'{0} {0:g}'.format(1.0) == '1.0 1'`
+
+- q: How to `str.format()` a number with comma as thousands separator? --- a: `'{:,}'.format(10**6)`
+- q: How to `str.format()` a number usign current locale to insert number separator characters? --- a: `'{:n}'.format(10**6)`
+- q: What is `'{:e}'` for? --- a: Exponent notation. For example: `'{:e}'.format(0.12345) == '1.234500e-01'`
+
+- q: How to print a float with precision? --- a: TODO
+
+- q: What is this shit? `'{:%}'` --- a: Percentage. Multiplies the number by 100 and displays in fixed (`'f'`) format, followed by a percent sign: `'{:%}'.format(0.42) == '42.000000%'` --- you probably want to use precision, `'{:.1%}'`
+- q: How to format a float as percents when it represents a ratio? --- a: `'{:.1%}'.format(1/3) == '33.3%'` --- you probably want to use precision, because it displays floats in fixed (`f`) format with default precision 6.
+
+- q: What do these mean? `'{:+f} {: f} {:-f}'` --- a: `'{:-f}'` is same as `'{:f}'`, `'{:+f}'` is for always showing the sign, `'{: f}'` preserves space: `'{: f}; {: f}'.format(3.14, -3.14) == ' 3.140000; -3.140000'`.
+
+- q: How to print a hex number with and without `0x` prefix? --- a: `'with: {0:#x}; without: {0:x}'.format(15) == 'with: 0xf; without: f'` --- the octothorp `#` does alternate behaviour.
+- q: What does `'{:#x}'` mean? --- a: Hexadecimal with the `0x` prefix.
+- q: What if we use capital letters for presentation types? `'{:F}'`, `'{:G}'`, `'{:E}'`, `'{:#X}'`? --- It formats `nan`, `inf`, `e`, etc, in uppercase; for hexadecimals it also formats the prefix `'0X'` uppercase.
+
+alignment:
+- q: How to align a string to the left when using `str.format()`? --- a: `'{:<3}'.format('l') == 'l  '`
+- q: How to align a string to the right when using `str.format()`? --- a: `'{:>3}'.format('r') =='  r'`
+- q: How to align a string at the center when using `str.format()`? --- a: `'{:^5}'.format('c') == '  c  '`
+- q: How to use a fill character when aligning a string using `str.format()`? --- a: `'{:*^5}'.format('c') == '**c**'`
+
+
 
 advanced:
 - q: `str()` vs `repr()` --- a: `repr()` is meant to generate representations which can be read by the interpreter, `str()` is for end-users.
@@ -861,7 +896,17 @@ advanced:
 - q: What is `ascii()` for? --- It's the `repr()` with escaped non-ASCII characters.
 - q: What is conversion flag to call `repr()` on an argument of `str.format()`? --- a: `'{!r}'.format('hello') == "'hello'"`
 - q: What is conversion flag to call `str()` on an argument of `str.format()`? --- a: `'{!s}'.format('hello') == 'hello'`
+- q: What does this mean? `{!r}.format(whatever)` --- a: Calls `repr()` on the argument.
+- q: What does this mean? `{!s}.format(whatever)` --- a: Calls `str()` on the argument.
+- q: `str.format(**dct)` vs `str.format_map(defaultdct)`? --- a: Unpacking produces a `dict`, so this fails if it doesn't contain a needed key. But with `.format_map()` we can use `defaultdict`.
+TODO: `str.format_map` example
+- q: Nested replacement fields. --- a: `'{:{fill}{align}{width}}'.format('hello', fill='*', align='^', width=11) == '***hello***'`
 
+# dates
+
+``` python
+'{:%Y-%m-%d %H:%M:%S}'.format(datetime(2010, 7, 4, 12, 15, 58))
+```
 
 ## misc
 

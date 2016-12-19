@@ -10,6 +10,9 @@ layout:  collection_page
 
 <https://s3.amazonaws.com/MLMastery/MachineLearningAlgorithms.png>
 
+
+<https://github.com/hangtwenty/dive-into-machine-learning>
+
 # misc
 
 examples of statistics using pandas: <https://github.com/rouseguy/intro2stats/tree/master/notebooks>
@@ -86,7 +89,13 @@ impurity of split
 > --- Sebastian Thrun, <cite><a href="https://www.youtube.com/watch?v=mzKPXz-Yhwk&index=68&list=PLAwxTw4SYaPkQXg8TkVdIvYv4HfLG7SiH">Intro to Machine Learning</a></cite>
 # neural networks
 
+<http://neuralnetworksanddeeplearning.com/>
 <http://www.asimovinstitute.org/neural-network-zoo/>
+<https://github.com/songrotek/Deep-Learning-Papers-Reading-Roadmap>
+
+<https://www.reddit.com/r/InternetIsBeautiful/comments/4emh2i/play_with_a_neural_network_right_in_your_browser/>
+
+A Few Useful Things to Know about Machine Learning <https://gist.github.com/shagunsodhani/5c2cdfc269bf8aa50b72>, <http://machinelearningmastery.com/useful-things-to-know-about-machine-learning/>
 
 ## universal approximation theorem
 

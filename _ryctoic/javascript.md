@@ -7,6 +7,12 @@ layout:  collection_page
 * this line gets replaced with the generated table of contents
 {:toc}
 
+# sort this
+
+<https://github.com/hemanth/functional-programming-jargon>
+
+<https://www.reddit.com/r/javascript/comments/5hfq6n/100_minutes_of_free_functional_programming/>, <https://egghead.io/courses/professor-frisby-introduces-function-composition>
+
 
 # misc
 

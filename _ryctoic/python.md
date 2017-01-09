@@ -538,6 +538,7 @@ def f():
 - q: Unpack `[1, [2, 3]]` into three variables `a = 1; b = 2; c = 3`. --- a: `a, (b, c) = [1, [2, 3]]`
 
 TODO: add: - q: merge two lists into a list of pairs --- a: `zip('abcd', [1,2,3,4])`
+TODO: advanced unpacking: `a, b, *rest = range(10)`, `a, *rest, b = range(10)`, `first, *_, last = f.readlines()`
 
 </div>
 
@@ -695,7 +696,7 @@ TODO:
 Strings `.join()` vs `+=` in a loop: <http://stackoverflow.com/questions/1349311/python-string-join-is-faster-than-but-whats-wrong-here/21964653#21964653>
 
 TODO: unicode
-TODO: a question on string immutability
+TODO: a question on string immutability, can't use <https://docs.python.org/3/library/stdtypes.html#typesseq-mutable>
 TODO: slice
 
 misc:
@@ -871,6 +872,7 @@ numbers:
 - q: How to `str.format()` a number usign current locale to insert number separator characters? --- a: `'{:n}'.format(10**6)`
 - q: What is `'{:e}'` for? --- a: Exponent notation. For example: `'{:e}'.format(0.12345) == '1.234500e-01'`
 
+- q: `'{:.3f}'` vs `'{:.3g}'` --- a: `'{:.3f}'` indicates number of digits after the decimal point, `'{:.3g}'` indicates number of digits overall, before and after the decimal point.
 - q: How to print a float with precision? --- a: TODO
 
 - q: What is this shit? `'{:%}'` --- a: Percentage. Multiplies the number by 100 and displays in fixed (`'f'`) format, followed by a percent sign: `'{:%}'.format(0.42) == '42.000000%'` --- you probably want to use precision, `'{:.1%}'`
@@ -890,7 +892,7 @@ alignment:
 
 
 
-advanced:
+misc:
 - q: `str()` vs `repr()` --- a: `repr()` is meant to generate representations which can be read by the interpreter, `str()` is for end-users.
 - q: What are outputs of `str('hello')` and `repr('hello')`? --- a: `'hello'` and `"'hello'"`
 - q: What is `ascii()` for? --- It's the `repr()` with escaped non-ASCII characters.
@@ -911,6 +913,7 @@ TODO: `str.format_map` example
 ## misc
 
 <https://docs.python.org/3/library/stdtypes.html#string-methods>
+
 
 TODO:
 casefold?
@@ -940,7 +943,7 @@ q: get all printable chars --- a: `string.printable`
 q: get all punctuation chars --- a: `string.punctuation`
 
 
-not covered: `expandtabs`
+not covered: `expandtabs`, because highly specialized
 
 
 
@@ -952,7 +955,48 @@ not covered: `expandtabs`
 [bytes](https://docs.python.org/3/library/functions.html#bytes)
 [memoryview](https://docs.python.org/3/library/functions.html#memoryview)
 
+
+The methods on bytes and bytearray objects don’t accept strings as their arguments, and vice versa:
+
+``` python
+a = b"abc"
+b = a.replace(b"a", b"f")
+```
+
+join
+
+decode
+
+count
+startswith, endswith
+(r)find
+(r)index
+(r)partition
+replace
+translate, maketrans
+
+these produce new objects:
+center 
+(lr)just
+(l)strip
+(r)split
+
+capitalize
+expandtabs
+splitlines
+
 - q: `bytes` vs `bytearray` -- a: `bytes` are immutable, just like strings, while `bytearray` objects are mutable and algorightms with them can be faster when we have lots of modifications, because we avoid lots of copying.
+
+# arrays
+
+<https://docs.python.org/3/library/array.html#module-array>
+
+<http://stackoverflow.com/questions/2214651/efficient-python-array-with-100-million-zeros>
+<http://stackoverflow.com/questions/2214651/efficient-python-array-with-100-million-zeros#comment2167466_2214771>: indexing a Python list is a very fast operation: it just fetches the object already in the internal array. array.array and numpy.array objects do not contain Python objects, so the actual datatype stored in the array needs to be converted on access. It's the price for the much, much lower memory use and actual contiguous block of data
+<http://stackoverflow.com/questions/3214288/what-is-the-fastest-way-to-initialize-an-integer-array-in-python/3214343#3214343>
+
+- q: How to initialize a large array? --- a: `from array import array; a = array('i', [0]) * 1000`
+- q: `list` vs `array.array`? --- a: `array` defines an object type which can _compactly_ represent an array of basic values: characters, integers, floating point numbers. At the cost of speed.
 
 
 # math
@@ -1226,12 +1270,15 @@ TODO: __slots__
 TODO: <https://pypi.python.org/pypi/PyMonad/>
 TODO: persistent data structures <https://github.com/tobgu/pyrsistent>
 TODO: <http://stackoverflow.com/questions/101268/hidden-features-of-python>
+TODO: <http://www.asmeurer.com/python3-presentation/slides.html#1>
+TODO: <https://github.com/sfermigier/awesome-functional-python>, <https://www.reddit.com/r/Python/comments/5iuj70/awesome_functional_python/>
 TODO: generate random number
 
 
 - q: Default character encoding of python3 files? -- a: `utf-8`
 
 - q: How to run a simple http server to serve static files? -- a: `$ cd path && python3 -m http.server 4001`
+
 
 ## skipped hackerrank challenges
 
@@ -1376,6 +1423,8 @@ q: `zip()` vs `itertools.zip_longest()` --- a: the former stops when the shortes
 
 # numpy
 
+<https://github.com/Kyubyong/numpy_exercises>
+
 `numpy.array()`: <http://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html>
 `numpy.array()` vs `numpy.asarray()`: <http://stackoverflow.com/questions/14415741/numpy-array-vs-asarray>
 numpy arrays vs matrices: <https://docs.scipy.org/doc/numpy-dev/user/numpy-for-matlab-users.html#array-or-matrix-which-should-i-use>
@@ -1452,6 +1501,7 @@ for child in tree.getroot():
 
 isinstance(tree.getroot().attrib, dict) == True
 ```
+
 
 
 

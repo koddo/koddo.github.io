@@ -17,7 +17,11 @@ layout:  collection_page
 
 examples of statistics using pandas: <https://github.com/rouseguy/intro2stats/tree/master/notebooks>
 
+sort:
+<https://codesachin.wordpress.com/2016/06/25/non-mathematical-feature-engineering-techniques-for-data-science/>
+<https://www.countbayesie.com/blog/2016/5/1/a-guide-to-bayesian-statistics>
 
+A Visual Introduction to Machine Learning --- <http://www.r2d3.us/visual-intro-to-machine-learning-part-1/>
 
 # Kaggle
 
@@ -130,6 +134,8 @@ TODO: does svm has this property?
 <https://www.quora.com/In-machine-learning-algorithms-why-is-sigmoid-function-used-primarily-and-not-functions-like-tanh-x-In-tanhx-for-eg-seem-to-split-y-axis-evenly-and-flatten-out-fast-as-x-approaches-+-infinity-The-range-being-sigmoid-0-1-and-tanh-x-1-1>
 
 Sign(sum) can be useful as an example of non-linear activation function.
+
+<https://medium.com/@karpathy/yes-you-should-understand-backprop-e2f06eab496b>
 
 ## perceptron
 

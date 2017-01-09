@@ -134,3 +134,5 @@ from <https://www.reddit.com/r/AskStatistics/comments/52vt7n/this_is_the_best_ex
 > (Gamma) The gamma is related to the exponential, and is the answer to the question: "If people arrive once every 5 minutes, then how long do I have to wait for a specific number of people to arrive".
 > (Weibull) The Weibull distribution is the answer to the question: "If I have a machine that crushes rocks into sand, what proportion of grains will be with-in this specific size range?"
 
+<https://habrahabr.ru/post/311092/>
+

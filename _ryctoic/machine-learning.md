@@ -22,6 +22,13 @@ sort:
 <https://www.countbayesie.com/blog/2016/5/1/a-guide-to-bayesian-statistics>
 
 A Visual Introduction to Machine Learning --- <http://www.r2d3.us/visual-intro-to-machine-learning-part-1/>
+<https://algobeans.com/>
+
+<https://ml.berkeley.edu/blog/2016/11/06/tutorial-1/>
+<https://ml.berkeley.edu/blog/2016/12/24/tutorial-2/>
+
+
+
 
 # Kaggle
 
@@ -47,6 +54,13 @@ Sentiment Analysis on Movie Reviews
 
 
 # decision trees
+
+<https://en.wikipedia.org/wiki/C4.5_algorithm> is number one in top ten ml algorithms
+<http://scikit-learn.org/stable/modules/tree.html>
+
+tutorials
+<http://thegrimmscientist.com/2014/10/23/tutorial-decision-trees/>
+<http://people.revoledu.com/kardi/tutorial/DecisionTree/index.html>
 
 ## algorithm
 
@@ -76,6 +90,14 @@ from [Theoretical Comparison between the Gini Index and Information Gain Criteri
 <div class="ryctoic-questions" markdown="1">
 - q: gini vs entropy criterias for decision trees
 </div>
+
+sources: 
+<https://www.garysieling.com/blog/sklearn-gini-vs-entropy-criteria>
+<https://sebastianraschka.com/faq/docs/decisiontree-error-vs-entropy.html>
+<https://sebastianraschka.com/faq/docs/decision-tree-binary.html>
+<http://haohanw.blogspot.ru/2014/08/ml-decision-tree-rule-selection.html>
+<https://www.quora.com/What-are-the-advantages-of-different-Decision-Trees-Algorithms>
+<https://www.quora.com/Are-gini-index-entropy-or-classification-error-measures-causing-any-difference-on-Decision-Tree-classification>
 
 ## entropy
 

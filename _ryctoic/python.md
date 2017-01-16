@@ -693,6 +693,8 @@ TODO:
 
 # strings
 
+TODO: f-strings, new in 3.6
+
 Strings `.join()` vs `+=` in a loop: <http://stackoverflow.com/questions/1349311/python-string-join-is-faster-than-but-whats-wrong-here/21964653#21964653>
 
 TODO: unicode
@@ -946,8 +948,8 @@ q: get all punctuation chars --- a: `string.punctuation`
 not covered: `expandtabs`, because highly specialized
 
 
-
-
+TODO: `Ellipsis` object --- <http://stackoverflow.com/questions/118370/how-do-you-use-the-ellipsis-slicing-syntax-in-python/118508#118508>
+TODO: `NotImplemented` object
 
 # bytes and bytearrays
 

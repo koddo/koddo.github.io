@@ -1220,6 +1220,8 @@ def make_counter():
 
 - q: Closures in python. -- a: To capture a binding in the outer scope, use `nonlocal x`.
 
+- q: How to generate a list of packages into `requirements.txt`? --- a: `pip freeze > requirements.txt`
+- q: How to install packages from requirements.txt? --- a: `$ pip install -r requirements.txt`
 
 TODO: complexity of all operations for lists, dicts, sets, deques considering their internal structure
 

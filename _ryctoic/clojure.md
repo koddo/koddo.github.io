@@ -12,3 +12,7 @@ layout:  collection_page
 # hara.zip
 
 hara.zip vs clojure.zip <https://www.reddit.com/r/Clojure/comments/55t3lg/why_clojurezip_sucks/>
+
+# misc
+
+`PersistentQueue`

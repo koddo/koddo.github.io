@@ -1403,6 +1403,19 @@ TODO: compress, better groupby, tee
 
 TODO: `itertools.isslice`
 
+TODO: how to get prev and next values in a loop
+if you don't have to look too smart:
+```
+l = len(timestamps)
+for i in range(l):
+    if i < l-1:
+        result.append(timestamps[i])
+        result.append(  (timestamps[i] + timestamps[i+1]) / 2  )
+    else:
+        result.append(timestamps[i])
+```
+
+
 q: get a cartesian product of two sequences --- a: `itertools.product(s1, s2)`
 q: get permutations of length `k` of elements in a list --- a: `itertools.permutations(a_list, k)`
 q: get combinations of length `k` of elements in a list --- a: `itertools.combinations(a_list, k)`
@@ -1423,6 +1436,7 @@ q: `slice()` vs `itertools.islice()` --- a: the latter is for iterators, which d
 q: `map()` vs `itertools.starmap()` --- a: the latter is for data, which has been pre-zipped, `list( itertools.starmap(pow, [(5,2), (3,2), (10,3)]) ) == [25, 9, 1000]`
 q: `zip()` two sequences until the longest one is exhauseted, with a given value for missing bits --- a: `itertools.zip_longest(lst1, lst2, fillvalue=None)`
 q: `zip()` vs `itertools.zip_longest()` --- a: the former stops when the shortest iterator is exhausted, the latter stops when the longest one is done
+
 
 
 # numpy

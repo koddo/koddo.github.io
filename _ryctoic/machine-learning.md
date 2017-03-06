@@ -123,6 +123,8 @@ impurity of split
 
 A Few Useful Things to Know about Machine Learning <https://gist.github.com/shagunsodhani/5c2cdfc269bf8aa50b72>, <http://machinelearningmastery.com/useful-things-to-know-about-machine-learning/>
 
+Методы оптимизации нейронных сетей --- <https://habrahabr.ru/post/318970/>
+
 ## universal approximation theorem
 
 <http://neuralnetworksanddeeplearning.com/chap4.html>

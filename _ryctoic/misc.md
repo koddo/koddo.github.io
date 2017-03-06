@@ -21,3 +21,13 @@ less:
 `p` --- beginning of file
 `G` --- end of file
 `/` --- search, `n` and `N` are next and prev
+
+# licenses
+
+<https://www.reddit.com/r/Python/comments/2z4k2q/which_license_you_would_choose_when_you_opensouce/>
+
+# erlang
+
+TODO: Erlang Types Book --- <http://erlang-types-book.com/>
+TODO: https://github.com/zkessin/testing-erlang-book
+

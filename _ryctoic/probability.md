@@ -5,6 +5,10 @@ mathjax: true
 
 ---
 
+# misc
+
+<http://students.brown.edu/seeing-theory/>
+
 # combinatorics
 
 \\[ \binom{N}{n} \ = \ \frac{N!}{(N-n)! \ n!} \\]

@@ -619,6 +619,8 @@ invert binary tree, yes
 
 Разбор задач финального раунда RCC 2016 <https://habrahabr.ru/company/mailru/blog/310376/>
 
+quotient filter, bloom filter, <https://en.wikipedia.org/wiki/Quotient_filter>, <https://habrahabr.ru/post/242285/>
+
 # Trash
 
 

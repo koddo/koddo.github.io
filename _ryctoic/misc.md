@@ -28,6 +28,6 @@ less:
 
 # erlang
 
-TODO: Erlang Types Book --- <http://erlang-types-book.com/>
-TODO: https://github.com/zkessin/testing-erlang-book
-
+TODO: Erlang Types Book --- <http://erlang-types-book.com/> --- doesn't work
+TODO: <https://github.com/zkessin/testing-erlang-book>
+TODO: <https://medium.com/@jlouis666/breaking-erlang-maps-1-31952b8729e6>, <https://medium.com/@jlouis666/breaking-erlang-maps-2-362730a91400>

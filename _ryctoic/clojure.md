@@ -20,3 +20,5 @@ hara.zip vs clojure.zip <https://www.reddit.com/r/Clojure/comments/55t3lg/why_cl
 <https://lambdaisland.com/blog/11-02-2017-re-frame-form-1-subscriptions> --- cooler looking subscriptions: `:checked (<sub [:todos/all-complete?])`
 
 <http://stackoverflow.com/questions/3008411/clojure-consseq-vs-conjlist>
+
+<https://stuartsierra.com/tag/dos-and-donts>

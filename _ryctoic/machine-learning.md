@@ -27,6 +27,7 @@ A Visual Introduction to Machine Learning --- <http://www.r2d3.us/visual-intro-t
 <https://ml.berkeley.edu/blog/2016/11/06/tutorial-1/>
 <https://ml.berkeley.edu/blog/2016/12/24/tutorial-2/>
 
+Computational Statistics in Python 0.1 --- <http://people.duke.edu/~ccc14/sta-663/index.html>
 
 
 

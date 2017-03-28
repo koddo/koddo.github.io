@@ -22,3 +22,5 @@ hara.zip vs clojure.zip <https://www.reddit.com/r/Clojure/comments/55t3lg/why_cl
 <http://stackoverflow.com/questions/3008411/clojure-consseq-vs-conjlist>
 
 <https://stuartsierra.com/tag/dos-and-donts>
+
+<http://stackoverflow.com/questions/26050540/what-is-the-difference-between-the-hash-map-and-array-map-in-clojure>

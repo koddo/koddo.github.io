@@ -147,7 +147,7 @@ TODO:
 - q: Write a lambda function. --- a: `f = lambda x: x**2`
 </div>
 
-TODO: mutable default args
+TODO: mutable default args, and make sure you use immutable types to catch this earlier
 TODO: new type hinting
 TODO: function annotations: <https://github.com/kennknowles/python-rightarrow>
 
@@ -1283,6 +1283,7 @@ TODO: generate random number
 
 - q: How to run a simple http server to serve static files? -- a: `$ cd path && python3 -m http.server 4001`
 
+<https://www.reddit.com/r/Python/comments/5zk97l/what_are_some_wtfs_still_in_python_3/>
 
 ## skipped hackerrank challenges
 
@@ -1519,6 +1520,12 @@ for child in tree.getroot():
 
 isinstance(tree.getroot().attrib, dict) == True
 ```
+
+
+
+
+
+
 
 
 

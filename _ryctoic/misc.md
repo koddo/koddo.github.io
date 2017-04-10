@@ -31,3 +31,7 @@ less:
 TODO: Erlang Types Book --- <http://erlang-types-book.com/> --- doesn't work
 TODO: <https://github.com/zkessin/testing-erlang-book>
 TODO: <https://medium.com/@jlouis666/breaking-erlang-maps-1-31952b8729e6>, <https://medium.com/@jlouis666/breaking-erlang-maps-2-362730a91400>
+
+# garbage collector
+
+<https://spin.atomicobject.com/2014/09/03/visualizing-garbage-collection-algorithms/>, <https://github.com/kenfox/gc-viz>

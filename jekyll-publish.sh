@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-docker run -it --rm --name=jekyll \
+docker run -it --rm --name=jekyll-publish \
     --volume=$(pwd):/srv/jekyll \
-    my-jekyll \
+    koddo/jekyll \
     jekyll build   # without --drafts
 
 # the whole _site/ dir gets rewritten after jekyll build

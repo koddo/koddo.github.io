@@ -7,7 +7,7 @@
 docker run -it --rm --name=jekyll \
     --volume=$(pwd):/srv/jekyll \
     -p 0.0.0.0:4000:4000 \
-    my-jekyll \
+    koddo/jekyll \
     jekyll serve --drafts \
     --config _config.yml,_config_livereload.yml \
     --force_polling   # for macosx

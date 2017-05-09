@@ -7,6 +7,6 @@
 docker run -it --rm --name=jekyll-livereload \
     --volume=$(pwd):/srv/jekyll \
     -p 0.0.0.0:35729:35729 \
-    my-jekyll \
+    koddo/jekyll \
     guard
 

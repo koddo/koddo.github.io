@@ -3,26 +3,31 @@
 https://koddo.github.io/
 
 ## how to write a new post
-create a markdown file in _drafts
+
+Create a markdown file in _drafts:
 M-x ym-jekyll-post-template
 ...
 M-x ym-jekyll-regenerate-date-and-filename
 
 ## how to use
 
+Before the first run create an image with installed gems:
+
+```
+$ docker build --tag koddo/jekyll - < Dockerfile
+```
+
+Then:
+
 ```
 $ ssh -t alex@debian.local "cd ~/mnt/koddo.github.io && ./jekyll-serve.sh"
 $ cd ~/Dropbox/ && python3 -m http.server 4001
-$ open -a Firefox http://my-jekyll.dev.dnsdock:4000/
+$ open -a Firefox http://jekyll.dev.dnsdock:4000/
 
-$ ./publish.sh
+$ ./jekyll-publish.sh
 ```
 
-before the first run create an image with installed gems
 
-```
-$ docker build --tag my-jekyll - < Dockerfile
-```
 
 the `_site/` dir contains the master branch of this repo, `_site/.git` is in keep_files in _config.yml
 

@@ -7,13 +7,14 @@
 docker run -it --rm --name=jekyll \
     --volume=$(pwd):/srv/jekyll \
     -p 0.0.0.0:4000:4000 \
+    --env JEKYLL_ENV=development \
     koddo/jekyll \
     jekyll serve --drafts \
-    --config _config.yml,_config_livereload.yml \
-    --force_polling   # for editing files outside the vm, takes a lot of resources
+    --config _config.yml
+    # --force_polling   # for editing files outside the vm, takes a lot of resources
 
-
+# --config _config.yml,_config_livereload.yml
 # now we check {% if site.livereload %}
 # we can do this using environment variable
-# JEKYLL_ENV=production jekyll build
-# and then {% if jekyll.environment == "production" %}
+# JEKYLL_ENV=development jekyll build
+# and then {% if jekyll.environment == "development" %}

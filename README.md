@@ -92,3 +92,22 @@ TODO: the show comments button is named "Any comments?" -- find a better name
 TODO: make the show comments button less bright, less visible
 TODO: on noscript make the show comments button redirect to the disqus site with comments
 TODO: attach the disqus logo to the button: https://disqus.com/brand/
+
+# new site
+
+```
+outside$ # create and clone site-name
+outside$ ./jekyll-run.sh jekyll new site-name
+outside$ cd site-name
+$ git add --all && git commit -am 'jekyll new'
+
+$ # clone site-name to ./_site dir, jekyll publishes everything into it
+$ cd _site
+_site$ git checkout --orphan gh-pages
+_site$ git rm -rf .
+
+_site$ cd ..
+$ # jekyl build
+$ cd _site
+_site$ git add --all && git commit --allow-empty-message -am ''
+```

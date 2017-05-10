@@ -848,8 +848,8 @@ not covered: besides `<`, `>`, and `^` alignment options there is another one, `
 not covered: printing binary and octal
 Note, we don't have questions for formatting floats with reserved space for sign, we only have question about meaning of those options: `'{:+f} {: f} {:-f}'`.
 
-TODO: print(..., sep=', ')
-TODO: print(..., end=' ')
+TODO: `print(..., sep=', ')`
+TODO: `print(..., end=' ')`
 
 basics:
 - q: `s.format()` vs `%`-interpolation --- a: Just use the `.format()`, the `%`-style formatting is left in the language for backward compatibility.

@@ -10,8 +10,8 @@ docker run -it --rm --name=jekyll \
     --env JEKYLL_ENV=development \
     koddo/jekyll \
     jekyll serve --drafts \
-    --config _config.yml
-    # --force_polling   # for editing files outside the vm, takes a lot of resources
+    --config _config.yml \
+    --force_polling
 
 # --config _config.yml,_config_livereload.yml
 # now we check {% if site.livereload %}

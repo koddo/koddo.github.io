@@ -27,14 +27,12 @@ keep_files:
 exclude:
     - jekyll-serve.sh
     - jekyll-livereload.sh
-    - publish.sh
-    - gh-pages.sh
+    - jekyll-publish.sh
+    - jekyll-run.sh
     - README.md
     - README-master-branch.md
     - Dockerfile
     - Guardfile
-    - _config_livereload.yml
-    - notebooks
 
 tag_page_layout: tag_page
 tag_page_dir: tag

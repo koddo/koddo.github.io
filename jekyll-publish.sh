@@ -12,6 +12,5 @@ echo $(git rev-parse --short HEAD) >> _site/commit
 
 cd _site
 git add --all && \
-    git commit --allow-empty-message -am '' && \
-    git push
+    git commit --allow-empty-message -am ''       # && git push
 

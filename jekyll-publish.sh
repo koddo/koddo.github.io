@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
-git diff --quiet || echo "please commit before publishing" && exit 1
+git diff --quiet
+if [[ $? ]] ; then
+    echo "please commit before publishing"
+    exit 1
+fi
 
 
 

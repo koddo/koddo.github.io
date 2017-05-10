@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 git diff --quiet
-if [[ $? ]] ; then
+if [[ $? -ne 0 ]] ; then
     echo "please commit before publishing"
     exit 1
 fi

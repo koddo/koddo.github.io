@@ -23,7 +23,7 @@ kramdown:
   
 destination: _site
 keep_files:
-    - _site/.git
+    - .git
 exclude:
     - jekyll-serve.sh
     - jekyll-livereload.sh

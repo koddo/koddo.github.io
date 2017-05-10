@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+git diff --quiet || echo "please commit before publishing" && exit 1
+
+
+
 docker run -it --rm --name=jekyll-publish \
     --volume=$(pwd):/srv/jekyll \
     koddo/jekyll \
@@ -10,7 +14,10 @@ cp README-master-branch.md _site/README.md
 echo $(date) >> _site/commit
 echo $(git rev-parse --short HEAD) >> _site/commit
 
+
+
 cd _site
 git add --all && \
-    git commit --allow-empty-message -am ''       # && git push
+    git -c "user.name=jekyll-publish" -c "user.email=NA" commit --allow-empty-message -am '' && \
+    git push
 

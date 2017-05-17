@@ -4,14 +4,21 @@
 
 ## please make sure listening to 0.0.0.0 is ok in your environment
 
-docker run -it --rm --name=jekyll \
+NAME=jekyll_$(basename $(pwd))
+PORT=${1:-4000}
+
+docker run -it --rm --name="$NAME" \
     --volume=$(pwd):/srv/jekyll \
-    -p 0.0.0.0:4000:4000 \
+    -p 0.0.0.0:$PORT:4000 \
     --env JEKYLL_ENV=development \
     koddo/jekyll \
-    jekyll serve --drafts \
-    --config _config.yml \
-    --force_polling
+    jekyll serve \
+    --profile \
+    --drafts \
+    --incremental \
+    --config _config.yml
+
+    # --force_polling
 
 # --config _config.yml,_config_livereload.yml
 # now we check {% if site.livereload %}

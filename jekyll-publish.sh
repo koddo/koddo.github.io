@@ -11,7 +11,7 @@ fi
 docker run -it --rm --name=jekyll-publish \
     --volume=$(pwd):/srv/jekyll \
     koddo/jekyll \
-    jekyll build   # without --drafts
+    jekyll build --profile   # without --drafts
 
 
 # the whole _site/ dir gets rewritten after jekyll build
@@ -25,3 +25,5 @@ cd _site
 git add --all && \
     git -c "user.name=jekyll-publish" -c "user.email=NA" commit --allow-empty-message -am ''      # && git push
 
+
+echo "ok, now please git push manually"

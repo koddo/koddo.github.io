@@ -56,10 +56,9 @@ tag_feed_dir: tag
 
 permalink: /blog/:title
 
-# assuming the default is permalink: /:collection/:path
-collections:
-  ryctoic:
-    output: true
-    title: "Ryctoic"
+# collections:
+#   ryctoic:
+#     output: true
+#     title: ""
 
     

@@ -82,8 +82,13 @@ TODO: only include mathjax on pages with math=true
 TODO: move ToC to layout
 TODO: excerpt_separator --- http://stackoverflow.com/questions/16422933/how-do-i-use-markdownify-in-jekyll-to-show-an-excerpt-on-the-index/18007879#18007879
 
-show comments
-====================
+three alphabets of lucida grande is approx 640 px 
+
+TODO: <https://wiredcraft.com/blog/make-jekyll-fast/>
+
+TODO: make it work with under a user instead of root
+
+# show comments
 
 it's a slightly modified disqus script
 the main difference is the function which appends script to the body is called on click
@@ -111,3 +116,5 @@ $ # jekyl build
 $ cd _site
 _site$ git add --all && git commit --allow-empty-message -am ''
 ```
+
+

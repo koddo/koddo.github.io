@@ -91,6 +91,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 h1.post-title, ul.post-list li h2 {
     margin-top: 0;
+    line-height: 1;
 }
 
 
@@ -99,7 +100,6 @@ h1.post-title, ul.post-list li h2 {
  * Links
  */
 a {
-    // color: $brand-color;
     color: $links-color;
     text-decoration: none;
     border-bottom: 1px solid $grey-color-light;
@@ -205,12 +205,9 @@ pre {
 }
 
 
-
-/**
- * Clearfix
- */
-%clearfix {
-
+// http://stackoverflow.com/questions/8554043/what-is-a-clearfix/29562362#29562362
+// for IE>=8
+%clearfix {   
     &:after {
         content: "";
         display: table;

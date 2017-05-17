@@ -14,12 +14,19 @@ url: "https://koddo.github.io" # the base hostname & protocol for your site
 twitter_username: introstatic
 github_username:  koddo
 
+page_source_prefix: "https://github.com/koddo/koddo.github.io/blob/jekyll-source"       # without trailing slash
+
 # Build settings
 markdown: kramdown
 kramdown:
   input:          GFM
   hard_wrap:      true
   highlighter:    rouge
+
+gems:
+  - jekyll-feed
+  # - jekyll-relative-links
+# later https://github.com/paulrobertlloyd/jekyll-figure
   
 destination: _site
 keep_files:
@@ -33,7 +40,9 @@ exclude:
     - README-master-branch.md
     - Dockerfile
     - Guardfile
+    - TAGS
 
+  
 tag_page_layout: tag_page
 tag_page_dir: tag
 tag_feed_layout: tag_feed

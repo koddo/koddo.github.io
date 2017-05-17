@@ -1,6 +1,6 @@
 <div id="disqus_thread"></div>
-<div class="button-wrapper">
-    <input type="button" id="btn_show_disqus" value="Comments?" />
+<div class="disqus-button-wrapper">
+    <input type="button" id="disqus-button-show-comments" value="Comments?" />
 </div>
 {% if false %}
   <!-- https://help.disqus.com/customer/portal/articles/565624-adding-comment-count-links-to-your-home-page -->
@@ -11,13 +11,13 @@
      this.page.url = "{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}";
      this.page.identifier = "{{ page.disqus_identifier }}";
  };
- document.getElementById('btn_show_disqus').onclick = function () {
+ document.getElementById('disqus-button-show-comments').onclick = function () {
      var d = document, s = d.createElement('script');
      s.src = '//koddo.disqus.com/embed.js';
      s.setAttribute('data-timestamp', +new Date());
      (d.head || d.body).appendChild(s);
 
-     document.getElementById('btn_show_disqus').style.display = 'none';
+     document.getElementById('disqus-button-show-comments').style.display = 'none';
      document.getElementById('comments_count').style.display = 'none';
  };
 </script>

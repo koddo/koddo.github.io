@@ -25,7 +25,7 @@ kramdown:
 
 gems:
   - jekyll-feed
-  # - jekyll-relative-links
+  # - jekyll-relative-links     # doesn't work for me
 # later https://github.com/paulrobertlloyd/jekyll-figure
   
 destination: _site

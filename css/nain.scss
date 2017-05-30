@@ -8,6 +8,7 @@ $site-title-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 $site-title-color: white;
 $site-title-letter-spacing: 0.07em;
 $site-header-background-color: #546d98;
+$site-header-background-gradient: linear-gradient(120deg, $site-header-background-color, lighten($site-header-background-color, 45%));
 $site-title-height: 100px;
 
 $base-font-size:   16px;
@@ -248,14 +249,15 @@ pre {
 // }
 
 .site-header {
-    border-bottom: 1px solid $grey-color-dark;
+    border-bottom: 0px solid $grey-color-dark;
     min-height: $site-title-height;
 
     // Positioning context for the mobile navigation icon
     position: relative;
 
     background-color: $site-header-background-color;
-
+    background-image: $site-header-background-gradient;
+    
     text-align: center;
 }
 

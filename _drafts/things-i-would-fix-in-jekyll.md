@@ -17,5 +17,5 @@ This makes it harder to use jekyll for wikis. You have to have discipline to wri
 [about]({{ site.baseurl }}{% link about.md %})
 ```
 
-Emacs
+I can use emacs
 

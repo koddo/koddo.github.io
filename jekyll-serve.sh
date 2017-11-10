@@ -7,21 +7,20 @@
 NAME=jekyll_$(basename $(pwd))
 PORT=${1:-4000}
 
-docker run -it --rm --name="$NAME" \
-    --volume=$(pwd):/srv/jekyll \
-    -p 0.0.0.0:$PORT:4000 \
-    --env JEKYLL_ENV=development \
-    koddo/jekyll \
-    jekyll serve \
-    --profile \
-    --drafts \
-    --incremental \
-    --config _config.yml
+sudo docker run -it --rm --name="$NAME" \
+     --volume=$(pwd):/srv/jekyll \
+     -p 0.0.0.0:$PORT:4000 \
+     --env JEKYLL_ENV=development \
+     koddo/jekyll \
+     jekyll serve \
+     --profile \
+     --drafts \
+     --config _config.yml,_config_dev.yml \
 
-    # --force_polling
+     # --incremental \
+     # --force_polling
+     # --user=jekyll \
 
-# --config _config.yml,_config_livereload.yml
-# now we check {% if site.livereload %}
-# we can do this using environment variable
+
 # JEKYLL_ENV=development jekyll build
 # and then {% if jekyll.environment == "development" %}

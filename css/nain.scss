@@ -2,16 +2,17 @@
 ---
 @charset "utf-8";
 
-// $base-font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 $base-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-$site-title-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+// $base-font-family: Lucida Grande,Lucida Sans Unicode,Lucida Sans,Geneva,Verdana,sans-serif;
+$site-title-font-family: $base-font-family;
 $site-title-color: white;
-$site-title-letter-spacing: 0.07em;
+// $site-title-letter-spacing: 0.03em;
+$site-title-letter-spacing: 0.15em;
 $site-header-background-color: #546d98;
 $site-header-background-gradient: linear-gradient(120deg, $site-header-background-color, lighten($site-header-background-color, 45%));
 $site-title-height: 100px;
 
-$base-font-size:   16px;
+$base-font-size:   18px;
 $base-font-weight: 400;
 $small-font-size:  $base-font-size * 0.875;
 $base-line-height: 1.5;
@@ -33,7 +34,8 @@ $grey-color-light: lighten($grey-color, 40%);
 $grey-color-dark:  darken($grey-color, 25%);
 $grey-color-semi-light: lighten($grey-color, 20%);
 
-$content-width:    700px;
+// $content-width:    700px;
+$content-width:    $base-font-size * 45;
 
 
 @mixin media-query($device) {
@@ -54,6 +56,12 @@ p, blockquote, pre, hr,
 dl, dd, ol, ul, figure {
     margin: 0;
     padding: 0;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: $grey-color-semi-light;
 }
 
 body {
@@ -190,16 +198,18 @@ pre,
 code {
     @include relative-font-size(0.9375);
     border: 1px solid $grey-color-light;
-    border-radius: 3px;
-    background-color: #eef;
+    border-radius: 5px;
+    // background-color: $grey-color-light;
 }
 
 code {
-    padding: 1px 5px;
+    padding: 1px 3px;
+    white-space: nowrap;
 }
 
 pre {
-    padding: 8px 12px;
+    // padding: 8px 12px;
+    padding: 30px;
     overflow-x: auto;
 
     > code {
@@ -231,14 +241,20 @@ pre {
 
 //////////////////////////////////////////////////////////////////
 
-.icon > svg {
-  display: inline-block;
-  vertical-align: middle;
+.icon {
+    display: inline-block;
+    vertical-align: middle;
 
-  path {
-    fill: $grey-color;
-  }
+    > svg {
+        width: $base-font-size;
+        height: $base-font-size;
+
+        path {
+            fill: $grey-color;
+        }
+    }
 }
+
 
 ////////////////////////////////////////////
 // end base
@@ -256,12 +272,19 @@ pre {
     position: relative;
 
     background-color: $site-header-background-color;
-    background-image: $site-header-background-gradient;
-    
-    text-align: center;
+    // background-image: $site-header-background-gradient;
+    background-color: #546d98;
+
+    // thanks to http://www.heropatterns.com/
+    background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%238a9dbd' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
+
+// text-align: center;
 }
 
 .site-title {
+    // padding-left: 50px;
+    // padding-right: 50px;
+
     font-family: $site-title-font-family;
     letter-spacing: $site-title-letter-spacing;
     @include relative-font-size(3);
@@ -298,7 +321,8 @@ pre {
     border-bottom: none;
     
     &:active, &:visited {
-        color: $background-color;
+        // color: $background-color;
+        color: $grey-color-dark;
     }
     &:hover {
         color: $grey-color;
@@ -332,7 +356,7 @@ pre {
 }
 
 .post-list {
-    margin-left: 0;
+    margin-left: 2em;
     list-style: none;
 
     > li {
@@ -384,3 +408,17 @@ ul.post-list li h2 {
 
 
 // @import "syntax-highlighting";
+
+.collection-list {
+    margin-left: 0;
+    list-style: none;
+
+    > li {
+        margin-bottom: $spacing-unit;
+    }
+}
+
+.collection-page {
+    margin-left: 2em;
+    list-style: none;
+}

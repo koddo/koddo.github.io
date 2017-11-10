@@ -3,24 +3,84 @@ layout: default
 ---
 
 <div class="home">
-  <!-- <h1 class="page-heading no-anchor">Blog</h1> -->
-  <ul class="post-list">
-    {% for post in site.posts %}
-      <li>
-        <h2 class="no-anchor">
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </h2>
-        <span class="post-meta">{{ post.date | date_to_string }}</span>
-      </li>
-    {% endfor %}
-  </ul>
+    
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <p>about text</p>
+    <ul class="social-media-list">
+        {% if site.github_username %}
+        <li>
+            {% include icon-github.html username=site.github_username %}
+        </li>
+        {% endif %}
 
-  <ul class="page-list">
-      {% for my_page in site.pages %}
-      {% if my_page.title %}
-      <p><a class="page-link" href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.title }}</a></p>
-      {% endif %}
-      {% endfor %}
+        {% if site.stackoverflow_username %}
+        <li>
+            {% include icon-stackoverflow.html username=site.stackoverflow_username id=site.stackoverflow_id %}
+        </li>
+        {% endif %}
+
+        {% if site.twitter_username %}
+        <li>
+            {% include icon-twitter.html username=site.twitter_username %}
+        </li>
+        {% endif %}
+
+        {% if true %}
+        <li>
+            {% include icon-rss.html %}
+        </li>
+        {% endif %}
+    </ul>
+    
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    
+    <h1 class="page-heading no-anchor">Blog</h1>
+    <ul class="post-list">
+        {% for post in site.posts %}
+        <li>
+            <h2 class="no-anchor">
+                <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+            </h2>
+            <p>{{ post.excerpt }}</p>
+            <span class="post-meta">{{ post.date | date_to_string }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <!-- <ul class="page-list">
+       {% for my_page in site.pages %}
+       {% if my_page.title %}
+       <p><a class="page-link" href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.title }}</a></p>
+       {% endif %}
+       {% endfor %}
+       </ul> -->
+
+  
+  {% for my_collection in site.collections %}
+  {% if my_collection.label != 'posts' %}
+  <h1 class="page-heading no-anchor">{{ my_collection.title }}</h1>
+  <ul class="collection-list">
+      <li>
+          <!-- <p>collection: <a href="{{ site.baseurl }}/{{ my_collection.label }}">{{ my_collection.title }}</a></p> -->
+          {% for my_page in my_collection.docs %}
+          {% if my_page.title != 'Index' %}
+          <ul class="collection-page">
+              <li><a class="page-link" href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.title }}</a></li>
+          </ul>
+          {% endif %}
+          {% endfor %}
+      </li>
   </ul>
-  <!-- <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p> -->
+  {% endif %}
+  {% endfor %}
+  <!-- </ul> -->
+
 </div>

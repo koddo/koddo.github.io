@@ -8,10 +8,10 @@ fi
 
 
 
-docker run -it --rm --name=jekyll-publish \
-    --volume=$(pwd):/srv/jekyll \
-    koddo/jekyll \
-    jekyll build --profile   # without --drafts
+sudo docker run -it --rm --name=jekyll-publish \
+     --volume=$(pwd):/srv/jekyll \
+     koddo/jekyll \
+     jekyll build --profile   # without --drafts
 
 
 # the whole _site/ dir gets rewritten after jekyll build

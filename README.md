@@ -20,7 +20,7 @@ $ docker build --tag koddo/jekyll - < Dockerfile
 Then:
 
 ```
-$ ssh -t alex@debian.local "cd ~/mnt/koddo.github.io && ./jekyll-serve.sh"
+$ ssh -t alex@debian.local "cd ~/mnt/koddo.github.io && ./jekyll-serve.sh --incremental"
 $ cd ~/Dropbox/ && python3 -m http.server 4001
 $ open -a Firefox http://jekyll.dev.dnsdock:4000/
 
@@ -44,18 +44,22 @@ in a second terminal tab:
 $ ssh -t alex@debian.local "cd ~/mnt/koddo.github.io && ./jekyll-livereload.sh"
 ```
 
+## summary
+
+`run.sh` opens tabs and runs both jekyll and livereload. 
 
 
 # misc
 
+The only thing bothers me with this image, jekyll runs as root, we can't run it as user by whatever reason.
+
 ## setup
 
 disqus
-mathjax
+mathjax, used only where `page.mathjax` is true
 https://github.com/pattex/jekyll-tagging
 https://github.com/bryanbraun/anchorjs
 https://github.com/guard/guard-livereload, http://stackoverflow.com/questions/8395526/using-live-reload-with-jekyll
-
 kramdown ToC
 
 my customizations:
@@ -72,12 +76,11 @@ TODO: footnotes
 
 TODO: html5 tags for accessibility: contents, navigation, etc
 
-TODO: add sitemap.xml generator
+TODO: add sitemap.xml generator -- https://github.com/jekyll/jekyll-sitemap
 TODO: add https://github.com/inukshuk/jekyll-scholar
 
 TODO: http://hamishwillee.github.io/2014/11/13/jekyll-includes-are-functions/
 TODO: make sure everything is ok with my links --- http://downtothewire.io/2015/08/15/configuring-jekyll-for-user-and-project-github-pages/
-TODO: only include mathjax on pages with math=true 
 
 TODO: move ToC to layout
 TODO: excerpt_separator --- http://stackoverflow.com/questions/16422933/how-do-i-use-markdownify-in-jekyll-to-show-an-excerpt-on-the-index/18007879#18007879
@@ -85,8 +88,6 @@ TODO: excerpt_separator --- http://stackoverflow.com/questions/16422933/how-do-i
 three alphabets of lucida grande is approx 640 px 
 
 TODO: <https://wiredcraft.com/blog/make-jekyll-fast/>
-
-TODO: make it work with under a user instead of root
 
 # show comments
 

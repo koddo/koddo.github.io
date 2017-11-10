@@ -8,6 +8,12 @@
           </li>
           {% endif %}
 
+          <!-- {% if site.stackoverflow_username %}
+               <li>
+               {% include icon-stackoverflow.html username=site.stackoverflow_username id=site.stackoverflow_id %}
+               </li>
+               {% endif %} -->
+
           {% if site.twitter_username %}
           <li>
               {% include icon-twitter.html username=site.twitter_username %}
@@ -19,9 +25,13 @@
               {% include icon-rss.html %}
           </li>
           {% endif %}
+
+          <li>
+              <a href="">cv</a>
+          </li>
       </ul>
 
-      <span><a class="page-source-link" href="{{ site.page_source_prefix }}/{{ page.path }}">page source</a></span>
+      <!-- <span><a class="page-source-link" href="{{ site.page_source_prefix }}/{{ page.path }}">page source</a></span> -->
 
   </div>
 </footer>

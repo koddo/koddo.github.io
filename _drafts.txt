@@ -1,0 +1,102 @@
+browser-console-logger docker image
+
+cordova redirect app + hot reload
+
+how i once saved a quadrocopter flying above water
+
+clojure-spec-doesnt-have-only-keys-for-map.md
+it has s/keys, but it doesn't catch keys that aren't supposed to be there
+(s/def ::good-state (only-keys :req-un [::active-panel]))
+
+updates in erlang
+
+icons on top of airbags
+
+multiple audio in ios
+
+my favorite macos bug
+
+---------------------
+
+things I would fix in jekyll
+I must have titles for links even if I just want to provide a relative link: `[/about](/about)`
+`<about>` doesn't work, because it's indistinguashable from an html tag.
+This makes it harder to use jekyll for wikis. You have to have discipline to write something like this:
+`[about]({{ site.baseurl }}{% link index.html %})`
+I can use yasnippet for this.
+
+
+---------------------
+
+jekyll in docker
+
+<https://hub.docker.com/r/jekyll/jekyll/>
+
+<https://github.com/jekyll/docker/wiki/Usage:-Running#on-native-docker>
+
+<https://google.com/>
+
+{% highlight shell %}
+$ docker run -it --rm --name=jekyll \
+     --volume=$(pwd):/srv/jekyll \
+     -p 127.0.0.1:4000:4000 \
+     my-jekyll \
+     jekyll serve
+{% endhighlight %}
+
+
+
+{% highlight shell %}
+$ cat Dockerfile
+from jekyll/jekyll
+RUN gem install jekyll-tagging
+
+$ docker build -t my-jekyll - < Dockerfile
+{% endhighlight %}
+
+------------------------
+
+hello, $$ \mathbf{X}_{n,p} = \mathbf{A}_{n,k} \mathbf{B}_{k,p} $$
+
+hello:
+
+$$ \mathbf{X}_{n,p} = \mathbf{A}_{n,k} \mathbf{B}_{k,p} $$
+
+hello, $   \mathbf{X}_{n,p} = \mathbf{A}_{n,k} \mathbf{B}_{k,p} $
+
+hello, \$$ \mathbf{X}_{n,p} = \mathbf{A}_{n,k} \mathbf{B}_{k,p} $$
+
+hello, \(  \mathbf{X}_{n,p} = \mathbf{A}_{n,k} \mathbf{B}_{k,p} \)
+
+\$$a+b$$
+
+```
+hello, $   \mathbf{X}_{n,p} = \mathbf{A}_{n,k} \mathbf{B}_{k,p} $
+hello, \$$ \mathbf{X}_{n,p} = \mathbf{A}_{n,k} \mathbf{B}_{k,p} $$
+hello, \(  \mathbf{X}_{n,p} = \mathbf{A}_{n,k} \mathbf{B}_{k,p} \)
+\$$a+b$$
+```
+
+
+
+
+use `\vert` instead of `|`, it actually adds readability sometimes
+
+
+$$P(A|B) = P(A|B)$$
+
+```
+conditional probability, $$P(A|B)$$
+$$P(A|B)$$, $$P(A|B)$$
+```
+
+conditional probability, \$$P(A|B)$$
+
+$$P(A|B)$$, $$P(A|B)$$
+
+-----------------------
+
+e^{i \pi} with visualisation
+
+-----------------------
+

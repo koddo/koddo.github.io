@@ -11,5 +11,5 @@ sudo docker run -it --rm --name="$NAME" \
      --volume=$(pwd):/srv/jekyll \
      -p 0.0.0.0:$PORT:35729 \
      koddo/jekyll \
-     guard
+     /usr/gem/bin/guard
 

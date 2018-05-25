@@ -58,6 +58,9 @@ The only thing bothers me with this image, jekyll runs as root, we can't run it 
 `livereload_script` var is declared in _config_dev.yml.
 If you'd like to have local configuration variables, set them in _config_local.yml, it's gitignored.
 
+`superlearn_url` in dev environment is also set to `superlearn.localhost`, which should resolve to localhost as per [rfc6761](https://tools.ietf.org/html/rfc6761). Add an entry `127.0.0.1	superlearn.localhost` to `/etc/hosts`.
+I personally run it in a vm, so for me `superlearn_url` is `http://local-vm.superlearn.it`, and the `/etc/hosts` entry is `172.28.128.3	local-vm.superlearn.it`
+
 ## setup
 
 disqus

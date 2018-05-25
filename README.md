@@ -53,6 +53,11 @@ $ ssh -t alex@debian.local "cd ~/mnt/koddo.github.io && ./jekyll-livereload.sh"
 
 The only thing bothers me with this image, jekyll runs as root, we can't run it as user by whatever reason.
 
+## configuration
+
+`livereload_script` var is declared in _config_dev.yml.
+If you'd like to have local configuration variables, set them in _config_local.yml, it's gitignored.
+
 ## setup
 
 disqus

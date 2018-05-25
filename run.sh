@@ -13,13 +13,13 @@ function tab() {
 EOF
 }
 
-vagrant ssh -c      'cd /vagrant-blog && docker build --tag koddo/jekyll - < Dockerfile'
-tab "vagrant ssh -c 'cd /vagrant-blog &&             /vagrant-blog/jekyll-serve.sh 4000'"
-tab "vagrant ssh -c 'cd /vagrant-blog &&             /vagrant-blog/jekyll-livereload.sh 35729'"
-tab "vagrant ssh -c 'cd /vagrant-superlearn-wiki &&  /vagrant-blog/jekyll-serve.sh 4001'"
-tab "vagrant ssh -c 'cd /vagrant-superlearn-wiki &&  /vagrant-blog/jekyll-livereload.sh 35730'"
+vagrant ssh -c      'cd /workspace.blog && docker build --tag koddo/jekyll - < Dockerfile'
+tab "vagrant ssh -c 'cd /workspace.blog &&             /workspace.blog/jekyll-serve.sh 4000'"
+tab "vagrant ssh -c 'cd /workspace.blog &&             /workspace.blog/jekyll-livereload.sh 35729'"
+tab "vagrant ssh -c 'cd /workspace.superlearn-wiki &&  /workspace.blog/jekyll-serve.sh 4001'"
+tab "vagrant ssh -c 'cd /workspace.superlearn-wiki &&  /workspace.blog/jekyll-livereload.sh 35730'"
 
 open http://vagrant.local:4000/
 open http://vagrant.local:4001/superlearn-wiki/
 
-emacsclient -n /ssh:vagrant@vagrant.local:/vagrant-blog
+emacsclient -n /ssh:vagrant@vagrant.local:/workspace.blog

@@ -100,3 +100,9 @@ e^{i \pi} with visualisation
 
 -----------------------
 
+mutable (default) argument in python
+
+-----------------------
+
+break or return in a finally block
+

@@ -7,6 +7,8 @@
 NAME=jekyll_$(basename $(pwd))
 PORT=${1:-4000}
 
+touch -a _config_local.yml
+
 sudo docker run -it --rm --name="$NAME" \
      --volume=$(pwd):/srv/jekyll \
      -p 0.0.0.0:$PORT:4000 \
@@ -15,7 +17,7 @@ sudo docker run -it --rm --name="$NAME" \
      jekyll serve \
      --profile \
      --drafts \
-     --config _config.yml,_config_dev.yml \
+     --config _config.yml,_config_dev.yml,_config_local.yml
 
      # --incremental \
      # --force_polling

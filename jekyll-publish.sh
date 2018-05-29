@@ -21,9 +21,9 @@ echo $(git rev-parse --short --verify HEAD) >> _site/commit
 
 
 
-cd _site
-git add --all && \
-    git -c "user.name=jekyll-publish" -c "user.email=NA" commit --allow-empty-message -am ''      # && git push
+# cd _site
+# git add --all && \
+#     git -c "user.name=jekyll-publish" -c "user.email=NA" commit --allow-empty-message -am ''      # && git push
 
 
-echo "ok, now please git push manually"
+echo "ok, now please git commit and push manually"

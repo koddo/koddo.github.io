@@ -14,10 +14,11 @@ sudo docker run -it --rm --name=jekyll-publish \
      jekyll build --profile   # without --drafts
 
 
+
 # the whole _site/ dir gets rewritten after jekyll build
 cp README-master-branch.md _site/README.md
-echo $(date) >> _site/commit
-echo $(git rev-parse --short --verify HEAD) >> _site/commit
+echo $(date) > _site/commit
+echo $(git rev-parse --short --verify HEAD) > _site/commit
 
 
 

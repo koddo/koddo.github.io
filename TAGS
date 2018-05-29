@@ -1,68 +1,0 @@
-
-_includes/disqus.html,0
-
-_includes/footer.html,0
-
-_includes/head.html,0
-
-_includes/header.html,0
-
-_includes/icon-github.html,0
-
-_includes/icon-rss.html,0
-
-_includes/icon-twitter.html,0
-
-_layouts/collection_index.html,0
-
-_layouts/collection_page.html,0
-
-_layouts/default.html,0
-
-_layouts/page.html,0
-
-_layouts/post.html,0
-
-_layouts/tag_page.html,0
-
-_plugins/ext.rb,0
-
-_site/about.html,0
-
-_site/blog/docker-sleep.html,0
-
-_site/blog/jekyll-in-docker.html,0
-
-_site/blog/math-in-jekyll.html,0
-
-_site/blog/welcome-to-jekyll.html,0
-
-_site/index.html,0
-
-_site/ryctoic/algorithms.html,0
-
-_site/ryctoic/english.html,0
-
-_site/ryctoic/index.html,0
-
-_site/ryctoic/machine-learning.html,0
-
-_site/ryctoic/math.html,0
-
-_site/ryctoic/probability.html,0
-
-_site/ryctoic/python.html,0
-
-_site/site-map.html,0
-
-_site/tag/docker-jekyll.html,0
-
-_site/tag/jekyll.html,0
-
-index.html,0
-
-jekyll-livereload.sh,0
-
-jekyll-serve.sh,0
-
-publish.sh,0

@@ -11,7 +11,7 @@ dl, dd, ol, ul, figure {
  * Basic styling
  */
 body {
-  font: 400 16px/1.5 "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font: 400 18px/1.5 "Lucida Sans Unicode", "Lucida Grande", sans-serif;
   color: #111;
   background-color: #fdfdfd;
   -webkit-text-size-adjust: 100%;
@@ -44,7 +44,7 @@ figure > img {
   display: block; }
 
 figcaption {
-  font-size: 14px; }
+  font-size: 15.75px; }
 
 /**
  * Lists
@@ -66,7 +66,8 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 100px; }
 
 h1.post-title, ul.post-list li h2 {
-  margin-top: 0; }
+  margin-top: 0;
+  line-height: 1; }
 
 /**
  * Links
@@ -133,22 +134,19 @@ pre {
  * Wrapper
  */
 .wrapper {
-  max-width: -webkit-calc(800px - (30px * 2));
-  max-width: calc(800px - (30px * 2));
+  max-width: -webkit-calc(700px - (30px * 2));
+  max-width: calc(700px - (30px * 2));
   margin-right: auto;
   margin-left: auto;
   padding-right: 30px;
   padding-left: 30px; }
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 700px) {
     .wrapper {
-      max-width: -webkit-calc(800px - (30px));
-      max-width: calc(800px - (30px));
+      max-width: -webkit-calc(700px - (30px));
+      max-width: calc(700px - (30px));
       padding-right: 15px;
       padding-left: 15px; } }
 
-/**
- * Clearfix
- */
 .wrapper:after, .footer-col-wrapper:after {
   content: "";
   display: table;
@@ -171,7 +169,8 @@ pre {
 .site-header {
   border-bottom: 1px solid #e8e8e8;
   min-height: 56px;
-  position: relative; }
+  position: relative;
+  background-color: #e8e8e8; }
 
 .site-title {
   font-size: 26px;
@@ -266,7 +265,7 @@ pre {
   width: -webkit-calc(40% - (30px / 2));
   width: calc(40% - (30px / 2)); }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 700px) {
   .footer-col-1,
   .footer-col-2 {
     width: -webkit-calc(50% - (30px / 2));
@@ -300,7 +299,7 @@ ul.post-list li h2 {
   line-height: 1; }
 
 .post-meta {
-  font-size: 10px;
+  font-size: 11.25px;
   color: #b5b5b5;
   margin-left: 2px; }
 
@@ -316,7 +315,7 @@ ul.post-list li h2 {
   cursor: pointer; }
 
 .page-source-link {
-  font-size: 14px;
+  font-size: 15.75px;
   color: #828282; }
 
 .post-link {
@@ -332,7 +331,7 @@ ul.post-list li h2 {
   font-size: 42px;
   letter-spacing: 0px;
   line-height: 1; }
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 700px) {
     .post-title {
       font-size: 36px; } }
 
@@ -340,17 +339,17 @@ ul.post-list li h2 {
   margin-bottom: 30px; }
   .post-content h2 {
     font-size: 32px; }
-    @media screen and (max-width: 800px) {
+    @media screen and (max-width: 700px) {
       .post-content h2 {
         font-size: 28px; } }
   .post-content h3 {
     font-size: 26px; }
-    @media screen and (max-width: 800px) {
+    @media screen and (max-width: 700px) {
       .post-content h3 {
         font-size: 22px; } }
   .post-content h4 {
     font-size: 20px; }
-    @media screen and (max-width: 800px) {
+    @media screen and (max-width: 700px) {
       .post-content h4 {
         font-size: 18px; } }
 

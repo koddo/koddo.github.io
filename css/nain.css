@@ -1,0 +1,222 @@
+body, h1, h2, h3, h4, h5, h6,
+p, blockquote, pre, hr,
+dl, dd, ol, ul, figure {
+  margin: 0;
+  padding: 0; }
+
+hr {
+  border: 0;
+  height: 1px;
+  background: #b5b5b5; }
+
+body {
+  font: 400 18px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #111;
+  background-color: #fbfbfb;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-feature-settings: "kern" 1;
+  -moz-font-feature-settings: "kern" 1;
+  -moz-font-feature-settings: "kern=1";
+  -o-font-feature-settings: "kern" 1;
+  font-feature-settings: "kern" 1;
+  font-kerning: normal; }
+
+h1, h2, h3, h4, h5, h6,
+p, blockquote, pre,
+ul, ol, dl, figure {
+  margin-bottom: 15px; }
+
+img {
+  max-width: 100%;
+  vertical-align: middle; }
+
+figure > img {
+  display: block; }
+
+figcaption {
+  font-size: 15.75px; }
+
+ul, ol {
+  margin-left: 30px; }
+
+li > ul,
+li > ol {
+  margin-bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 400; }
+
+a {
+  color: #1756a9;
+  text-decoration: none;
+  border-bottom: 1px solid #e8e8e8; }
+  a:visited {
+    color: #5e1493; }
+  a:hover {
+    color: #111;
+    border-bottom: 1px solid #424242; }
+
+a.site-title,
+a.rss-feed {
+  border-bottom: none; }
+
+a.site-title:hover {
+  text-decoration: underline; }
+
+a.site-title:focus {
+  text-decoration: none; }
+
+a.rss-feed:hover {
+  border-bottom: 1px solid #424242; }
+
+blockquote {
+  color: #828282;
+  border-left: 4px solid #e8e8e8;
+  padding-left: 15px;
+  font-size: 20.25px;
+  letter-spacing: -1px;
+  font-style: italic; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+pre,
+code {
+  font-size: 16.875px;
+  border: 1px solid #e8e8e8;
+  border-radius: 5px; }
+
+code {
+  padding: 1px 3px;
+  white-space: nowrap; }
+
+pre {
+  padding: 30px;
+  overflow-x: auto; }
+  pre > code {
+    border: 0;
+    padding-right: 0;
+    padding-left: 0; }
+
+.wrapper {
+  max-width: -webkit-calc(810px - (30px * 2));
+  max-width: calc(810px - (30px * 2));
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 30px;
+  padding-left: 30px; }
+
+.wrapper:after {
+  content: "";
+  display: table;
+  clear: both; }
+
+.icon {
+  display: inline-block;
+  vertical-align: middle; }
+  .icon > svg {
+    width: 18px;
+    height: 18px; }
+    .icon > svg path {
+      fill: #828282; }
+
+.site-header {
+  border-bottom: 0px solid #424242;
+  min-height: 100px;
+  position: relative;
+  background-color: #546d98;
+  background-color: #546d98;
+  background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%238a9dbd' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E"); }
+
+.site-title {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  letter-spacing: 0.15em;
+  font-size: 54px;
+  line-height: 100px;
+  margin-bottom: 0;
+  color: white; }
+  .site-title, .site-title:visited {
+    color: white; }
+
+.site-footer {
+  border-top: 1px solid #e8e8e8;
+  padding: 30px 0;
+  text-align: center; }
+
+.contact-list,
+.social-media-list {
+  list-style: none;
+  margin-left: 0;
+  margin-bottom: 60px; }
+
+.page-source-link {
+  font-size: 12.6px;
+  color: #fbfbfb;
+  border-bottom: none; }
+  .page-source-link:active, .page-source-link:visited {
+    color: #424242; }
+  .page-source-link:hover {
+    color: #828282;
+    border-bottom: 1px solid #828282; }
+
+.disqus-button-wrapper {
+  text-align: center; }
+
+#disqus-button-show-comments {
+  background: url("https://a.disquscdn.com/dotcom/d-2407bda/img/brand/disqus-social-icon-dark.svg") 20px center no-repeat;
+  background-size: 30px 30px;
+  height: 75px;
+  padding: 10px 20px 10px 50px;
+  border: 1px solid #e8e8e8;
+  cursor: pointer; }
+
+.page-content {
+  padding-top: 60px;
+  padding-bottom: 60px; }
+
+.page-heading {
+  font-size: 22.5px; }
+
+.post-list {
+  margin-left: 2em;
+  list-style: none; }
+  .post-list > li {
+    margin-bottom: 30px; }
+
+ul.post-list li h2 {
+  margin-bottom: 0px;
+  line-height: 1; }
+
+.post-meta {
+  font-size: 11.25px;
+  color: #b5b5b5;
+  margin-left: 2px; }
+
+.post-link {
+  font-size: 27px; }
+
+.post-header {
+  margin-bottom: 30px; }
+
+.post-title {
+  font-size: 47.25px;
+  letter-spacing: -1px;
+  line-height: 1; }
+
+.post-content {
+  margin-bottom: 30px; }
+  .post-content h2 {
+    font-size: 36px; }
+  .post-content h3 {
+    font-size: 29.25px; }
+  .post-content h4 {
+    font-size: 22.5px; }
+
+.collection-list {
+  margin-left: 0;
+  list-style: none; }
+  .collection-list > li {
+    margin-bottom: 30px; }
+
+.collection-page {
+  margin-left: 2em;
+  list-style: none; }

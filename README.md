@@ -97,6 +97,8 @@ three alphabets of lucida grande is approx 640 px
 
 TODO: <https://wiredcraft.com/blog/make-jekyll-fast/>
 
+TODO: set defaults for pages -- <https://jekyllrb.com/docs/configuration/#front-matter-defaults>
+
 # show comments
 
 it's a slightly modified disqus script

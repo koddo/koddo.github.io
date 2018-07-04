@@ -106,3 +106,8 @@ mutable (default) argument in python
 
 break or return in a finally block
 
+-----------------------
+
+str.split() in python 
+
+-----------------------

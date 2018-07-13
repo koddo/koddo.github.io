@@ -1,13 +1,17 @@
-# blog
+# my blog
 
 https://koddo.github.io/
 
-## how to write a new post
+## how to clone
 
-Create a markdown file in _drafts:
-M-x ym-jekyll-post-template
-...
-M-x ym-jekyll-regenerate-date-and-filename
+The `_site/` dir should contain the master branch of this repo, `_site/.git` is in keep_files in _config.yml
+
+```
+$ git clone git@github.com:koddo/koddo.github.io.git blog
+$ cd blog
+blog$ git checkout jekyll-source
+blog$ git clone git@github.com:koddo/koddo.github.io.git _site
+```
 
 ## how to use
 
@@ -27,14 +31,12 @@ $ open -a Firefox http://jekyll.dev.dnsdock:4000/
 $ ./jekyll-publish.sh
 ```
 
+## how to write a new post in emacs
 
-
-the `_site/` dir contains the master branch of this repo, `_site/.git` is in keep_files in _config.yml
-
-```
-$ git clone git@github.com:koddo/koddo.github.io.git
-$ mv koddo.github.io _site
-```
+Create a markdown file in _drafts:
+M-x ym-jekyll-post-template
+...
+M-x ym-jekyll-regenerate-date-and-filename
 
 ## livereload
 
@@ -109,7 +111,9 @@ TODO: make the show comments button less bright, less visible
 TODO: on noscript make the show comments button redirect to the disqus site with comments
 TODO: attach the disqus logo to the button: https://disqus.com/brand/
 
-# new site
+# how to create new site
+
+TODO: find a better place for this text
 
 ```
 outside$ # create and clone site-name

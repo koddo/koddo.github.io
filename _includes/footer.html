@@ -8,11 +8,11 @@
           </li>
           {% endif %}
 
-          <!-- {% if site.stackoverflow_username %}
-               <li>
-               {% include icon-stackoverflow.html username=site.stackoverflow_username id=site.stackoverflow_id %}
-               </li>
-               {% endif %} -->
+          {% if site.stackoverflow_username %}
+          <li>
+              {% include icon-stackoverflow.html username=site.stackoverflow_username id=site.stackoverflow_id %}
+          </li>
+          {% endif %}
 
           {% if site.twitter_username %}
           <li>

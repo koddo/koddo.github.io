@@ -9,7 +9,8 @@ RUN gem install \
                 jekyll-feed \
                 jekyll-tagging \
                 guard guard-livereload \
-                github-pages
+                github-pages \
+                jekyll-relative-links
 
 ## github-pages gem is for supported themes: https://pages.github.com/themes/
 

@@ -20,5 +20,5 @@ abcdefghijklmnopqrstuvwxyz&nbsp;abcdefghijklmnopqrstuvwxyz&nbsp;abcdefghijklmnop
 
 head of `index.html`: `<link href="css/site.css" rel="stylesheet" type="text/css">`
 
-
+[Link to a page]({{ site.baseurl }}{% link _notes/misc.md %})
 

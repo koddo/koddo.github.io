@@ -1,5 +1,5 @@
 [playlist]
-File1=http://198.105.223.94:8000/
+File1=http://46.23.78.32:8000/
 Title1=DnB Liquified
 Length=-1
 File2=http://stream5.jungletrain.net:8000/;

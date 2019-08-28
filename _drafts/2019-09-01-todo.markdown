@@ -1,0 +1,22 @@
+---
+layout: post
+title:  "TODO"
+date:   2017-05-14 16:54:42 +0300
+tags:   []
+comments: true
+disqus_identifier: 
+mathjax: false
+excerpt_separator: <!--more-->
+---
+
+TODO
+
+Data versioning system, sacred, etc
+
+<!--more-->
+
+On the first of 
+
+TODO
+
+
